@@ -12,9 +12,10 @@ public class DBConnection {
      ***************************************************/
 
     public static Connection getUserConnection(JTextField userNameField, JPasswordField pwdField ) throws SQLException {
-        Connection conn = DriverManager.getConnection(
+        String password = new String(pwdField.getPassword());
+    	Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://193.196.143.168/koch_universitydb",
-                userNameField.toString(), pwdField.toString()
+                userNameField.getText(), password
         );
         return conn;
     }
