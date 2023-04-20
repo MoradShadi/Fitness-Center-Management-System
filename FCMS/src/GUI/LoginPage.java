@@ -35,6 +35,7 @@ public class LoginPage {
 	private JFrame frame;
 	private JPasswordField pwdField;
 	private JTextField userNameField;
+	JLabel errorMsg = new JLabel("Incorrect Username or Password");
 
 	/**
 	 * Launch the application.
@@ -102,15 +103,18 @@ public class LoginPage {
 		loginPanel.add(pwdLabel);
 		
 		JButton LogInButton = new JButton("Log in");
-		LogInButton.setForeground(SystemColor.desktop);
 		LogInButton.setBounds(325, 456, 103, 35);
+		LogInButton.setForeground(SystemColor.desktop);
 		LogInButton.setHorizontalTextPosition(SwingConstants.LEADING);
 		LogInButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					DBConnection.getUserConnection(userNameField, pwdField);
+					Home hframe = new Home();
+					hframe.setVisible(true);
+					frame.dispose();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
+					errorMsg.setVisible(true);
 					e1.printStackTrace();
 				}
 			}
@@ -135,10 +139,18 @@ public class LoginPage {
 		loginPanel.add(exit);
 		
 		JLabel loginTitle = new JLabel("Login");
+		loginTitle.setBounds(110, 60, 142, 77);
 		loginTitle.setForeground(SystemColor.textHighlight);
 		loginTitle.setFont(new Font("Segoe UI Light", Font.BOLD, 50));
-		loginTitle.setBounds(110, 60, 142, 77);
 		loginPanel.add(loginTitle);
+		
+		
+		errorMsg.setVisible(false);
+		errorMsg.setHorizontalAlignment(SwingConstants.CENTER);
+		errorMsg.setFont(new Font("Tahoma", Font.BOLD, 15));
+		errorMsg.setForeground(new Color(255, 51, 0));
+		errorMsg.setBounds(241, 419, 280, 14);
+		loginPanel.add(errorMsg);
 		
 		JLabel Logo = new JLabel("");
 		ImageIcon icon = new ImageIcon(LoginPage.class.getResource("/GUI/Images/fitness.png"));
