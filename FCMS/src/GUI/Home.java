@@ -21,8 +21,6 @@ import javax.swing.border.MatteBorder;
 
 public class Home extends JFrame {
 
-	private JPanel contentPane;
-
 	/**
 	 * Launch the application.
 	 */
@@ -66,8 +64,10 @@ public class Home extends JFrame {
 		logout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				LoginPage.main(null);
-				dispose();
+				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
+					LoginPage.main(null);
+					dispose();
+				}
 			}
 		});
 		logout.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,8 +97,8 @@ public class Home extends JFrame {
 		
 		JLabel userNameLbl = new JLabel("userName");
 		userNameLbl.setForeground(SystemColor.textHighlight);
-		userNameLbl.setFont(new Font("Segoe UI Light", Font.BOLD, 50));
-		userNameLbl.setBounds(106, 29, 243, 49);
+		userNameLbl.setFont(new Font("Segoe UI Light", Font.BOLD, 25));
+		userNameLbl.setBounds(106, 29, 180, 49);
 		loginPanel.add(userNameLbl);
 		
 		JLabel profile = new JLabel("");

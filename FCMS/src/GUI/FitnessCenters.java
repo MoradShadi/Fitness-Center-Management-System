@@ -16,9 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.JMenuBar;
 
-public class Members extends JFrame {
+public class FitnessCenters extends JFrame {
 
 	private JPanel contentPane;
 
@@ -29,7 +28,7 @@ public class Members extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Members frame = new Members();
+					FitnessCenters frame = new FitnessCenters();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,9 +40,7 @@ public class Members extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
-	public Members() {
-		
+	public FitnessCenters() {
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -71,6 +68,7 @@ public class Members extends JFrame {
 					LoginPage.main(null);
 					dispose();
 				}
+				
 			}
 		});
 		logout.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,7 +132,7 @@ public class Members extends JFrame {
 		profile.setIcon(scaledIcon2);
 		loginPanel.add(profile);
 		
-		JLabel lblMembers_1 = new JLabel("Members");
+		JLabel lblMembers_1 = new JLabel("Centers");
 		lblMembers_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblMembers_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMembers_1.setForeground(SystemColor.textHighlight);
@@ -148,7 +146,7 @@ public class Members extends JFrame {
 		panel.setBounds(206, 178, 199, 150);
 		mainPanel.add(panel);
 		
-		JLabel lblMembers = new JLabel("Add Member");
+		JLabel lblMembers = new JLabel("Add Center");
 		lblMembers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -176,7 +174,7 @@ public class Members extends JFrame {
 		panel_1.setBounds(483, 178, 199, 150);
 		mainPanel.add(panel_1);
 		
-		JLabel lblClasses = new JLabel("Delete Member");
+		JLabel lblClasses = new JLabel("Delete Center");
 		lblClasses.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -205,7 +203,7 @@ public class Members extends JFrame {
 		mainPanel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblCenters = new JLabel("Edit Member");
+		JLabel lblCenters = new JLabel("Edit Center");
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -235,7 +233,7 @@ public class Members extends JFrame {
 		mainPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
-		JLabel lblStaff = new JLabel("List Members");
+		JLabel lblStaff = new JLabel("List Centers");
 		lblStaff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -259,4 +257,5 @@ public class Members extends JFrame {
 		lblStaff.setBounds(10, 7, 179, 132);
 		panel_3.add(lblStaff);
 	}
+
 }
