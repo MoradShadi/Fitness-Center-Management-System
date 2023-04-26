@@ -76,7 +76,7 @@ public class Members extends JFrame {
 		logout.setHorizontalAlignment(SwingConstants.CENTER);
 		logout.setBounds(822, 526, 68, 88);
 		mainPanel.add(logout);
-		ImageIcon icon = new ImageIcon(Home.class.getResource("/GUI/Images/exit.png"));
+		ImageIcon icon = new ImageIcon(Members.class.getResource("/GUI/Images/exit.png"));
 		Image img = icon.getImage();
 		Image imgScale = img.getScaledInstance(80, 80, 100);
 		ImageIcon scaledIcon = new ImageIcon(imgScale);
@@ -110,7 +110,7 @@ public class Members extends JFrame {
 		backArrow.setHorizontalAlignment(SwingConstants.CENTER);
 		backArrow.setBounds(33, 128, 89, 58);
 		mainPanel.add(backArrow);
-		ImageIcon backIcon = new ImageIcon(Home.class.getResource("/GUI/Images/backarrow.png"));
+		ImageIcon backIcon = new ImageIcon(Members.class.getResource("/GUI/Images/backarrow.png"));
 		Image img7 = backIcon.getImage();
 		Image imgScale7 = img7.getScaledInstance(80, 80, 100);
 		ImageIcon scaledIcon7 = new ImageIcon(imgScale7);
@@ -127,7 +127,7 @@ public class Members extends JFrame {
 		profile.setHorizontalAlignment(SwingConstants.CENTER);
 		profile.setBounds(10, 11, 86, 93);
 		loginPanel.add(profile);
-		ImageIcon profileIcon = new ImageIcon(Home.class.getResource("/GUI/Images/profile.png"));
+		ImageIcon profileIcon = new ImageIcon(Members.class.getResource("/GUI/Images/profile.png"));
 		Image img2 = profileIcon.getImage();
 		Image imgScale2 = img2.getScaledInstance(90, 90, 100);
 		ImageIcon scaledIcon2 = new ImageIcon(imgScale2);
@@ -152,6 +152,9 @@ public class Members extends JFrame {
 		lblMembers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				MemberSignUp newMemb = new MemberSignUp();
+				newMemb.setVisible(true);
+				dispose();
 			}
 		});
 		lblMembers.setIconTextGap(3);
@@ -162,7 +165,7 @@ public class Members extends JFrame {
 		lblMembers.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblMembers.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblMembers.setBounds(10, 11, 179, 128);
-		ImageIcon membersIcon = new ImageIcon(Home.class.getResource("/GUI/Images/add.png"));
+		ImageIcon membersIcon = new ImageIcon(Members.class.getResource("/GUI/Images/add.png"));
 		Image img3 = membersIcon.getImage();
 		Image imgScale3 = img3.getScaledInstance(100, 100, 100);
 		ImageIcon scaledIcon3 = new ImageIcon(imgScale3);
@@ -189,7 +192,7 @@ public class Members extends JFrame {
 		lblClasses.setBounds(10, 7, 179, 132);
 		lblClasses.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblClasses.setFont(new Font("Tahoma", Font.BOLD, 20));
-		ImageIcon classesIcon = new ImageIcon(Home.class.getResource("/GUI/Images/delete.png"));
+		ImageIcon classesIcon = new ImageIcon(Members.class.getResource("/GUI/Images/delete.png"));
 		Image img4 = classesIcon.getImage();
 		Image imgScale4 = img4.getScaledInstance(100, 100, 100);
 		ImageIcon scaledIcon4 = new ImageIcon(imgScale4);
@@ -218,7 +221,7 @@ public class Members extends JFrame {
 		lblCenters.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCenters.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCenters.setVerticalTextPosition(SwingConstants.BOTTOM);
-		ImageIcon centerIcon = new ImageIcon(Home.class.getResource("/GUI/Images/edit.png"));
+		ImageIcon centerIcon = new ImageIcon(Members.class.getResource("/GUI/Images/edit.png"));
 		Image img5 = centerIcon.getImage();
 		Image imgScale5 = img5.getScaledInstance(120, 110, 100);
 		ImageIcon scaledIcon5 = new ImageIcon(imgScale5);
@@ -249,7 +252,7 @@ public class Members extends JFrame {
 		lblStaff.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblStaff.setForeground(SystemColor.textHighlight);
 		lblStaff.setFont(new Font("Tahoma", Font.BOLD, 20));
-		ImageIcon staffIcon = new ImageIcon(Home.class.getResource("/GUI/Images/list-items.png"));
+		ImageIcon staffIcon = new ImageIcon(Members.class.getResource("/GUI/Images/list-items.png"));
 		Image img6 = staffIcon.getImage();
 		Image imgScale6 = img6.getScaledInstance(100, 90, 100);
 		ImageIcon scaledIcon6 = new ImageIcon(imgScale6);
