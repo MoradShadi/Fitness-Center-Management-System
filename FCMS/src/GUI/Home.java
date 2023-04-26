@@ -122,6 +122,9 @@ public class Home extends JFrame {
 		lblMembers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Members mframe = new Members();
+				mframe.setVisible(true);
+				dispose();
 			}
 		});
 		lblMembers.setIconTextGap(-20);
@@ -179,6 +182,9 @@ public class Home extends JFrame {
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				FitnessCenters FC = new FitnessCenters();
+				FC.setVisible(true);
+				dispose();
 			}
 		});
 		lblCenters.setIconTextGap(-5);
