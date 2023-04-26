@@ -5,21 +5,20 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.border.MatteBorder;
+import javax.swing.JMenuBar;
 
-public class Home extends JFrame {
+public class Members extends JFrame {
 
 	private JPanel contentPane;
 
@@ -30,7 +29,7 @@ public class Home extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Home frame = new Home();
+					Members frame = new Members();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +41,9 @@ public class Home extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Home() {
+	
+	public Members() {
+		
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -95,10 +96,29 @@ public class Home extends JFrame {
 		exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 		loginPanel.add(exit);
 		
+		JLabel backArrow = new JLabel("");
+		backArrow.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Home hframe = new Home();
+				hframe.setVisible(true);
+				dispose();
+			}
+		});
+		backArrow.setHorizontalAlignment(SwingConstants.CENTER);
+		backArrow.setBounds(33, 128, 89, 58);
+		mainPanel.add(backArrow);
+		ImageIcon backIcon = new ImageIcon(Home.class.getResource("/GUI/Images/backarrow.png"));
+		Image img7 = backIcon.getImage();
+		Image imgScale7 = img7.getScaledInstance(80, 80, 100);
+		ImageIcon scaledIcon7 = new ImageIcon(imgScale7);
+		backArrow.setIcon(scaledIcon7);
+		
+		
 		JLabel userNameLbl = new JLabel("userName");
 		userNameLbl.setForeground(SystemColor.textHighlight);
-		userNameLbl.setFont(new Font("Segoe UI Light", Font.BOLD, 50));
-		userNameLbl.setBounds(106, 29, 243, 49);
+		userNameLbl.setFont(new Font("Segoe UI Light", Font.BOLD, 25));
+		userNameLbl.setBounds(106, 29, 180, 49);
 		loginPanel.add(userNameLbl);
 		
 		JLabel profile = new JLabel("");
@@ -112,19 +132,27 @@ public class Home extends JFrame {
 		profile.setIcon(scaledIcon2);
 		loginPanel.add(profile);
 		
+		JLabel lblMembers_1 = new JLabel("Members");
+		lblMembers_1.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblMembers_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMembers_1.setForeground(SystemColor.textHighlight);
+		lblMembers_1.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblMembers_1.setBounds(363, 29, 151, 49);
+		loginPanel.add(lblMembers_1);
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 139)));
 		panel.setBackground(SystemColor.menu);
 		panel.setBounds(206, 178, 199, 150);
 		mainPanel.add(panel);
 		
-		JLabel lblMembers = new JLabel("Members");
+		JLabel lblMembers = new JLabel("Add Member");
 		lblMembers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
-		lblMembers.setIconTextGap(-20);
+		lblMembers.setIconTextGap(3);
 		lblMembers.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblMembers.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblMembers.setHorizontalAlignment(SwingConstants.CENTER);
@@ -132,9 +160,9 @@ public class Home extends JFrame {
 		lblMembers.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblMembers.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblMembers.setBounds(10, 11, 179, 128);
-		ImageIcon membersIcon = new ImageIcon(Home.class.getResource("/GUI/Images/team.png"));
+		ImageIcon membersIcon = new ImageIcon(Home.class.getResource("/GUI/Images/add.png"));
 		Image img3 = membersIcon.getImage();
-		Image imgScale3 = img3.getScaledInstance(150, 150, 100);
+		Image imgScale3 = img3.getScaledInstance(100, 100, 100);
 		ImageIcon scaledIcon3 = new ImageIcon(imgScale3);
 		panel.setLayout(null);
 		lblMembers.setIcon(scaledIcon3);
@@ -146,7 +174,7 @@ public class Home extends JFrame {
 		panel_1.setBounds(483, 178, 199, 150);
 		mainPanel.add(panel_1);
 		
-		JLabel lblClasses = new JLabel("Classes");
+		JLabel lblClasses = new JLabel("Delete Member");
 		lblClasses.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -159,7 +187,7 @@ public class Home extends JFrame {
 		lblClasses.setBounds(10, 7, 179, 132);
 		lblClasses.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblClasses.setFont(new Font("Tahoma", Font.BOLD, 20));
-		ImageIcon classesIcon = new ImageIcon(Home.class.getResource("/GUI/Images/workout.png"));
+		ImageIcon classesIcon = new ImageIcon(Home.class.getResource("/GUI/Images/delete.png"));
 		Image img4 = classesIcon.getImage();
 		Image imgScale4 = img4.getScaledInstance(100, 100, 100);
 		ImageIcon scaledIcon4 = new ImageIcon(imgScale4);
@@ -175,22 +203,22 @@ public class Home extends JFrame {
 		mainPanel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblCenters = new JLabel("Centers");
+		JLabel lblCenters = new JLabel("Edit Member");
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
-		lblCenters.setIconTextGap(-5);
+		lblCenters.setIconTextGap(0);
 		lblCenters.setForeground(SystemColor.textHighlight);
 		lblCenters.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCenters.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblCenters.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCenters.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCenters.setVerticalTextPosition(SwingConstants.BOTTOM);
-		ImageIcon centerIcon = new ImageIcon(Home.class.getResource("/GUI/Images/fitnessstudio.png"));
+		ImageIcon centerIcon = new ImageIcon(Home.class.getResource("/GUI/Images/edit.png"));
 		Image img5 = centerIcon.getImage();
-		Image imgScale5 = img5.getScaledInstance(120, 120, 100);
+		Image imgScale5 = img5.getScaledInstance(120, 110, 100);
 		ImageIcon scaledIcon5 = new ImageIcon(imgScale5);
 		panel.setLayout(null);
 		panel_1.setLayout(null);
@@ -205,24 +233,23 @@ public class Home extends JFrame {
 		mainPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
-		JLabel lblStaff = new JLabel("Staff");
+		JLabel lblStaff = new JLabel("List Members");
 		lblStaff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
 		lblStaff.setBackground(SystemColor.menu);
-		lblStaff.setIconTextGap(-10);
-		lblStaff.setIcon(new ImageIcon(Home.class.getResource("/GUI/Images/employee.png")));
+		lblStaff.setIconTextGap(10);
 		lblStaff.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblStaff.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStaff.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblStaff.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblStaff.setForeground(SystemColor.textHighlight);
 		lblStaff.setFont(new Font("Tahoma", Font.BOLD, 20));
-		ImageIcon staffIcon = new ImageIcon(Home.class.getResource("/GUI/Images/employee.png"));
+		ImageIcon staffIcon = new ImageIcon(Home.class.getResource("/GUI/Images/list-items.png"));
 		Image img6 = staffIcon.getImage();
-		Image imgScale6 = img6.getScaledInstance(130, 130, 100);
+		Image imgScale6 = img6.getScaledInstance(100, 90, 100);
 		ImageIcon scaledIcon6 = new ImageIcon(imgScale6);
 		panel.setLayout(null);
 		panel_1.setLayout(null);
