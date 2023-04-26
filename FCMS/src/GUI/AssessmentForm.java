@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Choice;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -9,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,26 +17,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
-import Database.DBConnection;
-
-import javax.swing.JToolBar;
-import javax.swing.JList;
-import javax.swing.JSlider;
-import javax.swing.JMenuBar;
-import java.awt.Choice;
-import javax.swing.JTextField;
-
-public class MemberSignUp extends JFrame {
+public class AssessmentForm extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField firstName;
-	private JTextField lastName;
-	private JTextField address;
-	private JTextField phoneNumber;
+	private JTextField textField;
+	private JTextField txtAge;
+	private JTextField txtBMI;
+	private JTextField txtFatMass;
 
 	/**
 	 * Launch the application.
@@ -45,7 +36,7 @@ public class MemberSignUp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MemberSignUp frame = new MemberSignUp();
+					AssessmentForm frame = new AssessmentForm();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +48,7 @@ public class MemberSignUp extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MemberSignUp() {
+	public AssessmentForm() {
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -93,76 +84,67 @@ public class MemberSignUp extends JFrame {
 		exit.setForeground(SystemColor.textHighlight);
 		exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		Choice fitnessCenterSelector = new Choice();
-		fitnessCenterSelector.setBounds(240, 144, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
-		fitnessCenterSelector.add("Schwäbisch Hall");
-		fitnessCenterSelector.add("Börsenplatz");
-		fitnessCenterSelector.add("Blaubeuren");
+		JTextField txtHeight = new JTextField();
+		txtHeight.setBounds(240, 176, 280, 35);
+		Panel.add(txtHeight);
+		txtHeight.setColumns(10);
 		
-		Panel.add(fitnessCenterSelector);
+		JTextField txtWeight = new JTextField();
+		txtWeight.setColumns(10);
+		txtWeight.setBounds(240, 240, 280, 35);
+		Panel.add(txtWeight);
 		
-		firstName = new JTextField();
-		firstName.setBounds(240, 191, 280, 35);
-		Panel.add(firstName);
-		firstName.setColumns(10);
+		JTextField txtBoneMass = new JTextField();
+		txtBoneMass.setColumns(10);
+		txtBoneMass.setBounds(240, 369, 280, 35);
+		Panel.add(txtBoneMass);
 		
-		lastName = new JTextField();
-		lastName.setColumns(10);
-		lastName.setBounds(240, 260, 280, 35);
-		Panel.add(lastName);
+		JTextField txtMuscleMass = new JTextField();
+		txtMuscleMass.setColumns(10);
+		txtMuscleMass.setBounds(240, 432, 280, 35);
+		Panel.add(txtMuscleMass);
 		
-		address = new JTextField();
-		address.setColumns(10);
-		address.setBounds(240, 377, 280, 35);
-		Panel.add(address);
+		JLabel lblAge = new JLabel("Age:");
+		lblAge.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAge.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblAge.setBounds(29, 113, 171, 20);
+		Panel.add(lblAge);
 		
-		phoneNumber = new JTextField();
-		phoneNumber.setColumns(10);
-		phoneNumber.setBounds(240, 443, 280, 35);
-		Panel.add(phoneNumber);
+		JLabel lblHeight = new JLabel("Height:");
+		lblHeight.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHeight.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblHeight.setBounds(30, 180, 170, 20);
+		Panel.add(lblHeight);
 		
-		Choice gender = new Choice();
-		gender.setBounds(240, 325, 280, 20);
-		gender.add("Male");
-		gender.add("Female");
-		Panel.add(gender);
+		JLabel lblWeight = new JLabel("Weight:");
+		lblWeight.setHorizontalAlignment(SwingConstants.LEFT);
+		lblWeight.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblWeight.setBounds(30, 244, 170, 20);
+		Panel.add(lblWeight);
 		
-		JLabel fitnessCenterlabel = new JLabel("Fitness Center Branch:");
-		fitnessCenterlabel.setHorizontalAlignment(SwingConstants.LEFT);
-		fitnessCenterlabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		fitnessCenterlabel.setBounds(29, 144, 171, 20);
-		Panel.add(fitnessCenterlabel);
+		JLabel lblBMI = new JLabel("BMI:");
+		lblBMI.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBMI.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblBMI.setBounds(29, 306, 170, 20);
+		Panel.add(lblBMI);
 		
-		JLabel lblFirstName = new JLabel("First Name:");
-		lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFirstName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblFirstName.setBounds(29, 201, 170, 20);
-		Panel.add(lblFirstName);
+		JLabel lblBoneMass = new JLabel("Bone Mass:");
+		lblBoneMass.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBoneMass.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblBoneMass.setBounds(30, 373, 170, 20);
+		Panel.add(lblBoneMass);
 		
-		JLabel lblLastName = new JLabel("Last Name:");
-		lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLastName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblLastName.setBounds(29, 270, 170, 20);
-		Panel.add(lblLastName);
+		JLabel lblMuscleMass = new JLabel("Muscle Mass:");
+		lblMuscleMass.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMuscleMass.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblMuscleMass.setBounds(29, 436, 170, 20);
+		Panel.add(lblMuscleMass);
 		
-		JLabel lblGender = new JLabel("Gender:");
-		lblGender.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGender.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblGender.setBounds(29, 325, 170, 20);
-		Panel.add(lblGender);
-		
-		JLabel lblAddress = new JLabel("Address:");
-		lblAddress.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAddress.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblAddress.setBounds(29, 387, 170, 20);
-		Panel.add(lblAddress);
-		
-		JLabel lblPhoneNumber = new JLabel("Phone Number:");
-		lblPhoneNumber.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPhoneNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblPhoneNumber.setBounds(29, 447, 170, 20);
-		Panel.add(lblPhoneNumber);
+		JLabel lblFatMass = new JLabel("Fat Mass:");
+		lblFatMass.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFatMass.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblFatMass.setBounds(29, 497, 170, 20);
+		Panel.add(lblFatMass);
 		
 		JLabel backArrow = new JLabel("");
 		backArrow.addMouseListener(new MouseAdapter() {
@@ -176,14 +158,14 @@ public class MemberSignUp extends JFrame {
 		backArrow.setHorizontalAlignment(SwingConstants.CENTER);
 		backArrow.setBounds(10, 11, 89, 58);
 		mainPanel.add(backArrow);
-		ImageIcon backIcon = new ImageIcon(MemberSignUp.class.getResource("/GUI/Images/backarrow.png"));
+		ImageIcon backIcon = new ImageIcon(AssessmentForm.class.getResource("/GUI/Images/backarrow.png"));
 		Image img7 = backIcon.getImage();
 		Image imgScale7 = img7.getScaledInstance(80, 80, 100);
 		ImageIcon scaledIcon7 = new ImageIcon(imgScale7);
 		backArrow.setIcon(scaledIcon7);
 		
 		JLabel Logo = new JLabel("");
-		ImageIcon icon1 = new ImageIcon(MemberSignUp.class.getResource("/GUI/Images/fitness.png"));
+		ImageIcon icon1 = new ImageIcon(AssessmentForm.class.getResource("/GUI/Images/fitness.png"));
 		Image img1 = icon1.getImage();
 		Image imgScale1 = img1.getScaledInstance(300, 300, 100);
 		ImageIcon scaledIcon1 = new ImageIcon(imgScale1);
@@ -192,14 +174,6 @@ public class MemberSignUp extends JFrame {
 		mainPanel.add(Logo);
 		
 		JButton btnNext = new JButton("Next");
-		btnNext.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				AssessmentForm test = new AssessmentForm();
-				test.setVisible(true);
-				dispose();
-			}
-		});
 		btnNext.setBounds(417, 543, 103, 35);
 		btnNext.setForeground(SystemColor.desktop);
 		btnNext.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -226,14 +200,30 @@ public class MemberSignUp extends JFrame {
 		btnCancel.setForeground(Color.BLACK);
 		btnCancel.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
 		btnCancel.setBackground(Color.ORANGE);
-		btnCancel.setBounds(290, 543, 103, 35);
+		btnCancel.setBounds(296, 543, 103, 35);
 		Panel.add(btnCancel);
 		
-		JLabel title = new JLabel("Member sign-up form");
-		title.setBounds(72, 31, 448, 77);
+		JLabel title = new JLabel("Assessment form");
+		title.setBounds(108, 11, 377, 77);
 		title.setForeground(SystemColor.textHighlight);
 		title.setFont(new Font("Segoe UI Light", Font.BOLD, 45));
 		Panel.add(title);
 		
+		txtAge = new JTextField();
+		txtAge.setColumns(10);
+		txtAge.setBounds(240, 109, 280, 35);
+		Panel.add(txtAge);
+		
+		txtBMI = new JTextField();
+		txtBMI.setColumns(10);
+		txtBMI.setBounds(240, 302, 280, 35);
+		Panel.add(txtBMI);
+		
+		txtFatMass = new JTextField();
+		txtFatMass.setColumns(10);
+		txtFatMass.setBounds(240, 493, 280, 35);
+		Panel.add(txtFatMass);
+		
 	}
+
 }
