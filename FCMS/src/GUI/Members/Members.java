@@ -1,4 +1,7 @@
-package GUI;
+package GUI.Members;
+
+import GUI.Home;
+import GUI.LoginPage;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -14,9 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.JMenuBar;
 
 public class Members extends JFrame {
 
