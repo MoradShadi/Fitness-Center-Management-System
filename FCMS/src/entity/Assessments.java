@@ -1,19 +1,19 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Assessments {
 	
 	private int memberId;
 	private Date assessmentDate;
-	private int staffId;
 	private int memberWeight;
+	private int memberHeight;
 	private int memberAge;
 	private double memberBMI;
-	private int memberHeight;
 	private double memberBoneMass;
 	private double memberFatMass;
 	private double memberMuscleMass;
+	private int staffId;
 	
 	public int getMemberId() {
 		return memberId;
@@ -95,23 +95,32 @@ public class Assessments {
 		this.memberMuscleMass = memberMuscleMass;
 	}
 
-	
-	
-	public Assessments(Date assessmentDate, int staffId, int memberWeight, int memberAge, double memberBMI,
-			int memberHeight, double memberBoneMass, double memberFatMass, double memberMuscleMass) {
+	public Assessments() {}
+
+	public Assessments(int memberId, Date assessmentDate, int memberWeight, int memberHeight, int memberAge,
+			double memberBMI, double memberBoneMass, double memberFatMass, double memberMuscleMass, int staffId) {
+		this.memberId = memberId;
 		this.assessmentDate = assessmentDate;
-		this.staffId = staffId;
 		this.memberWeight = memberWeight;
+		this.memberHeight = memberHeight;
 		this.memberAge = memberAge;
 		this.memberBMI = memberBMI;
-		this.memberHeight = memberHeight;
 		this.memberBoneMass = memberBoneMass;
 		this.memberFatMass = memberFatMass;
 		this.memberMuscleMass = memberMuscleMass;
+		this.staffId = staffId;
 	}
 
-	public Assessments() {}
-	
-	
+	public Assessments(int memberWeight, int memberHeight, int memberAge, double memberBMI, double memberBoneMass,
+			double memberFatMass, double memberMuscleMass, int staffId) {
+		this.memberWeight = memberWeight;
+		this.memberHeight = memberHeight;
+		this.memberAge = memberAge;
+		this.memberBMI = memberBMI;
+		this.memberBoneMass = memberBoneMass;
+		this.memberFatMass = memberFatMass;
+		this.memberMuscleMass = memberMuscleMass;
+		this.staffId = staffId;
+	}
 	
 }

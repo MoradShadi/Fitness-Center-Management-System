@@ -1,20 +1,34 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Class {
 
 	private int classId;
-	private Date classDate;
 	private int centerId;
-	private String classType;
-	private int roomNumber;
+	private Date classDate;
+	private Date classTime;
 	private int maxParticipants;
 	private int classSessions;
 	private double classCost;
+	private String classType;
+	private int roomNumber;
 	private char genderRestrictions;
 	private int nbParticipants;
 	
+	
+	public Date getClassTime() {
+		return classTime;
+	}
+
+	public void setClassTime(Date classTime) {
+		this.classTime = classTime;
+	}
+
+	public void setClassId(int classId) {
+		this.classId = classId;
+	}
+
 	public Date getClassDate() {
 		return classDate;
 	}
@@ -91,19 +105,38 @@ public class Class {
 		this.nbParticipants = nbParticipants;
 	}
 
-	public Class(Date classDate, int centerId, String classType, int roomNumber, int maxParticipants, int classSessions,
-			double classCost, char genderRestrictions, int nbParticipants) {
-		this.classDate = classDate;
+	public Class() {}
+
+	public Class(int classId, int centerId, Date classDate, Date classTime, int maxParticipants, int classSessions,
+			double classCost, String classType, int roomNumber, char genderRestrictions, int nbParticipants) {
+		this.classId = classId;
 		this.centerId = centerId;
-		this.classType = classType;
-		this.roomNumber = roomNumber;
+		this.classDate = classDate;
+		this.classTime = classTime;
 		this.maxParticipants = maxParticipants;
 		this.classSessions = classSessions;
 		this.classCost = classCost;
+		this.classType = classType;
+		this.roomNumber = roomNumber;
 		this.genderRestrictions = genderRestrictions;
 		this.nbParticipants = nbParticipants;
 	}
 
-	public Class() {}
+	public Class(int centerId, Date classDate, Date classTime, int maxParticipants, int classSessions, double classCost,
+			String classType, int roomNumber, char genderRestrictions, int nbParticipants) {
+		this.centerId = centerId;
+		this.classDate = classDate;
+		this.classTime = classTime;
+		this.maxParticipants = maxParticipants;
+		this.classSessions = classSessions;
+		this.classCost = classCost;
+		this.classType = classType;
+		this.roomNumber = roomNumber;
+		this.genderRestrictions = genderRestrictions;
+		this.nbParticipants = nbParticipants;
+	}
+
+
+	
 	
 }

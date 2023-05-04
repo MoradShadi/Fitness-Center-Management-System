@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ClassStaffing {
 
@@ -11,6 +11,11 @@ public class ClassStaffing {
 	private Date classDate;
 	private boolean classLeader;
 	
+	
+	public void setClassStaffingId(int classStaffingId) {
+		this.classStaffingId = classStaffingId;
+	}
+
 	public int getStaffId() {
 		return staffId;
 	}
@@ -65,4 +70,15 @@ public class ClassStaffing {
 
 	public ClassStaffing() {}
 
+	public ClassStaffing(int classStaffingId, int staffId, int classId, int centerId, Date classDate,
+			boolean classLeader) {
+		this.classStaffingId = classStaffingId;
+		this.staffId = staffId;
+		this.classId = classId;
+		this.centerId = centerId;
+		this.classDate = classDate;
+		this.classLeader = classLeader;
+	}
+
+	
 }

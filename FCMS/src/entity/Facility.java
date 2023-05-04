@@ -8,6 +8,7 @@ public class Facility {
 	private String facilityDescription;
 	private int facilityCapacity;
 	
+	
 	public int getFacilityRoomNumber() {
 		return facilityRoomNumber;
 	}

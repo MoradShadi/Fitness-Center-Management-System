@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Enrollment {
 
@@ -11,6 +11,10 @@ public class Enrollment {
 	private Date classDate;
 	private Date paymentDate;
 	
+	public void setEnrollmentId(int enrollmentId) {
+		this.enrollmentId = enrollmentId;
+	}
+
 	public int getMemberId() {
 		return memberId;
 	}
@@ -64,6 +68,15 @@ public class Enrollment {
 	}
 
 	public Enrollment() {}
+
+	public Enrollment(int enrollmentId, int memberId, int classId, int centerId, Date classDate, Date paymentDate) {
+		this.enrollmentId = enrollmentId;
+		this.memberId = memberId;
+		this.classId = classId;
+		this.centerId = centerId;
+		this.classDate = classDate;
+		this.paymentDate = paymentDate;
+	}
 	
 	
 }

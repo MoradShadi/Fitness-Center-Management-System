@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Member {
 	
@@ -10,8 +10,8 @@ public class Member {
 	private String address;
 	private int phoneNumber;
 	private Date joinDate;
-	private int centerId;
 	private char gender;
+	private int centerId;
 	
 	public String getFirstName() {
 		return firstName;
@@ -57,6 +57,10 @@ public class Member {
 		return memberId;
 	}
 	
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
 	public int getCenterId() {
 		return centerId;
 	}
@@ -75,15 +79,27 @@ public class Member {
 
 	public Member() {}
 
-	public Member(String firstName, String lastName, String address, int phoneNumber, Date joinDate, int centerId,
-			char gender) {
+	public Member(int memberId, String firstName, String lastName, String address, int phoneNumber, Date joinDate,
+			char gender, int centerId) {
+		this.memberId = memberId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.joinDate = joinDate;
-		this.centerId = centerId;
 		this.gender = gender;
+		this.centerId = centerId;
+	}
+
+	public Member(String firstName, String lastName, String address, int phoneNumber, Date joinDate, char gender,
+			int centerId) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.joinDate = joinDate;
+		this.gender = gender;
+		this.centerId = centerId;
 	}
 
 

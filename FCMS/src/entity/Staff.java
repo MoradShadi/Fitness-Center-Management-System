@@ -1,18 +1,22 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Staff {
 
 	private int staffId;
-	private char roleId;
-	private int centerId;
 	private String firstName;
 	private String lastName;
 	private int phoneNumber;
 	private Date startDate;
 	private Boolean firstAidCertified;
+	private int centerId;
+	private char roleId;
 	
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
+	}
+
 	public char getRoleId() {
 		return roleId;
 	}
@@ -73,17 +77,32 @@ public class Staff {
 		return staffId;
 	}
 
-	public Staff(char roleId, int centerId, String firstName, String lastName, int phoneNumber, Date startDate,
-			Boolean firstAidCertified) {
-		this.roleId = roleId;
-		this.centerId = centerId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.startDate = startDate;
-		this.firstAidCertified = firstAidCertified;
-	}
-
 	public Staff() {}
+
+
+public Staff(int staffId, String firstName, String lastName, int phoneNumber, Date startDate, Boolean firstAidCertified,
+		int centerId, char roleId) {
+	this.staffId = staffId;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.phoneNumber = phoneNumber;
+	this.startDate = startDate;
+	this.firstAidCertified = firstAidCertified;
+	this.centerId = centerId;
+	this.roleId = roleId;
+}
+
+public Staff(String firstName, String lastName, int phoneNumber, Date startDate, Boolean firstAidCertified,
+		int centerId, char roleId) {
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.phoneNumber = phoneNumber;
+	this.startDate = startDate;
+	this.firstAidCertified = firstAidCertified;
+	this.centerId = centerId;
+	this.roleId = roleId;
+}
 	
+	
+
 }

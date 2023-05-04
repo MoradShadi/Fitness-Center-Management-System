@@ -3,13 +3,17 @@ package entity;
 public class FitnessCenter {
 
 	private int centerId;
-	private int staffId;
 	private String centerName;
 	private String centerStreet;
 	private String centerTown;
 	private String centerPost;
 	private int centerPhoneNumber;
+	private int staffId;
 	
+	public void setCenterId(int centerId) {
+		this.centerId = centerId;
+	}
+
 	public int getStaffId() {
 		return staffId;
 	}
@@ -62,17 +66,29 @@ public class FitnessCenter {
 		return centerId;
 	}
 
-	public FitnessCenter(int staffId, String centerName, String centerStreet, String centerTown, String centerPost,
-			int centerPhoneNumber) {
-		this.staffId = staffId;
+	public FitnessCenter() {}
+
+	public FitnessCenter(int centerId, String centerName, String centerStreet, String centerTown, String centerPost,
+			int centerPhoneNumber, int staffId) {
+		this.centerId = centerId;
 		this.centerName = centerName;
 		this.centerStreet = centerStreet;
 		this.centerTown = centerTown;
 		this.centerPost = centerPost;
 		this.centerPhoneNumber = centerPhoneNumber;
+		this.staffId = staffId;
 	}
 
-	public FitnessCenter() {}
+	public FitnessCenter(String centerName, String centerStreet, String centerTown, String centerPost,
+			int centerPhoneNumber, int staffId) {
+		this.centerName = centerName;
+		this.centerStreet = centerStreet;
+		this.centerTown = centerTown;
+		this.centerPost = centerPost;
+		this.centerPhoneNumber = centerPhoneNumber;
+		this.staffId = staffId;
+	}
+
 	
 	
 }
