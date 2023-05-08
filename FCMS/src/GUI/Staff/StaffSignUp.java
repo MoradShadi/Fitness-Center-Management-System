@@ -1,41 +1,22 @@
-package GUI;
+package GUI.Staff;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.SystemColor;
+import GUI.Home;
+import GUI.Members.AssessmentForm;
+import GUI.Members.Members;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-
-import Database.DBConnection;
-
-import javax.swing.JToolBar;
-import javax.swing.JList;
-import javax.swing.JSlider;
-import javax.swing.JMenuBar;
-import java.awt.Choice;
-import javax.swing.JTextField;
-
-public class MemberSignUp extends JFrame {
+public class StaffSignUp extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField firstName;
 	private JTextField lastName;
-	private JTextField address;
+	private JTextField position;
 	private JTextField phoneNumber;
 
 	/**
@@ -45,7 +26,7 @@ public class MemberSignUp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MemberSignUp frame = new MemberSignUp();
+					StaffSignUp frame = new StaffSignUp();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +38,7 @@ public class MemberSignUp extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MemberSignUp() {
+	public StaffSignUp() {
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -112,10 +93,10 @@ public class MemberSignUp extends JFrame {
 		lastName.setBounds(240, 260, 280, 35);
 		Panel.add(lastName);
 		
-		address = new JTextField();
-		address.setColumns(10);
-		address.setBounds(240, 377, 280, 35);
-		Panel.add(address);
+		position = new JTextField();
+		position.setColumns(10);
+		position.setBounds(240, 377, 280, 35);
+		Panel.add(position);
 		
 		phoneNumber = new JTextField();
 		phoneNumber.setColumns(10);
@@ -152,7 +133,7 @@ public class MemberSignUp extends JFrame {
 		lblGender.setBounds(29, 325, 170, 20);
 		Panel.add(lblGender);
 		
-		JLabel lblAddress = new JLabel("Address:");
+		JLabel lblAddress = new JLabel("Position:");
 		lblAddress.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAddress.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
 		lblAddress.setBounds(29, 387, 170, 20);
@@ -176,14 +157,14 @@ public class MemberSignUp extends JFrame {
 		backArrow.setHorizontalAlignment(SwingConstants.CENTER);
 		backArrow.setBounds(10, 11, 89, 58);
 		mainPanel.add(backArrow);
-		ImageIcon backIcon = new ImageIcon(MemberSignUp.class.getResource("/GUI/Images/backarrow.png"));
+		ImageIcon backIcon = new ImageIcon(StaffSignUp.class.getResource("/GUI/Images/backarrow.png"));
 		Image img7 = backIcon.getImage();
 		Image imgScale7 = img7.getScaledInstance(80, 80, 100);
 		ImageIcon scaledIcon7 = new ImageIcon(imgScale7);
 		backArrow.setIcon(scaledIcon7);
 		
 		JLabel Logo = new JLabel("");
-		ImageIcon icon1 = new ImageIcon(MemberSignUp.class.getResource("/GUI/Images/fitness.png"));
+		ImageIcon icon1 = new ImageIcon(StaffSignUp.class.getResource("/GUI/Images/fitness.png"));
 		Image img1 = icon1.getImage();
 		Image imgScale1 = img1.getScaledInstance(300, 300, 100);
 		ImageIcon scaledIcon1 = new ImageIcon(imgScale1);
@@ -191,25 +172,23 @@ public class MemberSignUp extends JFrame {
 		Logo.setBounds(0, 179, 310, 346);
 		mainPanel.add(Logo);
 		
-		JButton btnNext = new JButton("Next");
-		btnNext.addMouseListener(new MouseAdapter() {
+		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				AssessmentForm test = new AssessmentForm();
-				test.setVisible(true);
-				dispose();
+				// Add the new staff member to the database.
 			}
 		});
-		btnNext.setBounds(417, 543, 103, 35);
-		btnNext.setForeground(SystemColor.desktop);
-		btnNext.setHorizontalTextPosition(SwingConstants.LEADING);
-		btnNext.addActionListener(new ActionListener() {
+		btnConfirm.setBounds(417, 543, 103, 35);
+		btnConfirm.setForeground(SystemColor.desktop);
+		btnConfirm.setHorizontalTextPosition(SwingConstants.LEADING);
+		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNext.setBackground(Color.ORANGE);
-		btnNext.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
-		Panel.add(btnNext);
+		btnConfirm.setBackground(Color.ORANGE);
+		btnConfirm.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
+		Panel.add(btnConfirm);
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addMouseListener(new MouseAdapter() {
@@ -229,7 +208,7 @@ public class MemberSignUp extends JFrame {
 		btnCancel.setBounds(290, 543, 103, 35);
 		Panel.add(btnCancel);
 		
-		JLabel title = new JLabel("Member sign-up form");
+		JLabel title = new JLabel("Staff sign-up form");
 		title.setBounds(72, 31, 448, 77);
 		title.setForeground(SystemColor.textHighlight);
 		title.setFont(new Font("Segoe UI Light", Font.BOLD, 45));

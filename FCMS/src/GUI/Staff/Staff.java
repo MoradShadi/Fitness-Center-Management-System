@@ -1,23 +1,16 @@
-package GUI;
+package GUI.Staff;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.SystemColor;
+import GUI.Home;
+import GUI.LoginPage;
+import GUI.Members.MemberSignUp;
+
+import javax.swing.*;
+import javax.swing.border.MatteBorder;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-
-public class FitnessCenters extends JFrame {
+public class Staff extends JFrame {
 
 	private JPanel contentPane;
 
@@ -28,7 +21,7 @@ public class FitnessCenters extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FitnessCenters frame = new FitnessCenters();
+					Staff frame = new Staff();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +33,7 @@ public class FitnessCenters extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FitnessCenters() {
+	public Staff() {
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -74,7 +67,7 @@ public class FitnessCenters extends JFrame {
 		logout.setHorizontalAlignment(SwingConstants.CENTER);
 		logout.setBounds(822, 526, 68, 88);
 		mainPanel.add(logout);
-		ImageIcon icon = new ImageIcon(FitnessCenters.class.getResource("/GUI/Images/exit.png"));
+		ImageIcon icon = new ImageIcon(Staff.class.getResource("/GUI/Images/exit.png"));
 		Image img = icon.getImage();
 		Image imgScale = img.getScaledInstance(80, 80, 100);
 		ImageIcon scaledIcon = new ImageIcon(imgScale);
@@ -108,7 +101,7 @@ public class FitnessCenters extends JFrame {
 		backArrow.setHorizontalAlignment(SwingConstants.CENTER);
 		backArrow.setBounds(33, 128, 89, 58);
 		mainPanel.add(backArrow);
-		ImageIcon backIcon = new ImageIcon(FitnessCenters.class.getResource("/GUI/Images/backarrow.png"));
+		ImageIcon backIcon = new ImageIcon(Staff.class.getResource("/GUI/Images/backarrow.png"));
 		Image img7 = backIcon.getImage();
 		Image imgScale7 = img7.getScaledInstance(80, 80, 100);
 		ImageIcon scaledIcon7 = new ImageIcon(imgScale7);
@@ -125,14 +118,14 @@ public class FitnessCenters extends JFrame {
 		profile.setHorizontalAlignment(SwingConstants.CENTER);
 		profile.setBounds(10, 11, 86, 93);
 		loginPanel.add(profile);
-		ImageIcon profileIcon = new ImageIcon(FitnessCenters.class.getResource("/GUI/Images/profile.png"));
+		ImageIcon profileIcon = new ImageIcon(Staff.class.getResource("/GUI/Images/profile.png"));
 		Image img2 = profileIcon.getImage();
 		Image imgScale2 = img2.getScaledInstance(90, 90, 100);
 		ImageIcon scaledIcon2 = new ImageIcon(imgScale2);
 		profile.setIcon(scaledIcon2);
 		loginPanel.add(profile);
 		
-		JLabel lblMembers_1 = new JLabel("Centers");
+		JLabel lblMembers_1 = new JLabel("Staff");
 		lblMembers_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblMembers_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMembers_1.setForeground(SystemColor.textHighlight);
@@ -146,10 +139,13 @@ public class FitnessCenters extends JFrame {
 		panel.setBounds(206, 178, 199, 150);
 		mainPanel.add(panel);
 		
-		JLabel lblMembers = new JLabel("Add Center");
+		JLabel lblMembers = new JLabel("Add Staff");
 		lblMembers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				StaffSignUp newStaff = new StaffSignUp();
+				newStaff.setVisible(true);
+				dispose();
 			}
 		});
 		lblMembers.setIconTextGap(3);
@@ -160,7 +156,7 @@ public class FitnessCenters extends JFrame {
 		lblMembers.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblMembers.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblMembers.setBounds(10, 11, 179, 128);
-		ImageIcon membersIcon = new ImageIcon(FitnessCenters.class.getResource("/GUI/Images/add.png"));
+		ImageIcon membersIcon = new ImageIcon(Staff.class.getResource("/GUI/Images/add.png"));
 		Image img3 = membersIcon.getImage();
 		Image imgScale3 = img3.getScaledInstance(100, 100, 100);
 		ImageIcon scaledIcon3 = new ImageIcon(imgScale3);
@@ -174,7 +170,7 @@ public class FitnessCenters extends JFrame {
 		panel_1.setBounds(483, 178, 199, 150);
 		mainPanel.add(panel_1);
 		
-		JLabel lblClasses = new JLabel("Delete Center");
+		JLabel lblClasses = new JLabel("Delete Staff");
 		lblClasses.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -187,7 +183,7 @@ public class FitnessCenters extends JFrame {
 		lblClasses.setBounds(10, 7, 179, 132);
 		lblClasses.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblClasses.setFont(new Font("Tahoma", Font.BOLD, 20));
-		ImageIcon classesIcon = new ImageIcon(FitnessCenters.class.getResource("/GUI/Images/delete.png"));
+		ImageIcon classesIcon = new ImageIcon(Staff.class.getResource("/GUI/Images/delete.png"));
 		Image img4 = classesIcon.getImage();
 		Image imgScale4 = img4.getScaledInstance(100, 100, 100);
 		ImageIcon scaledIcon4 = new ImageIcon(imgScale4);
@@ -203,7 +199,7 @@ public class FitnessCenters extends JFrame {
 		mainPanel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblCenters = new JLabel("Edit Center");
+		JLabel lblCenters = new JLabel("Edit Staff");
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -216,7 +212,7 @@ public class FitnessCenters extends JFrame {
 		lblCenters.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCenters.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCenters.setVerticalTextPosition(SwingConstants.BOTTOM);
-		ImageIcon centerIcon = new ImageIcon(FitnessCenters.class.getResource("/GUI/Images/edit.png"));
+		ImageIcon centerIcon = new ImageIcon(Staff.class.getResource("/GUI/Images/edit.png"));
 		Image img5 = centerIcon.getImage();
 		Image imgScale5 = img5.getScaledInstance(120, 110, 100);
 		ImageIcon scaledIcon5 = new ImageIcon(imgScale5);
@@ -233,7 +229,7 @@ public class FitnessCenters extends JFrame {
 		mainPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
-		JLabel lblStaff = new JLabel("List Centers");
+		JLabel lblStaff = new JLabel("List Staff");
 		lblStaff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -247,7 +243,7 @@ public class FitnessCenters extends JFrame {
 		lblStaff.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblStaff.setForeground(SystemColor.textHighlight);
 		lblStaff.setFont(new Font("Tahoma", Font.BOLD, 20));
-		ImageIcon staffIcon = new ImageIcon(FitnessCenters.class.getResource("/GUI/Images/list-items.png"));
+		ImageIcon staffIcon = new ImageIcon(Staff.class.getResource("/GUI/Images/list-items.png"));
 		Image img6 = staffIcon.getImage();
 		Image imgScale6 = img6.getScaledInstance(100, 90, 100);
 		ImageIcon scaledIcon6 = new ImageIcon(imgScale6);
