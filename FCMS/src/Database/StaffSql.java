@@ -157,16 +157,14 @@ public class StaffSql {
 	public String addAssignement(ClassStaffing staffing) {
 		Connection conn = DBConnection.getConnection();
 
-		String query = "INSERT INTO class_staffing (staff_id, class_numb, centre_id, class_start_date_time, class_leader)"
+		String query = "INSERT INTO class_staffing (staff_id, class_numb, class_leader)"
 				+ " VALUES(?,?,?,?,?)";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setInt(1, staffing.getStaffId());
 			stmt.setInt(2, staffing.getClassId());
-			stmt.setInt(3, staffing.getCenterId());
-			stmt.setDate(4, staffing.getClassDate());
-			stmt.setBoolean(5, staffing.isClassLeader());
+			stmt.setBoolean(3, staffing.isClassLeader());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);

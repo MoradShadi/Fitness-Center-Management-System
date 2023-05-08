@@ -11,16 +11,14 @@ public class EnrollmentSql {
 	public String addEnrollment (Enrollment enrollment) {
 		Connection conn = DBConnection.getConnection();
 
-		String query = "INSERT INTO enrollment (member_id, class_numb, centre_id, class_start_date_time, enrollment_payment_date)"
+		String query = "INSERT INTO enrollment (member_id, class_numb, enrollment_payment_date)"
 				+ " VALUES(?,?,?,?,?)";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setInt(1, enrollment.getMemberId());
 			stmt.setInt(2, enrollment.getClassId());
-			stmt.setInt(3, enrollment.getCenterId());
-			stmt.setDate(4, enrollment.getClassDate());
-			stmt.setDate(5, enrollment.getPaymentDate());
+			stmt.setDate(3, enrollment.getPaymentDate());
 			
 			stmt.executeUpdate();
 		} catch (SQLException e) {
