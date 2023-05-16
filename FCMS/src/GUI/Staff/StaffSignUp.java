@@ -18,6 +18,8 @@ public class StaffSignUp extends JFrame {
 	private JTextField lastName;
 	private JTextField position;
 	private JTextField phoneNumber;
+	private JSpinner dateTimeSpinner;
+	private SpinnerDateModel dateModel;
 
 	/**
 	 * Launch the application.
@@ -73,77 +75,88 @@ public class StaffSignUp extends JFrame {
 		Panel.add(exit);
 		exit.setForeground(SystemColor.textHighlight);
 		exit.setFont(new Font("Tahoma", Font.BOLD, 30));
+
 		
+		firstName = new JTextField();
+		firstName.setColumns(10);
+		firstName.setBounds(240, 144, 280, 35);
+		Panel.add(firstName);
+
+		lastName = new JTextField();
+		lastName.setColumns(10);
+		lastName.setBounds(240, 191, 280, 35);
+		Panel.add(lastName);
+
+		phoneNumber = new JTextField();
+		phoneNumber.setColumns(10);
+		phoneNumber.setBounds(240, 240, 280, 35);
+		Panel.add(phoneNumber);
+
+		dateModel = new SpinnerDateModel();
+		dateTimeSpinner = new JSpinner(dateModel);
+		dateTimeSpinner.setBounds(240, 290, 280, 27);
+		Panel.add(dateTimeSpinner);
+
+		Choice firstAidCertified = new Choice();
+		firstAidCertified.setBounds(240, 340, 280, 20);
+		firstAidCertified.add("True");
+		firstAidCertified.add("False");
+		Panel.add(firstAidCertified);
+
 		Choice fitnessCenterSelector = new Choice();
-		fitnessCenterSelector.setBounds(240, 144, 280, 27);
+		fitnessCenterSelector.setBounds(240, 390, 280, 27);
 		// Need to be retrieved from the database, these are just placeholders for now.
 		fitnessCenterSelector.add("Schwäbisch Hall");
 		fitnessCenterSelector.add("Börsenplatz");
 		fitnessCenterSelector.add("Blaubeuren");
-		
 		Panel.add(fitnessCenterSelector);
-		
-		firstName = new JTextField();
-		firstName.setBounds(240, 191, 280, 35);
-		Panel.add(firstName);
-		firstName.setColumns(10);
-		
-		lastName = new JTextField();
-		lastName.setColumns(10);
-		lastName.setBounds(240, 260, 280, 35);
-		Panel.add(lastName);
-		
+
 		position = new JTextField();
 		position.setColumns(10);
-		position.setBounds(240, 377, 280, 35);
+		position.setBounds(240, 430, 280, 35);
 		Panel.add(position);
-		
-		phoneNumber = new JTextField();
-		phoneNumber.setColumns(10);
-		phoneNumber.setBounds(240, 443, 280, 35);
-		Panel.add(phoneNumber);
-		
-		Choice gender = new Choice();
-		gender.setBounds(240, 325, 280, 20);
-		gender.add("Male");
-		gender.add("Female");
-		Panel.add(gender);
-		
-		JLabel fitnessCenterlabel = new JLabel("Fitness Center Branch:");
-		fitnessCenterlabel.setHorizontalAlignment(SwingConstants.LEFT);
-		fitnessCenterlabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		fitnessCenterlabel.setBounds(29, 144, 171, 20);
-		Panel.add(fitnessCenterlabel);
-		
+
 		JLabel lblFirstName = new JLabel("First Name:");
 		lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFirstName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblFirstName.setBounds(29, 201, 170, 20);
+		lblFirstName.setBounds(29, 144, 170, 20);
 		Panel.add(lblFirstName);
-		
+
 		JLabel lblLastName = new JLabel("Last Name:");
 		lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLastName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblLastName.setBounds(29, 270, 170, 20);
+		lblLastName.setBounds(29, 191, 170, 20);
 		Panel.add(lblLastName);
-		
-		JLabel lblGender = new JLabel("Gender:");
-		lblGender.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGender.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblGender.setBounds(29, 325, 170, 20);
-		Panel.add(lblGender);
-		
-		JLabel lblAddress = new JLabel("Position:");
-		lblAddress.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAddress.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblAddress.setBounds(29, 387, 170, 20);
-		Panel.add(lblAddress);
-		
+
 		JLabel lblPhoneNumber = new JLabel("Phone Number:");
 		lblPhoneNumber.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPhoneNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblPhoneNumber.setBounds(29, 447, 170, 20);
+		lblPhoneNumber.setBounds(29, 240, 170, 20);
 		Panel.add(lblPhoneNumber);
+
+		JLabel startDate = new JLabel("Start Date:");
+		startDate.setHorizontalAlignment(SwingConstants.LEFT);
+		startDate.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		startDate.setBounds(29, 290, 170, 20);
+		Panel.add(startDate);
+
+		JLabel firstAidCertifiedLabel = new JLabel("First Aid Certified:");
+		firstAidCertifiedLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		firstAidCertifiedLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		firstAidCertifiedLabel.setBounds(29, 340, 170, 20);
+		Panel.add(firstAidCertifiedLabel);
+
+		JLabel fitnessCenterLabel = new JLabel("Fitness Center:");
+		fitnessCenterLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		fitnessCenterLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		fitnessCenterLabel.setBounds(29, 390, 170, 20);
+		Panel.add(fitnessCenterLabel);
+
+		JLabel roleLabel = new JLabel("Role:");
+		roleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		roleLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		roleLabel.setBounds(29, 430, 170, 20);
+		Panel.add(roleLabel);
 		
 		JLabel backArrow = new JLabel("");
 		backArrow.addMouseListener(new MouseAdapter() {
