@@ -162,8 +162,8 @@ public class StaffSignUp extends JFrame {
 		backArrow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Home hframe = new Home();
-				hframe.setVisible(true);
+				Staff sFrame = new Staff();
+				sFrame.setVisible(true);
 				dispose();
 			}
 		});
@@ -208,8 +208,8 @@ public class StaffSignUp extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this form?", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
-					Members member = new Members();
-					member.setVisible(true);
+					Staff staff = new Staff();
+					staff.setVisible(true);
 					dispose();
 				}
 			}
