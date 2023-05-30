@@ -183,6 +183,9 @@ public class FitnessCenters extends JFrame {
 		lblClasses.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				DeleteCenters delCenter = new DeleteCenters();
+				delCenter.setVisible(true);
+				dispose();
 			}
 		});
 		lblClasses.setForeground(SystemColor.textHighlight);
@@ -212,6 +215,9 @@ public class FitnessCenters extends JFrame {
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				PreEditCenter editCenter = new PreEditCenter();
+				editCenter.setVisible(true);
+				dispose();
 			}
 		});
 		lblCenters.setIconTextGap(0);
@@ -242,6 +248,9 @@ public class FitnessCenters extends JFrame {
 		lblStaff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ListCenters listCenters = new ListCenters();
+				listCenters.setVisible(true);
+				dispose();
 			}
 		});
 		lblStaff.setBackground(SystemColor.menu);

@@ -161,7 +161,7 @@ public class MemberSignUp extends JFrame {
 		backArrow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Home hframe = new Home();
+				Members hframe = new Members();
 				hframe.setVisible(true);
 				dispose();
 			}

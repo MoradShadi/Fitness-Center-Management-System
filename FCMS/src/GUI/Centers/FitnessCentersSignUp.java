@@ -154,9 +154,9 @@ public class FitnessCentersSignUp extends JFrame {
 		backArrow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Home hframe = new Home();
-				hframe.setVisible(true);
-				dispose();
+                FitnessCenters center = new FitnessCenters();
+                center.setVisible(true);
+                dispose();
 			}
 		});
 		backArrow.setHorizontalAlignment(SwingConstants.CENTER);
@@ -200,9 +200,9 @@ public class FitnessCentersSignUp extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this form?", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
-					Members member = new Members();
-					member.setVisible(true);
-					dispose();
+                    FitnessCenters center = new FitnessCenters();
+                    center.setVisible(true);
+                    dispose();
 				}
 			}
 		});
