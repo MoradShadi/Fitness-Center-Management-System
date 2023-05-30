@@ -15,8 +15,7 @@ public class MemberSql {
 	public String addMember (Member member){
 		Connection conn = DBConnection.getConnection();
 
-		String query = "INSERT INTO member (member_fname, member_lname, memberr_address, member_phone, member_join_date, gender, centre_id)"
-				+ " VALUES(?,?,?,?,?,?,?)";
+		String query = "CALL InsertMember(?, ?, ?, ?, ?, ?, ?);";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
