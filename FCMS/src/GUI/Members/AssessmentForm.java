@@ -173,7 +173,7 @@ public class AssessmentForm extends JFrame {
 		Logo.setBounds(0, 179, 310, 346);
 		mainPanel.add(Logo);
 		
-		JButton btnNext = new JButton("Next");
+		JButton btnNext = new JButton("Submit");
 		btnNext.setBounds(417, 543, 103, 35);
 		btnNext.setForeground(SystemColor.desktop);
 		btnNext.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -185,11 +185,11 @@ public class AssessmentForm extends JFrame {
 		btnNext.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
 		Panel.add(btnNext);
 		
-		JButton btnCancel = new JButton("Cancel");
+		JButton btnCancel = new JButton("Skip");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this form?", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
+				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to skip this form?", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
 					Members member = new Members();
 					member.setVisible(true);
 					dispose();

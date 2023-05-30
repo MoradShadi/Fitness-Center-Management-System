@@ -184,6 +184,9 @@ public class Members extends JFrame {
 		lblClasses.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				DeleteMember delMemb = new DeleteMember();
+				delMemb.setVisible(true);
+				dispose();
 			}
 		});
 		lblClasses.setForeground(SystemColor.textHighlight);
@@ -213,6 +216,9 @@ public class Members extends JFrame {
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				PreEditMember editMemb = new PreEditMember();
+				editMemb.setVisible(true);
+				dispose();
 			}
 		});
 		lblCenters.setIconTextGap(0);
@@ -243,6 +249,9 @@ public class Members extends JFrame {
 		lblStaff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ListMembers listMemb = new ListMembers();
+				listMemb.setVisible(true);
+				dispose();
 			}
 		});
 		lblStaff.setBackground(SystemColor.menu);
