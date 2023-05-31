@@ -12,23 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.border.MatteBorder;
 
-import Database.AssessmentSql;
-import Database.ClassSql;
 import Database.DBConnection;
-import Database.EnrollmentSql;
-import Database.FitnessCenterSql;
-import Database.MemberSql;
-import Database.StaffSql;
-import entity.Assessments;
-import entity.Class;
-import entity.ClassDescription;
-import entity.ClassStaffing;
-import entity.Enrollment;
-import entity.Facility;
-import entity.FitnessCenter;
-import entity.Member;
-import entity.Role;
-import entity.Staff;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -42,11 +26,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 
