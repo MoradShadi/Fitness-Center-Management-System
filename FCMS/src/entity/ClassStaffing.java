@@ -5,7 +5,7 @@ public class ClassStaffing {
 	private int classStaffingId;
 	private int staffId;
 	private int classId;
-	private boolean classLeader;
+	private char classLeader;
 	
 	
 	public void setClassStaffingId(int classStaffingId) {
@@ -28,11 +28,11 @@ public class ClassStaffing {
 		this.classId = classId;
 	}
 	
-	public boolean isClassLeader() {
+	public char isClassLeader() {
 		return classLeader;
 	}
 	
-	public void setClassLeader(boolean classLeader) {
+	public void setClassLeader(char classLeader) {
 		this.classLeader = classLeader;
 	}
 	
@@ -40,7 +40,7 @@ public class ClassStaffing {
 		return classStaffingId;
 	}
 
-	public ClassStaffing(int staffId, int classId, boolean classLeader) {
+	public ClassStaffing(int staffId, int classId, char classLeader) {
 		this.staffId = staffId;
 		this.classId = classId;
 		this.classLeader = classLeader;
@@ -48,7 +48,7 @@ public class ClassStaffing {
 
 	public ClassStaffing() {}
 
-	public ClassStaffing(int classStaffingId, int staffId, int classId, boolean classLeader) {
+	public ClassStaffing(int classStaffingId, int staffId, int classId, char classLeader) {
 		this.classStaffingId = classStaffingId;
 		this.staffId = staffId;
 		this.classId = classId;

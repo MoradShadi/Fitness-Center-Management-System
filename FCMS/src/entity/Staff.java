@@ -9,7 +9,7 @@ public class Staff {
 	private String lastName;
 	private int phoneNumber;
 	private Date startDate;
-	private Boolean firstAidCertified;
+	private char firstAidCertified;
 	private int centerId;
 	private char roleId;
 	
@@ -65,14 +65,15 @@ public class Staff {
 		this.startDate = startDate;
 	}
 	
-	public Boolean getFirstAidCertified() {
+	
+	public char getFirstAidCertified() {
 		return firstAidCertified;
 	}
-	
-	public void setFirstAidCertified(Boolean firstAidCertified) {
+
+	public void setFirstAidCertified(char firstAidCertified) {
 		this.firstAidCertified = firstAidCertified;
 	}
-	
+
 	public int getStaffId() {
 		return staffId;
 	}
@@ -80,29 +81,27 @@ public class Staff {
 	public Staff() {}
 
 
-public Staff(int staffId, String firstName, String lastName, int phoneNumber, Date startDate, Boolean firstAidCertified,
-		int centerId, char roleId) {
-	this.staffId = staffId;
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.phoneNumber = phoneNumber;
-	this.startDate = startDate;
-	this.firstAidCertified = firstAidCertified;
-	this.centerId = centerId;
-	this.roleId = roleId;
-}
-
-public Staff(String firstName, String lastName, int phoneNumber, Date startDate, Boolean firstAidCertified,
-		int centerId, char roleId) {
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.phoneNumber = phoneNumber;
-	this.startDate = startDate;
-	this.firstAidCertified = firstAidCertified;
-	this.centerId = centerId;
-	this.roleId = roleId;
-}
+	public Staff(int staffId, String firstName, String lastName, int phoneNumber, Date startDate, char firstAidCertified,
+			int centerId, char roleId) {
+		this.staffId = staffId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.startDate = startDate;
+		this.firstAidCertified = firstAidCertified;
+		this.centerId = centerId;
+		this.roleId = roleId;
+	}
 	
-	
+	public Staff(String firstName, String lastName, int phoneNumber, Date startDate, char firstAidCertified,
+			int centerId, char roleId) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.startDate = startDate;
+		this.firstAidCertified = firstAidCertified;
+		this.centerId = centerId;
+		this.roleId = roleId;
+	}
 
 }

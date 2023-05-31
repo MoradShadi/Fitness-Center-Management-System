@@ -12,7 +12,7 @@ public class EnrollmentSql {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "INSERT INTO enrollment (member_id, class_numb, enrollment_payment_date)"
-				+ " VALUES(?,?,?,?,?)";
+				+ " VALUES(?,?,?)";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);

@@ -102,6 +102,4 @@ public class Member {
 		this.centerId = centerId;
 	}
 
-
-	
 }

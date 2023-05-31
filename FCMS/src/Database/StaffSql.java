@@ -27,9 +27,9 @@ public class StaffSql {
 			stmt.setString(2, staff.getLastName());
 			stmt.setInt(3, staff.getPhoneNumber());
 			stmt.setDate(4, staff.getStartDate());
-			stmt.setBoolean(5, staff.getFirstAidCertified());
+			stmt.setString(5, String.valueOf(staff.getFirstAidCertified()));
 			stmt.setInt(6, staff.getCenterId());
-			stmt.setInt(7, staff.getRoleId());
+			stmt.setString(7, String.valueOf(staff.getRoleId()));
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -44,8 +44,8 @@ public class StaffSql {
 
 		String query = "UPDATE staff SET staff_fname = ?, staff_lname = ?, "
 				+ "staff_phone = ?, staff_startdate = ?, "
-				+ "first_aid_certified = ?, centre_id = ?, role_id = ?)"
-				+ "WHERE staff_id = ?";
+				+ "first_aid_certified = ?, centre_id = ?, role_id = ?"
+				+ " WHERE staff_id = ?";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
@@ -53,9 +53,9 @@ public class StaffSql {
 			stmt.setString(2, staff.getLastName());
 			stmt.setInt(3, staff.getPhoneNumber());
 			stmt.setDate(4, staff.getStartDate());
-			stmt.setBoolean(5, staff.getFirstAidCertified());
+			stmt.setString(5, String.valueOf(staff.getFirstAidCertified()));
 			stmt.setInt(6, staff.getCenterId());
-			stmt.setInt(7, staff.getRoleId());
+			stmt.setString(7, String.valueOf(staff.getRoleId()));
 			stmt.setInt(8, staff.getStaffId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -95,7 +95,7 @@ public class StaffSql {
 			while (result.next()) {
 				Staff staffMember = new Staff(result.getInt(1), result.getString(2), 
 						result.getString(3),result.getInt(4), result.getDate(5), 
-						result.getBoolean(6), result.getInt(7), result.getString(8).charAt(0));
+						result.getString(6).charAt(0), result.getInt(7), result.getString(8).charAt(0));
 				staffMembers.add(staffMember);
 			}
 		} catch (SQLException e) {
@@ -122,7 +122,7 @@ public class StaffSql {
 				staff.setLastName(result.getString(3));
 				staff.setPhoneNumber(result.getInt(4));
 				staff.setStartDate(result.getDate(5));
-				staff.setFirstAidCertified(result.getBoolean(6));
+				staff.setFirstAidCertified(result.getString(6).charAt(0));
 				staff.setCenterId(result.getInt(7));
 				staff.setRoleId(result.getString(8).charAt(0));
 			}
@@ -158,13 +158,13 @@ public class StaffSql {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "INSERT INTO class_staffing (staff_id, class_numb, class_leader)"
-				+ " VALUES(?,?,?,?,?)";
+				+ " VALUES(?,?,?)";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setInt(1, staffing.getStaffId());
 			stmt.setInt(2, staffing.getClassId());
-			stmt.setBoolean(3, staffing.isClassLeader());
+			stmt.setString(3, String.valueOf(staffing.isClassLeader()));
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);

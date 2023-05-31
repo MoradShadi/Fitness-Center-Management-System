@@ -1,7 +1,6 @@
 package Database;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,7 @@ import java.util.List;
 
 import entity.Class;
 import entity.ClassDescription;
-import entity.Member;
+import entity.ClassStaffing;
 
 public class ClassSql {
 
@@ -19,16 +18,16 @@ public class ClassSql {
 	public String addClass (Class cls) {
 		Connection conn = DBConnection.getConnection();
 
-		String query = "INSERT INTO  (centre_id, class_start_date, class_start_time, "
-				+ "class_max_participants, class_sessions, class_cost, class_type,"
-				+ " facility_room_numb, class_gender_restrictions, class_nb_participants)"
-				+ " VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO class (centre_id, class_start_date, class_start_time, "
+				+ "class_max_participants, class_sessions, class_cost, class_type, "
+				+ "facility_room_numb, class_gender_restrictions, class_nb_participants)"
+				+ " VALUES (?,?,?,?,?,?,?,?,?,?)";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setInt(1, cls.getCenterId());
 			stmt.setDate(2, cls.getClassDate());
-			stmt.setDate(3, cls.getClassTime());
+			stmt.setTime(3, cls.getClassTime());
 			stmt.setInt(4, cls.getMaxParticipants());
 			stmt.setInt(5, cls.getClassSessions());
 			stmt.setDouble(6, cls.getClassCost());
@@ -44,21 +43,59 @@ public class ClassSql {
 		return "Class added successfully";
 	}
 	
+//	public String AddClassAndStaffing (Class cls, ClassStaffing staffing) {
+//		
+//		Connection conn = DBConnection.getConnection();
+//
+//		String query = "START TRANSACTION;\n"
+//				+ "INSERT INTO class (centre_id, class_start_date, class_start_time, "
+//				+ "class_max_participants, class_sessions, class_cost, class_type, "
+//				+ "facility_room_numb, class_gender_restrictions)\n"
+//				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? );\n"
+//				+ "SET @class_id := LAST_INSERT_ID();\n"
+//				+ "INSERT INTO class_staffing (staff_id, class_numb, class_leader)\n"
+//				+ "VALUES (?, @class_id, ?);\n"
+//				+ "COMMIT;\n"
+//				+ "";
+//		System.out.println(query);
+//		try {
+//			PreparedStatement stmt = conn.prepareStatement(query);
+//			stmt.setInt(1, cls.getCenterId());
+//			stmt.setDate(2, cls.getClassDate());
+//			stmt.setTime(3, cls.getClassTime());
+//			stmt.setInt(4, cls.getMaxParticipants());
+//			stmt.setInt(5, cls.getClassSessions());
+//			stmt.setDouble(6, cls.getClassCost());
+//			stmt.setString(7, cls.getClassType());
+//			stmt.setInt(8, cls.getRoomNumber());
+//			stmt.setString(9, String.valueOf(cls.getGenderRestrictions()));
+////			stmt.setInt(10, cls.getNbParticipants());
+//			stmt.setInt(10, staffing.getStaffId());
+//			stmt.setString(11, String.valueOf(staffing.isClassLeader()));
+//			stmt.executeUpdate();
+//		} catch (SQLException e) {
+//			System.out.println(e);
+//			return "Something went wrong! Unable to add class!";
+//		}
+//		return "Class added successfully";
+//	
+//	}
+	
 	// Return "Class updated successfully" or " Something went wrong..." 
 	public String UpdateClass (Class cls) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "UPDATE class SET "
 				+ " centre_id = ?, class_start_date = ?, class_start_time = ?, "
-				+ "class_max_participants = ?, class_sessions = ?, class_cost = ?, class_type = ? "
+				+ "class_max_participants = ?, class_sessions = ?, class_cost = ?, class_type = ?, "
 				+ "facility_room_numb = ?, class_gender_restrictions = ?, "
-				+ "class_nb_participants = ?, WHERE class_numb = ?";
+				+ "class_nb_participants = ? WHERE class_numb = ?";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setInt(1, cls.getCenterId());
 			stmt.setDate(2, cls.getClassDate());
-			stmt.setDate(3, cls.getClassTime());
+			stmt.setTime(3, cls.getClassTime());
 			stmt.setInt(4, cls.getMaxParticipants());
 			stmt.setInt(5, cls.getClassSessions());
 			stmt.setDouble(6, cls.getClassCost());
@@ -104,7 +141,7 @@ public class ClassSql {
 			ResultSet result = stmt.executeQuery(query);
 			while (result.next()) {
 				Class cls = new Class(result.getInt(1), result.getInt(2), result.getDate(3),
-						result.getDate(4), result.getInt(5) , result.getInt(6),
+						result.getTime(4), result.getInt(5) , result.getInt(6),
 						result.getDouble(7), result.getString(8), result.getInt(9),
 						result.getString(10).charAt(0), result.getInt(11));
 				classes.add(cls);
@@ -151,7 +188,7 @@ public class ClassSql {
 				cls.setClassId(result.getInt(1));
 				cls.setCenterId(result.getInt(2));
 				cls.setClassDate(result.getDate(3));
-				cls.setClassTime(result.getDate(4));
+				cls.setClassTime(result.getTime(4));
 				cls.setMaxParticipants(result.getInt(5));
 				cls.setClassSessions(result.getInt(6));
 				cls.setClassCost(result.getDouble(7));
