@@ -1,7 +1,6 @@
 package Database;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import entity.Class;
 import entity.ClassDescription;
-import entity.Member;
 
 public class ClassSql {
 
@@ -28,7 +26,7 @@ public class ClassSql {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setInt(1, cls.getCenterId());
 			stmt.setDate(2, cls.getClassDate());
-			stmt.setDate(3, cls.getClassTime());
+			stmt.setTime(3, cls.getClassTime());
 			stmt.setInt(4, cls.getMaxParticipants());
 			stmt.setInt(5, cls.getClassSessions());
 			stmt.setDouble(6, cls.getClassCost());
@@ -58,7 +56,7 @@ public class ClassSql {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setInt(1, cls.getCenterId());
 			stmt.setDate(2, cls.getClassDate());
-			stmt.setDate(3, cls.getClassTime());
+			stmt.setTime(3, cls.getClassTime());
 			stmt.setInt(4, cls.getMaxParticipants());
 			stmt.setInt(5, cls.getClassSessions());
 			stmt.setDouble(6, cls.getClassCost());
@@ -104,7 +102,7 @@ public class ClassSql {
 			ResultSet result = stmt.executeQuery(query);
 			while (result.next()) {
 				Class cls = new Class(result.getInt(1), result.getInt(2), result.getDate(3),
-						result.getDate(4), result.getInt(5) , result.getInt(6),
+						result.getTime(4), result.getInt(5) , result.getInt(6),
 						result.getDouble(7), result.getString(8), result.getInt(9),
 						result.getString(10).charAt(0), result.getInt(11));
 				classes.add(cls);
@@ -151,7 +149,7 @@ public class ClassSql {
 				cls.setClassId(result.getInt(1));
 				cls.setCenterId(result.getInt(2));
 				cls.setClassDate(result.getDate(3));
-				cls.setClassTime(result.getDate(4));
+				cls.setClassTime(result.getTime(4));
 				cls.setMaxParticipants(result.getInt(5));
 				cls.setClassSessions(result.getInt(6));
 				cls.setClassCost(result.getDouble(7));

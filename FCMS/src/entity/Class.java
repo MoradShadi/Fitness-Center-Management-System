@@ -1,13 +1,14 @@
 package entity;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class Class {
 
 	private int classId;
 	private int centerId;
 	private Date classDate;
-	private Date classTime;
+	private Time classTime;
 	private int maxParticipants;
 	private int classSessions;
 	private double classCost;
@@ -17,11 +18,11 @@ public class Class {
 	private int nbParticipants;
 	
 	
-	public Date getClassTime() {
+	public Time getClassTime() {
 		return classTime;
 	}
 
-	public void setClassTime(Date classTime) {
+	public void setClassTime(Time classTime) {
 		this.classTime = classTime;
 	}
 
@@ -107,7 +108,7 @@ public class Class {
 
 	public Class() {}
 
-	public Class(int classId, int centerId, Date classDate, Date classTime, int maxParticipants, int classSessions,
+	public Class(int classId, int centerId, Date classDate, Time classTime, int maxParticipants, int classSessions,
 			double classCost, String classType, int roomNumber, char genderRestrictions, int nbParticipants) {
 		this.classId = classId;
 		this.centerId = centerId;
@@ -122,7 +123,7 @@ public class Class {
 		this.nbParticipants = nbParticipants;
 	}
 
-	public Class(int centerId, Date classDate, Date classTime, int maxParticipants, int classSessions, double classCost,
+	public Class(int centerId, Date classDate, Time classTime, int maxParticipants, int classSessions, double classCost,
 			String classType, int roomNumber, char genderRestrictions, int nbParticipants) {
 		this.centerId = centerId;
 		this.classDate = classDate;
