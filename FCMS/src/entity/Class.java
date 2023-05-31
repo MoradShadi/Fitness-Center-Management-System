@@ -137,7 +137,17 @@ public class Class {
 		this.nbParticipants = nbParticipants;
 	}
 
+	public Class(int centerId, Date classDate, Time classTime, int maxParticipants, int classSessions, double classCost,
+			String classType, int roomNumber, char genderRestrictions) {
+		this.centerId = centerId;
+		this.classDate = classDate;
+		this.classTime = classTime;
+		this.maxParticipants = maxParticipants;
+		this.classSessions = classSessions;
+		this.classCost = classCost;
+		this.classType = classType;
+		this.roomNumber = roomNumber;
+		this.genderRestrictions = genderRestrictions;
+	}
 
-	
-	
 }

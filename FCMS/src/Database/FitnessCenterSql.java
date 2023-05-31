@@ -41,7 +41,7 @@ public class FitnessCenterSql {
 
 		String query = "UPDATE fitness_centre SET centre_name = ?, centre_street = ?, centre_town = ?, centre_post = ?, "
 				+ "centre_phone = ?"
-				+ "WHERE centre_id = ?";
+				+ " WHERE centre_id = ?";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
@@ -50,7 +50,7 @@ public class FitnessCenterSql {
 			stmt.setString(3, center.getCenterTown());
 			stmt.setString(4, center.getCenterPost());
 			stmt.setInt(5, center.getCenterPhoneNumber());
-			stmt.setInt(7, center.getCenterId());
+			stmt.setInt(6, center.getCenterId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -146,15 +146,14 @@ public class FitnessCenterSql {
 	
 	public String addFacility(Facility facility) {
 		Connection conn = DBConnection.getConnection();
-		String query = "INSERT INTO facility VALUES (?,?,?,?,?)";
+		String query = "INSERT INTO facility (centre_id, facilty_name, facility_desc, facility_capacity) VALUES (?,?,?,?)";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setInt(1, facility.getFacilityRoomNumber());
-			stmt.setInt(2, facility.getCenterId());
-			stmt.setString(3, facility.getFacilityName());
-			stmt.setString(4, facility.getFacilityDescription());
-			stmt.setInt(5, facility.getFacilityCapacity());
+			stmt.setInt(1, facility.getCenterId());
+			stmt.setString(2, facility.getFacilityName());
+			stmt.setString(3, facility.getFacilityDescription());
+			stmt.setInt(4, facility.getFacilityCapacity());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -171,7 +170,7 @@ public class FitnessCenterSql {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setInt(1, facility.getCenterId());
-			stmt.setInt(1, facility.getFacilityRoomNumber());
+			stmt.setInt(2, facility.getFacilityRoomNumber());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);

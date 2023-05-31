@@ -40,7 +40,7 @@ public class MemberSql {
 
 		String query = "UPDATE member SET member_fname = ?, member_lname = ?, memberr_address = ?, member_phone = ?, "
 				+ "member_join_date = ?, gender = ?, centre_id = ?"
-				+ "WHERE member_id = ?";
+				+ " WHERE member_id = ?";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);

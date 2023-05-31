@@ -58,6 +58,13 @@ public class Facility {
 		this.facilityCapacity = facilityCapacity;
 	}
 
-	public Facility() {}	
-	
+	public Facility(int centerId, String facilityName, String facilityDescription, int facilityCapacity) {
+		this.centerId = centerId;
+		this.facilityName = facilityName;
+		this.facilityDescription = facilityDescription;
+		this.facilityCapacity = facilityCapacity;
+	}
+
+	public Facility() {}
+
 }

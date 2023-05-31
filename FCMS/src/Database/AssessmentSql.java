@@ -25,7 +25,7 @@ public class AssessmentSql {
 			stmt.setDouble(7, assessment.getMemberBoneMass());
 			stmt.setDouble(8, assessment.getMemberFatMass());
 			stmt.setDouble(9, assessment.getMemberMuscleMass());
-			stmt.setInt(9, assessment.getStaffId());
+			stmt.setInt(10, assessment.getStaffId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);

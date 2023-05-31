@@ -77,7 +77,5 @@ public class FitnessCenter {
 		this.centerPost = centerPost;
 		this.centerPhoneNumber = centerPhoneNumber;
 	}
-
-	
 	
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import entity.Class;
 import entity.ClassDescription;
+import entity.ClassStaffing;
 
 public class ClassSql {
 
@@ -17,10 +18,10 @@ public class ClassSql {
 	public String addClass (Class cls) {
 		Connection conn = DBConnection.getConnection();
 
-		String query = "INSERT INTO  (centre_id, class_start_date, class_start_time, "
-				+ "class_max_participants, class_sessions, class_cost, class_type,"
-				+ " facility_room_numb, class_gender_restrictions, class_nb_participants)"
-				+ " VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO class (centre_id, class_start_date, class_start_time, "
+				+ "class_max_participants, class_sessions, class_cost, class_type, "
+				+ "facility_room_numb, class_gender_restrictions, class_nb_participants)"
+				+ " VALUES (?,?,?,?,?,?,?,?,?,?)";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
@@ -42,15 +43,53 @@ public class ClassSql {
 		return "Class added successfully";
 	}
 	
+//	public String AddClassAndStaffing (Class cls, ClassStaffing staffing) {
+//		
+//		Connection conn = DBConnection.getConnection();
+//
+//		String query = "START TRANSACTION;\n"
+//				+ "INSERT INTO class (centre_id, class_start_date, class_start_time, "
+//				+ "class_max_participants, class_sessions, class_cost, class_type, "
+//				+ "facility_room_numb, class_gender_restrictions)\n"
+//				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? );\n"
+//				+ "SET @class_id := LAST_INSERT_ID();\n"
+//				+ "INSERT INTO class_staffing (staff_id, class_numb, class_leader)\n"
+//				+ "VALUES (?, @class_id, ?);\n"
+//				+ "COMMIT;\n"
+//				+ "";
+//		System.out.println(query);
+//		try {
+//			PreparedStatement stmt = conn.prepareStatement(query);
+//			stmt.setInt(1, cls.getCenterId());
+//			stmt.setDate(2, cls.getClassDate());
+//			stmt.setTime(3, cls.getClassTime());
+//			stmt.setInt(4, cls.getMaxParticipants());
+//			stmt.setInt(5, cls.getClassSessions());
+//			stmt.setDouble(6, cls.getClassCost());
+//			stmt.setString(7, cls.getClassType());
+//			stmt.setInt(8, cls.getRoomNumber());
+//			stmt.setString(9, String.valueOf(cls.getGenderRestrictions()));
+////			stmt.setInt(10, cls.getNbParticipants());
+//			stmt.setInt(10, staffing.getStaffId());
+//			stmt.setString(11, String.valueOf(staffing.isClassLeader()));
+//			stmt.executeUpdate();
+//		} catch (SQLException e) {
+//			System.out.println(e);
+//			return "Something went wrong! Unable to add class!";
+//		}
+//		return "Class added successfully";
+//	
+//	}
+	
 	// Return "Class updated successfully" or " Something went wrong..." 
 	public String UpdateClass (Class cls) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "UPDATE class SET "
 				+ " centre_id = ?, class_start_date = ?, class_start_time = ?, "
-				+ "class_max_participants = ?, class_sessions = ?, class_cost = ?, class_type = ? "
+				+ "class_max_participants = ?, class_sessions = ?, class_cost = ?, class_type = ?, "
 				+ "facility_room_numb = ?, class_gender_restrictions = ?, "
-				+ "class_nb_participants = ?, WHERE class_numb = ?";
+				+ "class_nb_participants = ? WHERE class_numb = ?";
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
