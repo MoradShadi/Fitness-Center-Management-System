@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,9 +22,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Database.FitnessCenterSql;
+import Database.MemberSql;
+import entity.FitnessCenter;
+import entity.Member;
+
 public class PreEditMember extends JFrame {
 
 	private JPanel contentPane;
+    private List<Member> memberList;
+    private HashMap<Integer, Member> map;
+    private Choice memberSelector;
 
 	/**
 	 * Launch the application.
@@ -44,6 +54,7 @@ public class PreEditMember extends JFrame {
 	 * Create the frame.
 	 */
 	public PreEditMember() {
+		for (Member i : MemberSql.getAllMembers()) map.put(i.getMemberId(),i); 
 		setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -79,13 +90,16 @@ public class PreEditMember extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice staffSelector = new Choice();
-        staffSelector.setBounds(200, 300, 350, 27);
+        memberSelector = new Choice();
+        memberSelector.setBounds(200, 300, 350, 27);
         // Need to be retrieved from the database, these are just placeholders for now.
-        staffSelector.add("ID 1 (John Doe)");
-        staffSelector.add("ID 2 (Jane Doe)");
-        staffSelector.add("ID 3 (John Smith)");
-        Panel.add(staffSelector);
+		for (int i = 0; i < memberList.size(); i ++) {
+			memberSelector.add(String.valueOf(memberList.get(i).getMemberId()));
+		}
+        memberSelector.add("ID 1 (John Doe)");
+        memberSelector.add("ID 2 (Jane Doe)");
+        memberSelector.add("ID 3 (John Smith)");
+        Panel.add(memberSelector);
 
         JLabel lblClassSelector = new JLabel("Select Member:");
         lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
@@ -125,6 +139,7 @@ public class PreEditMember extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
             	EditMembers sFrame = new EditMembers();
+            	sFrame.setEditMember(map.get(Integer.parseInt(memberSelector.getSelectedItem())));
                 sFrame.setVisible(true);
                 dispose();
             }

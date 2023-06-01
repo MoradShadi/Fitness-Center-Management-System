@@ -3,6 +3,7 @@ package GUI.Members;
 import java.awt.EventQueue;
 import GUI.Home;
 import GUI.Members.Members;
+import entity.Member;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,14 +11,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Database.MemberSql;
+
 public class DeleteMember extends JFrame {
 
 	private JPanel contentPane;
+    private List<Member> memberList;
+    private Choice memberSelector;
 
 	/**
 	 * Launch the application.
@@ -74,13 +80,16 @@ public class DeleteMember extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice staffSelector = new Choice();
-        staffSelector.setBounds(200, 300, 350, 27);
+        memberSelector = new Choice();
+        memberSelector.setBounds(200, 300, 350, 27);
         // Need to be retrieved from the database, these are just placeholders for now.
-        staffSelector.add("ID 1 (John Doe)");
-        staffSelector.add("ID 2 (Jane Doe)");
-        staffSelector.add("ID 3 (John Smith)");
-        Panel.add(staffSelector);
+		for (int i = 0; i < memberList.size(); i ++) {
+			memberSelector.add(String.valueOf(memberList.get(i).getMemberId()));
+		}
+        memberSelector.add("ID 1 (John Doe)");
+        memberSelector.add("ID 2 (Jane Doe)");
+        memberSelector.add("ID 3 (John Smith)");
+        Panel.add(memberSelector);
 
         JLabel lblClassSelector = new JLabel("Select Member:");
         lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
@@ -121,6 +130,7 @@ public class DeleteMember extends JFrame {
             public void mouseClicked(MouseEvent e) {
             	if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this member", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
             		//Need to delete member from database here
+            		MemberSql.deleteMember(Integer.parseInt(memberSelector.getSelectedItem()));
                 	Members member = new Members();
                 	member.setVisible(true);
                     dispose();

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +22,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Database.AssessmentSql;
+import Database.StaffSql;
+import entity.Assessments;
+import entity.Staff;
+
+import java.awt.Choice;
+
 public class AssessmentForm extends JFrame {
 
 	private JPanel contentPane;
@@ -28,6 +36,12 @@ public class AssessmentForm extends JFrame {
 	private JTextField txtAge;
 	private JTextField txtBMI;
 	private JTextField txtFatMass;
+	private JTextField txtWeight;
+	private JTextField txtHeight;
+	private JTextField txtBoneMass;
+	private JTextField txtMuscleMass;
+	private Choice choiceStaff;
+	private static List<Staff> staffList;
 
 	/**
 	 * Launch the application.
@@ -38,6 +52,12 @@ public class AssessmentForm extends JFrame {
 				try {
 					AssessmentForm frame = new AssessmentForm();
 					frame.setVisible(true);
+					try {
+						staffList = StaffSql.getAllStaff();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -84,66 +104,66 @@ public class AssessmentForm extends JFrame {
 		exit.setForeground(SystemColor.textHighlight);
 		exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		JTextField txtHeight = new JTextField();
-		txtHeight.setBounds(240, 176, 280, 35);
+		txtHeight = new JTextField();
+		txtHeight.setBounds(240, 155, 280, 35);
 		Panel.add(txtHeight);
 		txtHeight.setColumns(10);
 		
-		JTextField txtWeight = new JTextField();
+		txtWeight = new JTextField();
 		txtWeight.setColumns(10);
-		txtWeight.setBounds(240, 240, 280, 35);
+		txtWeight.setBounds(240, 219, 280, 35);
 		Panel.add(txtWeight);
 		
-		JTextField txtBoneMass = new JTextField();
+		txtBoneMass = new JTextField();
 		txtBoneMass.setColumns(10);
-		txtBoneMass.setBounds(240, 369, 280, 35);
+		txtBoneMass.setBounds(240, 348, 280, 35);
 		Panel.add(txtBoneMass);
 		
-		JTextField txtMuscleMass = new JTextField();
+		txtMuscleMass = new JTextField();
 		txtMuscleMass.setColumns(10);
-		txtMuscleMass.setBounds(240, 432, 280, 35);
+		txtMuscleMass.setBounds(240, 411, 280, 35);
 		Panel.add(txtMuscleMass);
 		
 		JLabel lblAge = new JLabel("Age:");
 		lblAge.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAge.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblAge.setBounds(29, 113, 171, 20);
+		lblAge.setBounds(36, 91, 171, 20);
 		Panel.add(lblAge);
 		
 		JLabel lblHeight = new JLabel("Height:");
 		lblHeight.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHeight.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblHeight.setBounds(30, 180, 170, 20);
+		lblHeight.setBounds(37, 158, 170, 20);
 		Panel.add(lblHeight);
 		
 		JLabel lblWeight = new JLabel("Weight:");
 		lblWeight.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWeight.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblWeight.setBounds(30, 244, 170, 20);
+		lblWeight.setBounds(37, 222, 170, 20);
 		Panel.add(lblWeight);
 		
 		JLabel lblBMI = new JLabel("BMI:");
 		lblBMI.setHorizontalAlignment(SwingConstants.LEFT);
 		lblBMI.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblBMI.setBounds(29, 306, 170, 20);
+		lblBMI.setBounds(36, 284, 170, 20);
 		Panel.add(lblBMI);
 		
 		JLabel lblBoneMass = new JLabel("Bone Mass:");
 		lblBoneMass.setHorizontalAlignment(SwingConstants.LEFT);
 		lblBoneMass.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblBoneMass.setBounds(30, 373, 170, 20);
+		lblBoneMass.setBounds(37, 351, 170, 20);
 		Panel.add(lblBoneMass);
 		
 		JLabel lblMuscleMass = new JLabel("Muscle Mass:");
 		lblMuscleMass.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMuscleMass.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblMuscleMass.setBounds(29, 436, 170, 20);
+		lblMuscleMass.setBounds(36, 414, 170, 20);
 		Panel.add(lblMuscleMass);
 		
 		JLabel lblFatMass = new JLabel("Fat Mass:");
 		lblFatMass.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFatMass.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblFatMass.setBounds(29, 497, 170, 20);
+		lblFatMass.setBounds(36, 475, 170, 20);
 		Panel.add(lblFatMass);
 		
 		JLabel backArrow = new JLabel("");
@@ -174,11 +194,18 @@ public class AssessmentForm extends JFrame {
 		mainPanel.add(Logo);
 		
 		JButton btnNext = new JButton("Submit");
-		btnNext.setBounds(417, 543, 103, 35);
+		btnNext.setBounds(419, 579, 103, 35);
 		btnNext.setForeground(SystemColor.desktop);
 		btnNext.setHorizontalTextPosition(SwingConstants.LEADING);
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Assessments assessment = new Assessments(Integer.parseInt(txtWeight.getText()), Integer.parseInt(txtHeight.getText()), Integer.parseInt(txtAge.getText()), Double.parseDouble(txtBMI.getText()), Double.parseDouble(txtBoneMass.getText()), Double.parseDouble(txtFatMass.getText()), Double.parseDouble(txtMuscleMass.getText()), Integer.parseInt(choiceStaff.getSelectedItem()) );
+					AssessmentSql.addAssessment(assessment);
+				} catch(Exception e1) {
+					  //  Block of code to handle errors
+				}
+
 			}
 		});
 		btnNext.setBackground(Color.ORANGE);
@@ -200,7 +227,7 @@ public class AssessmentForm extends JFrame {
 		btnCancel.setForeground(Color.BLACK);
 		btnCancel.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
 		btnCancel.setBackground(Color.ORANGE);
-		btnCancel.setBounds(296, 543, 103, 35);
+		btnCancel.setBounds(298, 579, 103, 35);
 		Panel.add(btnCancel);
 		
 		JLabel title = new JLabel("Assessment form");
@@ -211,19 +238,31 @@ public class AssessmentForm extends JFrame {
 		
 		txtAge = new JTextField();
 		txtAge.setColumns(10);
-		txtAge.setBounds(240, 109, 280, 35);
+		txtAge.setBounds(240, 88, 280, 35);
 		Panel.add(txtAge);
 		
 		txtBMI = new JTextField();
 		txtBMI.setColumns(10);
-		txtBMI.setBounds(240, 302, 280, 35);
+		txtBMI.setBounds(240, 281, 280, 35);
 		Panel.add(txtBMI);
 		
 		txtFatMass = new JTextField();
 		txtFatMass.setColumns(10);
-		txtFatMass.setBounds(240, 493, 280, 35);
+		txtFatMass.setBounds(240, 472, 280, 35);
 		Panel.add(txtFatMass);
 		
+		JLabel lblStaffId = new JLabel("Staff ID:");
+		lblStaffId.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStaffId.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblStaffId.setBounds(36, 525, 170, 20);
+		Panel.add(lblStaffId);
+		
+		choiceStaff = new Choice();
+		choiceStaff.setBounds(240, 525, 280, 20);
+		for (int i = 0; i < staffList.size(); i ++) {
+			choiceStaff.add(String.valueOf(staffList.get(i).getStaffId()));
+		}
+		Panel.add(choiceStaff);
+		
 	}
-
 }

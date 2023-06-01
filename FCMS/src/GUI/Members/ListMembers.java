@@ -2,6 +2,7 @@ package GUI.Members;
 
 import GUI.Home;
 import GUI.Members.Members;
+import entity.Member;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,10 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class ListMembers extends JFrame {
     private JList<String> list;
     private DefaultListModel<String> listModel;
+    private List<Member> memberList;
     /**
      * Launch the application.
      */
@@ -66,6 +69,9 @@ public class ListMembers extends JFrame {
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         listModel = new DefaultListModel<>();
+        for (int i = 0; i < memberList.size(); i++) {
+        	listModel.addElement(String.valueOf(memberList.get(i).getMemberId()) + " " + String.valueOf(memberList.get(i).getFirstName())+ " " + String.valueOf(memberList.get(i).getLastName()));
+        }
         listModel.addElement("Morad");
         listModel.addElement("Sandra");
         listModel.addElement("Tiberiu");

@@ -1,8 +1,11 @@
 package GUI.Members;
 
 import javax.swing.border.EmptyBorder;
+
+import Database.MemberSql;
 import GUI.Home;
 import GUI.Members.Members;
+import entity.Member;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +21,7 @@ public class EditMembers extends JFrame {
 	private JTextField lastName;
 	private JTextField address;
 	private JTextField phoneNumber;
+	private Member member;
 
 	/**
 	 * Launch the application.
@@ -75,75 +79,54 @@ public class EditMembers extends JFrame {
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         firstName = new JTextField();
+        firstName.setText(member.getFirstName());
         firstName.setColumns(10);
-        firstName.setBounds(240, 191, 280, 35);
+        firstName.setBounds(240, 222, 280, 35);
         Panel.add(firstName);
 
         lastName = new JTextField();
+        firstName.setText(member.getLastName());
         lastName.setColumns(10);
-        lastName.setBounds(240, 240, 280, 35);
+        lastName.setBounds(240, 271, 280, 35);
         Panel.add(lastName);
 
         phoneNumber = new JTextField();
+        firstName.setText(member.getPhoneNumber());
         phoneNumber.setColumns(10);
-        phoneNumber.setBounds(240, 390, 280, 27);
+        phoneNumber.setBounds(240, 378, 280, 27);
        
         Panel.add(phoneNumber);
         
         address = new JTextField();
+        firstName.setText(member.getAddress());
 		address.setColumns(10);
-		address.setBounds(240, 340, 280, 27);
+		address.setBounds(240, 328, 280, 27);
 		Panel.add(address);
-		
-		Choice gender = new Choice();
-		gender.setBounds(240, 290, 280, 35);
-		gender.add("Male");
-		gender.add("Female");
-		Panel.add(gender);
-
-        Choice fitnessCenterSelector = new Choice();
-        fitnessCenterSelector.setBounds(240, 145, 280, 27);
-        // Need to be retrieved from the database, these are just placeholders for now.
-        fitnessCenterSelector.add("Schwäbisch Hall");
-        fitnessCenterSelector.add("Börsenplatz");
-        fitnessCenterSelector.add("Blaubeuren");
-        Panel.add(fitnessCenterSelector);
-
-        JLabel lblClassSelector = new JLabel("Select Branch:");
-        lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
-        lblClassSelector.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblClassSelector.setBounds(29, 144, 201, 20);
-        Panel.add(lblClassSelector);
 
         JLabel lblFirstName = new JLabel("First Name:");
         lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
         lblFirstName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblFirstName.setBounds(29, 191, 170, 20);
+        lblFirstName.setBounds(29, 222, 170, 20);
         Panel.add(lblFirstName);
 
         JLabel lblLastName = new JLabel("Last Name:");
         lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
         lblLastName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblLastName.setBounds(29, 240, 170, 20);
+        lblLastName.setBounds(29, 275, 170, 20);
         Panel.add(lblLastName);
 
-        JLabel lblPhoneNumber = new JLabel("Gender:");
-        lblPhoneNumber.setHorizontalAlignment(SwingConstants.LEFT);
-        lblPhoneNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblPhoneNumber.setBounds(29, 290, 170, 20);
-        Panel.add(lblPhoneNumber);
 
-        JLabel startDate = new JLabel("Address:");
-        startDate.setHorizontalAlignment(SwingConstants.LEFT);
-        startDate.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        startDate.setBounds(29, 340, 170, 20);
-        Panel.add(startDate);
+        JLabel lblAddress = new JLabel("Address:");
+        lblAddress.setHorizontalAlignment(SwingConstants.LEFT);
+        lblAddress.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+        lblAddress.setBounds(29, 328, 170, 20);
+        Panel.add(lblAddress);
 
-        JLabel firstAidCertifiedLabel = new JLabel("Phone Number:");
-        firstAidCertifiedLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        firstAidCertifiedLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        firstAidCertifiedLabel.setBounds(29, 390, 170, 20);
-        Panel.add(firstAidCertifiedLabel);
+        JLabel lblPhoneNumb = new JLabel("Phone Number:");
+        lblPhoneNumb.setHorizontalAlignment(SwingConstants.LEFT);
+        lblPhoneNumb.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+        lblPhoneNumb.setBounds(29, 378, 170, 20);
+        Panel.add(lblPhoneNumb);
 
         JLabel backArrow = new JLabel("");
         backArrow.addMouseListener(new MouseAdapter() {
@@ -176,7 +159,11 @@ public class EditMembers extends JFrame {
         btnConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Add the new staff member to the database.
+            	member.setFirstName(firstName.getText());
+            	member.setLastName(lastName.getText());
+            	member.setAddress(address.getText());
+            	member.setPhoneNumber(phoneNumber.getText());
+                MemberSql.updateMember(member);
             }
         });
         btnConfirm.setBounds(417, 543, 103, 35);
@@ -216,4 +203,7 @@ public class EditMembers extends JFrame {
 
     }
 
+	public void setEditMember(Member mem) {
+		member = mem;
+	}
 }

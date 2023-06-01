@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,10 +20,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import GUI.Home;
 
 import java.awt.Choice;
 import javax.swing.JTextField;
+
+import entity.FitnessCenter;
+import entity.Member;
+import Database.FitnessCenterSql;
+import Database.MemberSql;
 
 public class MemberSignUp extends JFrame {
 
@@ -30,6 +36,9 @@ public class MemberSignUp extends JFrame {
 	private JTextField lastName;
 	private JTextField address;
 	private JTextField phoneNumber;
+	private Choice gender;
+	private Choice fitnessCenterSelector;
+	private HashMap<String, FitnessCenter> map;
 
 	/**
 	 * Launch the application.
@@ -40,6 +49,7 @@ public class MemberSignUp extends JFrame {
 				try {
 					MemberSignUp frame = new MemberSignUp();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -51,6 +61,7 @@ public class MemberSignUp extends JFrame {
 	 * Create the frame.
 	 */
 	public MemberSignUp() {
+		for (FitnessCenter i : FitnessCenterSql.getAllCenters()) map.put(i.getCenterName(),i); 
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -86,12 +97,12 @@ public class MemberSignUp extends JFrame {
 		exit.setForeground(SystemColor.textHighlight);
 		exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		Choice fitnessCenterSelector = new Choice();
+		fitnessCenterSelector = new Choice();
 		fitnessCenterSelector.setBounds(240, 144, 280, 27);
 		// Need to be retrieved from the database, these are just placeholders for now.
-		fitnessCenterSelector.add("Schwäbisch Hall");
-		fitnessCenterSelector.add("Börsenplatz");
-		fitnessCenterSelector.add("Blaubeuren");
+		for (String key : map.keySet()) {
+			fitnessCenterSelector.add(key);
+		}
 		
 		Panel.add(fitnessCenterSelector);
 		
@@ -115,7 +126,7 @@ public class MemberSignUp extends JFrame {
 		phoneNumber.setBounds(240, 443, 280, 35);
 		Panel.add(phoneNumber);
 		
-		Choice gender = new Choice();
+		gender = new Choice();
 		gender.setBounds(240, 325, 280, 20);
 		gender.add("Male");
 		gender.add("Female");
@@ -188,6 +199,13 @@ public class MemberSignUp extends JFrame {
 		btnNext.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					Member newMemb = new Member(firstName.getText(), lastName.getText(), address.getText(), phoneNumber.getText(), new Date(System.currentTimeMillis()) , gender.getSelectedItem().charAt(0), map.get(fitnessCenterSelector.getSelectedItem()).getCenterId() );
+					MemberSql.addMember(newMemb);
+				} catch(Exception e1) {
+					  //  Block of code to handle errors
+				}
+				
 				AssessmentForm test = new AssessmentForm();
 				test.setVisible(true);
 				dispose();
