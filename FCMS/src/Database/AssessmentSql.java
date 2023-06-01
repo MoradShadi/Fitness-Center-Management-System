@@ -1,6 +1,7 @@
 package Database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -35,7 +36,7 @@ public class AssessmentSql {
 	}
 	
 	// Return "Assessment deleted successfully" or " Something went wrong..." 
-	public String deleteAssessment (Assessments assessment) {
+	public String deleteAssessment (int memberId, Date assessmentDate) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM assessments"
@@ -43,8 +44,8 @@ public class AssessmentSql {
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setInt(1, assessment.getMemberId());
-			stmt.setDate(2, assessment.getAssessmentDate());
+			stmt.setInt(1, memberId);
+			stmt.setDate(2, assessmentDate);
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);

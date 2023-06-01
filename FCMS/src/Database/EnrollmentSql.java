@@ -29,7 +29,7 @@ public class EnrollmentSql {
 	}
 	
 	// Return "Enrollment deleted successfully" or " Something went wrong..." 
-	public String deleteEnrollment (Enrollment enrollment) {
+	public String deleteEnrollment (int enrollmentId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM enrollment"
@@ -37,7 +37,7 @@ public class EnrollmentSql {
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setInt(1, enrollment.getEnrollmentId());
+			stmt.setInt(1, enrollmentId);
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);

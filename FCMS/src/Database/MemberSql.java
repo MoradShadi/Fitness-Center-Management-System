@@ -62,7 +62,7 @@ public class MemberSql {
 	}
 	
 	// Return "Member deleted successfully" or " Something went wrong..." 
-	public String deleteMember (Member member) {
+	public String deleteMember (int memberId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM member"
@@ -70,7 +70,7 @@ public class MemberSql {
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setInt(1, member.getMemberId());
+			stmt.setInt(1, memberId);
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);

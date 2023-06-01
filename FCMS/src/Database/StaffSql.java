@@ -66,7 +66,7 @@ public class StaffSql {
 	}
 	
 	// Return "Staff Member deleted successfully" or " Something went wrong..." 
-	public String deleteStafMember (Staff staff) {
+	public String deleteStafMember (int staffId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM staff"
@@ -74,7 +74,7 @@ public class StaffSql {
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setInt(1, staff.getStaffId());
+			stmt.setInt(1, staffId);
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -174,7 +174,7 @@ public class StaffSql {
 	}
 	
 	// delete class staffing
-	public String deleteAssignement(ClassStaffing staffing) {
+	public String deleteAssignement(int staffingId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM class_staffing"
@@ -182,7 +182,7 @@ public class StaffSql {
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setInt(1, staffing.getClassStaffingId());
+			stmt.setInt(1, staffingId);
 			
 			stmt.executeUpdate();
 		} catch (SQLException e) {
