@@ -12,10 +12,10 @@ import entity.Class;
 import entity.ClassDescription;
 import entity.ClassStaffing;
 
-public class ClassSql {
+public final class ClassSql {
 
 	// Return "Class added successfully" or " Something went wrong..." 
-	public String addClass (Class cls) {
+	public static String addClass (Class cls) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "INSERT INTO class (centre_id, class_start_date, class_start_time, "
@@ -82,7 +82,7 @@ public class ClassSql {
 //	}
 	
 	// Return "Class updated successfully" or " Something went wrong..." 
-	public String UpdateClass (Class cls) {
+	public static String UpdateClass (Class cls) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "UPDATE class SET "
@@ -113,7 +113,7 @@ public class ClassSql {
 	}
 	
 	// Return "Class deleted successfully" or " Something went wrong..." 
-	public String deleteClass (int classId) {
+	public static String deleteClass (int classId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM class"
@@ -131,7 +131,7 @@ public class ClassSql {
 	}
 	
 	// Return a list of Classes
-	public List<Class> getAllClasses () {
+	public static List<Class> getAllClasses () {
 		Connection conn = DBConnection.getConnection();
 		List<Class> classes = new ArrayList<Class>();
 		String query = "SELECT * FROM class";
@@ -154,7 +154,7 @@ public class ClassSql {
 	}
 	
 	// Return a list of Classes
-	public List<ClassDescription> getClassTypes () {
+	public static List<ClassDescription> getClassTypes () {
 		Connection conn = DBConnection.getConnection();
 		List<ClassDescription> classTypes = new ArrayList<ClassDescription>();
 		String query = "SELECT * FROM class_description";
@@ -174,7 +174,7 @@ public class ClassSql {
 	}
 	
 	// Return a class
-	public Class getClass (int classId) {
+	public static Class getClass (int classId) {
 		Connection conn = DBConnection.getConnection();
 		Class cls = new Class();
 		String query = "SELECT * FROM class"
