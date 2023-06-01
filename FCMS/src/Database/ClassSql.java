@@ -43,7 +43,7 @@ public final class ClassSql {
 		return "Class added successfully";
 	}
 	
-	public String AddClassTransaction (Class cls, ClassStaffing staffing) {
+	public static String AddClassTransaction (Class cls, ClassStaffing staffing) {
 		Connection conn = DBConnection.getConnection();
 		
 		try {
