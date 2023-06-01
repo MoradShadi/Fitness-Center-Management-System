@@ -55,5 +55,11 @@ public class ClassStaffing {
 		this.classLeader = classLeader;
 	}
 
+	public ClassStaffing(int staffId, char classLeader) {
+		this.staffId = staffId;
+		this.classLeader = classLeader;
+	}
+
+	
 	
 }
