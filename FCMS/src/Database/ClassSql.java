@@ -43,43 +43,60 @@ public class ClassSql {
 		return "Class added successfully";
 	}
 	
-//	public String AddClassAndStaffing (Class cls, ClassStaffing staffing) {
-//		
-//		Connection conn = DBConnection.getConnection();
-//
-//		String query = "START TRANSACTION;\n"
-//				+ "INSERT INTO class (centre_id, class_start_date, class_start_time, "
-//				+ "class_max_participants, class_sessions, class_cost, class_type, "
-//				+ "facility_room_numb, class_gender_restrictions)\n"
-//				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? );\n"
-//				+ "SET @class_id := LAST_INSERT_ID();\n"
-//				+ "INSERT INTO class_staffing (staff_id, class_numb, class_leader)\n"
-//				+ "VALUES (?, @class_id, ?);\n"
-//				+ "COMMIT;\n"
-//				+ "";
-//		System.out.println(query);
-//		try {
-//			PreparedStatement stmt = conn.prepareStatement(query);
-//			stmt.setInt(1, cls.getCenterId());
-//			stmt.setDate(2, cls.getClassDate());
-//			stmt.setTime(3, cls.getClassTime());
-//			stmt.setInt(4, cls.getMaxParticipants());
-//			stmt.setInt(5, cls.getClassSessions());
-//			stmt.setDouble(6, cls.getClassCost());
-//			stmt.setString(7, cls.getClassType());
-//			stmt.setInt(8, cls.getRoomNumber());
-//			stmt.setString(9, String.valueOf(cls.getGenderRestrictions()));
-////			stmt.setInt(10, cls.getNbParticipants());
-//			stmt.setInt(10, staffing.getStaffId());
-//			stmt.setString(11, String.valueOf(staffing.isClassLeader()));
-//			stmt.executeUpdate();
-//		} catch (SQLException e) {
-//			System.out.println(e);
-//			return "Something went wrong! Unable to add class!";
-//		}
-//		return "Class added successfully";
-//	
-//	}
+	public String AddClassTransaction (Class cls, ClassStaffing staffing) {
+		Connection conn = DBConnection.getConnection();
+		
+		try {
+		    conn.setAutoCommit(false);
+			String query1 = "INSERT INTO class (centre_id, class_start_date, class_start_time, class_max_participants, "
+					+ "class_sessions, class_cost, class_type, facility_room_numb, class_gender_restrictions, class_nb_participants)"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement stmt1 = conn.prepareStatement(query1, Statement.RETURN_GENERATED_KEYS);
+		    stmt1.setInt(1, cls.getCenterId());
+			stmt1.setDate(2, cls.getClassDate());
+			stmt1.setTime(3, cls.getClassTime());
+			stmt1.setInt(4, cls.getMaxParticipants());
+			stmt1.setInt(5, cls.getClassSessions());
+			stmt1.setDouble(6, cls.getClassCost());
+			stmt1.setString(7, cls.getClassType());
+			stmt1.setInt(8, cls.getRoomNumber());
+			stmt1.setString(9, String.valueOf(cls.getGenderRestrictions()));
+			stmt1.setInt(10, cls.getNbParticipants());
+			
+			int rowAffected = stmt1.executeUpdate();
+            if(rowAffected >0){
+    			ResultSet generatedKey = stmt1.getGeneratedKeys();
+                int classId = 0;
+                if(generatedKey.next()) {
+                	classId = generatedKey.getInt(1);
+                }
+        		String query2 = "INSERT INTO class_staffing (staff_id, class_numb, class_leader)"
+        				+ "VALUES (?, ?, ?);";
+        		PreparedStatement stmt2 = conn.prepareStatement(query2);
+				stmt2.setInt(1, staffing.getStaffId());
+				stmt2.setInt(2, classId);
+				stmt2.setString(3, String.valueOf(staffing.isClassLeader()));
+				stmt2.executeUpdate();
+				conn.commit();
+            } else {
+            	conn.rollback();
+            	return "Something went wrong! Unable to add class!";
+            }
+		} catch (SQLException e) {
+			System.out.println(e);
+			if (conn != null) {
+				try {
+					System.err.print("Transaction is being rolled back");
+					conn.rollback();
+					return "Something went wrong! Unable to add class!";
+				} catch (SQLException excep) {
+					return "Something went wrong! Unable to add class!";
+				}
+			}
+		}
+		return "Class added successfully";
+	
+	}
 	
 	// Return "Class updated successfully" or " Something went wrong..." 
 	public String UpdateClass (Class cls) {
