@@ -12,10 +12,10 @@ import entity.ClassStaffing;
 import entity.Role;
 import entity.Staff;
 
-public class StaffSql {
+public final class StaffSql {
 
 	// Return "Staff Member added successfully" or " Something went wrong..." 
-	public String addStaffMember (Staff staff) {
+	public static String addStaffMember (Staff staff) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "INSERT INTO staff (staff_fname, staff_lname, staff_phone, staff_startdate, first_aid_certified, centre_id, role_id)"
@@ -39,7 +39,7 @@ public class StaffSql {
 	}
 	
 	// Return "Staff Member updated successfully" or " Something went wrong..." 
-	public String UpdateStaffMember (Staff staff) {
+	public static String UpdateStaffMember (Staff staff) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "UPDATE staff SET staff_fname = ?, staff_lname = ?, "
@@ -66,7 +66,7 @@ public class StaffSql {
 	}
 	
 	// Return "Staff Member deleted successfully" or " Something went wrong..." 
-	public String deleteStafMember (int staffId) {
+	public static String deleteStafMember (int staffId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM staff"
@@ -84,7 +84,7 @@ public class StaffSql {
 	}
 	
 	// Return a list of staff Members
-	public List<Staff> getAllStaff () {
+	public static List<Staff> getAllStaff () {
 		Connection conn = DBConnection.getConnection();
 		List<Staff> staffMembers = new ArrayList<Staff>();
 		String query = "SELECT * FROM staff";

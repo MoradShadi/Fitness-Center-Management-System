@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import entity.Member;
 
-public class MemberSql {
+public final class MemberSql {
 
 	// Return "Member added successfully" or " Something went wrong..." 
-	public String addMember (Member member){
+	public static String addMember (Member member){
 		Connection conn = DBConnection.getConnection();
 
 		String query = "CALL InsertMember(?, ?, ?, ?, ?, ?, ?);";
@@ -35,7 +35,7 @@ public class MemberSql {
 	}
 	
 	// Return "Member updated successfully" or " Something went wrong..." 
-	public String updateMember (Member member) {
+	public static String updateMember (Member member) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "UPDATE member SET member_fname = ?, member_lname = ?, memberr_address = ?, member_phone = ?, "
@@ -62,7 +62,7 @@ public class MemberSql {
 	}
 	
 	// Return "Member deleted successfully" or " Something went wrong..." 
-	public String deleteMember (int memberId) {
+	public static String deleteMember (int memberId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM member"
@@ -80,7 +80,7 @@ public class MemberSql {
 	}
 	
 	// Return a list of Members
-	public List<Member> getAllMembers () {
+	public static List<Member> getAllMembers () {
 		Connection conn = DBConnection.getConnection();
 		List<Member> members = new ArrayList<Member>();
 		String query = "SELECT * FROM member";
@@ -102,7 +102,7 @@ public class MemberSql {
 	}
 	
 	// Return a Member
-	public Member getMember (int memberId) {
+	public static Member getMember (int memberId) {
 		Connection conn = DBConnection.getConnection();
 		Member member = new Member();
 		String query = "SELECT * FROM member"

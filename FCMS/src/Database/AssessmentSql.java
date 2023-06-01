@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 import entity.Assessments;
 
-public class AssessmentSql {
+public final class AssessmentSql {
 
 	// Return "Assessment added successfully" or " Something went wrong..." 
-	public String addAssessment (Assessments assessment) {
+	public static String addAssessment (Assessments assessment) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "INSERT INTO assessments VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -36,7 +36,7 @@ public class AssessmentSql {
 	}
 	
 	// Return "Assessment deleted successfully" or " Something went wrong..." 
-	public String deleteAssessment (int memberId, Date assessmentDate) {
+	public static String deleteAssessment (int memberId, Date assessmentDate) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM assessments"

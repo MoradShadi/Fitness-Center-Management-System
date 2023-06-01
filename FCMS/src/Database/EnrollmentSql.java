@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 import entity.Enrollment;
 
-public class EnrollmentSql {
+public final class EnrollmentSql {
 	// Return "Enrollment added successfully" or " Something went wrong..." 
-	public String addEnrollment (Enrollment enrollment) {
+	public static String addEnrollment (Enrollment enrollment) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "INSERT INTO enrollment (member_id, class_numb, enrollment_payment_date)"
@@ -29,7 +29,7 @@ public class EnrollmentSql {
 	}
 	
 	// Return "Enrollment deleted successfully" or " Something went wrong..." 
-	public String deleteEnrollment (int enrollmentId) {
+	public static String deleteEnrollment (int enrollmentId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM enrollment"

@@ -11,10 +11,10 @@ import java.util.List;
 import entity.Facility;
 import entity.FitnessCenter;
 
-public class FitnessCenterSql {
+public final class FitnessCenterSql {
 
 	// Return "Center added successfully" or " Something went wrong..." 
-	public String addCenter (FitnessCenter center) {
+	public static String addCenter (FitnessCenter center) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "INSERT INTO fitness_centre (centre_name, centre_street, centre_town, centre_post, centre_phone)"
@@ -36,7 +36,7 @@ public class FitnessCenterSql {
 	}
 	
 	// Return "Center updated successfully" or " Something went wrong..." 
-	public String UpdateCenter (FitnessCenter center) {
+	public static String UpdateCenter (FitnessCenter center) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "UPDATE fitness_centre SET centre_name = ?, centre_street = ?, centre_town = ?, centre_post = ?, "
@@ -60,7 +60,7 @@ public class FitnessCenterSql {
 	}
 	
 	// Return "Center deleted successfully" or " Something went wrong..." 
-	public String deleteCenter (int centerId) {
+	public static String deleteCenter (int centerId) {
 		Connection conn = DBConnection.getConnection();
 		String query = "DELETE FROM fitness_centre"
 				+ " WHERE centre_id = ?";
@@ -77,7 +77,7 @@ public class FitnessCenterSql {
 	}
 	
 	// Return a list of Centers
-	public List<FitnessCenter> getAllCenters () {
+	public static List<FitnessCenter> getAllCenters () {
 		Connection conn = DBConnection.getConnection();
 		List<FitnessCenter> centers = new ArrayList<FitnessCenter>();
 		String query = "SELECT * FROM fitness_centre";
@@ -98,7 +98,7 @@ public class FitnessCenterSql {
 	}
 
 	// Return a list of Facility rooms
-	public List<Facility> getAllrooms () {
+	public static List<Facility> getAllrooms () {
 		Connection conn = DBConnection.getConnection();
 		List<Facility> rooms = new ArrayList<Facility>();
 		String query = "SELECT * FROM facility";
@@ -119,7 +119,7 @@ public class FitnessCenterSql {
 	}
 	
 	// Return a Fitness center
-	public FitnessCenter getCenter (int centerId) {
+	public static FitnessCenter getCenter (int centerId) {
 		Connection conn = DBConnection.getConnection();
 		FitnessCenter center = new FitnessCenter();
 		String query = "SELECT * FROM fitness_centre"
@@ -144,7 +144,7 @@ public class FitnessCenterSql {
 		return center;
 	}
 	
-	public String addFacility(Facility facility) {
+	public static String addFacility(Facility facility) {
 		Connection conn = DBConnection.getConnection();
 		String query = "INSERT INTO facility (centre_id, facilty_name, facility_desc, facility_capacity) VALUES (?,?,?,?)";
 		System.out.println(query);
@@ -162,7 +162,7 @@ public class FitnessCenterSql {
 		return "facility added successfully";
 	}
 	
-	public String deleteFacility(int centerId, int facilityRoom) {
+	public static String deleteFacility(int centerId, int facilityRoom) {
 		Connection conn = DBConnection.getConnection();
 		String query = "DELETE FROM facility"
 				+ " WHERE centre_id = ? AND facility_room_numb = ?";
