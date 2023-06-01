@@ -7,7 +7,7 @@ public class FitnessCenter {
 	private String centerStreet;
 	private String centerTown;
 	private String centerPost;
-	private int centerPhoneNumber;
+	private String centerPhoneNumber;
 	
 	public void setCenterId(int centerId) {
 		this.centerId = centerId;
@@ -45,11 +45,11 @@ public class FitnessCenter {
 		this.centerPost = centerPost;
 	}
 	
-	public int getCenterPhoneNumber() {
+	public String getCenterPhoneNumber() {
 		return centerPhoneNumber;
 	}
 	
-	public void setCenterPhoneNumber(int centerPhoneNumber) {
+	public void setCenterPhoneNumber(String centerPhoneNumber) {
 		this.centerPhoneNumber = centerPhoneNumber;
 	}
 	
@@ -60,7 +60,7 @@ public class FitnessCenter {
 	public FitnessCenter() {}
 
 	public FitnessCenter(int centerId, String centerName, String centerStreet, String centerTown, String centerPost,
-			int centerPhoneNumber) {
+			String centerPhoneNumber) {
 		this.centerId = centerId;
 		this.centerName = centerName;
 		this.centerStreet = centerStreet;
@@ -70,7 +70,7 @@ public class FitnessCenter {
 	}
 
 	public FitnessCenter(String centerName, String centerStreet, String centerTown, String centerPost,
-			int centerPhoneNumber) {
+			String centerPhoneNumber) {
 		this.centerName = centerName;
 		this.centerStreet = centerStreet;
 		this.centerTown = centerTown;

@@ -113,7 +113,7 @@ public class ClassSql {
 	}
 	
 	// Return "Class deleted successfully" or " Something went wrong..." 
-	public String deleteClass (Class cls) {
+	public String deleteClass (int classId) {
 		Connection conn = DBConnection.getConnection();
 
 		String query = "DELETE FROM class"
@@ -121,7 +121,7 @@ public class ClassSql {
 		System.out.println(query);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setInt(1, cls.getClassId());
+			stmt.setInt(1, classId);
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
