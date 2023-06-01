@@ -8,7 +8,7 @@ public class Member {
 	private String firstName;
 	private String lastName;
 	private String address;
-	private int phoneNumber;
+	private String phoneNumber;
 	private Date joinDate;
 	private char gender;
 	private int centerId;
@@ -37,11 +37,11 @@ public class Member {
 		this.address = address;
 	}
 	
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 	
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	
@@ -79,7 +79,7 @@ public class Member {
 
 	public Member() {}
 
-	public Member(int memberId, String firstName, String lastName, String address, int phoneNumber, Date joinDate,
+	public Member(int memberId, String firstName, String lastName, String address, String phoneNumber, Date joinDate,
 			char gender, int centerId) {
 		this.memberId = memberId;
 		this.firstName = firstName;
@@ -91,7 +91,7 @@ public class Member {
 		this.centerId = centerId;
 	}
 
-	public Member(String firstName, String lastName, String address, int phoneNumber, Date joinDate, char gender,
+	public Member(String firstName, String lastName, String address, String phoneNumber, Date joinDate, char gender,
 			int centerId) {
 		this.firstName = firstName;
 		this.lastName = lastName;

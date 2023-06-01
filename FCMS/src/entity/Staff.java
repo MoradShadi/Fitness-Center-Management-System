@@ -7,7 +7,7 @@ public class Staff {
 	private int staffId;
 	private String firstName;
 	private String lastName;
-	private int phoneNumber;
+	private String phoneNumber;
 	private Date startDate;
 	private char firstAidCertified;
 	private int centerId;
@@ -49,11 +49,11 @@ public class Staff {
 		this.lastName = lastName;
 	}
 	
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 	
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	
@@ -81,7 +81,7 @@ public class Staff {
 	public Staff() {}
 
 
-	public Staff(int staffId, String firstName, String lastName, int phoneNumber, Date startDate, char firstAidCertified,
+	public Staff(int staffId, String firstName, String lastName, String phoneNumber, Date startDate, char firstAidCertified,
 			int centerId, char roleId) {
 		this.staffId = staffId;
 		this.firstName = firstName;
@@ -93,7 +93,7 @@ public class Staff {
 		this.roleId = roleId;
 	}
 	
-	public Staff(String firstName, String lastName, int phoneNumber, Date startDate, char firstAidCertified,
+	public Staff(String firstName, String lastName, String phoneNumber, Date startDate, char firstAidCertified,
 			int centerId, char roleId) {
 		this.firstName = firstName;
 		this.lastName = lastName;

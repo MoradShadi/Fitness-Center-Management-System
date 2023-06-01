@@ -25,7 +25,7 @@ public class StaffSql {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setString(1, staff.getFirstName());
 			stmt.setString(2, staff.getLastName());
-			stmt.setInt(3, staff.getPhoneNumber());
+			stmt.setString(3, staff.getPhoneNumber());
 			stmt.setDate(4, staff.getStartDate());
 			stmt.setString(5, String.valueOf(staff.getFirstAidCertified()));
 			stmt.setInt(6, staff.getCenterId());
@@ -51,7 +51,7 @@ public class StaffSql {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setString(1, staff.getFirstName());
 			stmt.setString(2, staff.getLastName());
-			stmt.setInt(3, staff.getPhoneNumber());
+			stmt.setString(3, staff.getPhoneNumber());
 			stmt.setDate(4, staff.getStartDate());
 			stmt.setString(5, String.valueOf(staff.getFirstAidCertified()));
 			stmt.setInt(6, staff.getCenterId());
@@ -94,7 +94,7 @@ public class StaffSql {
 			ResultSet result = stmt.executeQuery(query);
 			while (result.next()) {
 				Staff staffMember = new Staff(result.getInt(1), result.getString(2), 
-						result.getString(3),result.getInt(4), result.getDate(5), 
+						result.getString(3),result.getString(4), result.getDate(5), 
 						result.getString(6).charAt(0), result.getInt(7), result.getString(8).charAt(0));
 				staffMembers.add(staffMember);
 			}
@@ -120,7 +120,7 @@ public class StaffSql {
 				staff.setStaffId(result.getInt(1));
 				staff.setFirstName(result.getString(2));
 				staff.setLastName(result.getString(3));
-				staff.setPhoneNumber(result.getInt(4));
+				staff.setPhoneNumber(result.getString(4));
 				staff.setStartDate(result.getDate(5));
 				staff.setFirstAidCertified(result.getString(6).charAt(0));
 				staff.setCenterId(result.getInt(7));

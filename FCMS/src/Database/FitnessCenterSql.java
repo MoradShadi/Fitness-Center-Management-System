@@ -26,7 +26,7 @@ public class FitnessCenterSql {
 			stmt.setString(2, center.getCenterStreet());
 			stmt.setString(3, center.getCenterTown());
 			stmt.setString(4, center.getCenterPost());
-			stmt.setInt(5, center.getCenterPhoneNumber());			
+			stmt.setString(5, center.getCenterPhoneNumber());			
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -49,7 +49,7 @@ public class FitnessCenterSql {
 			stmt.setString(2, center.getCenterStreet());
 			stmt.setString(3, center.getCenterTown());
 			stmt.setString(4, center.getCenterPost());
-			stmt.setInt(5, center.getCenterPhoneNumber());
+			stmt.setString(5, center.getCenterPhoneNumber());
 			stmt.setInt(6, center.getCenterId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -87,7 +87,7 @@ public class FitnessCenterSql {
 			ResultSet result = stmt.executeQuery(query);
 			while (result.next()) {
 				FitnessCenter center = new FitnessCenter(result.getInt(1), result.getString(2), result.getString(3),
-						result.getString(4), result.getString(5), result.getInt(6));
+						result.getString(4), result.getString(5), result.getString(6));
 				centers.add(center);
 			}
 		} catch (SQLException e) {
@@ -135,7 +135,7 @@ public class FitnessCenterSql {
 				center.setCenterStreet(result.getString(3));
 				center.setCenterTown(result.getString(4));
 				center.setCenterPost(result.getString(5));
-				center.setCenterPhoneNumber(result.getInt(6));
+				center.setCenterPhoneNumber(result.getString(6));
 			}
 		} catch (SQLException e) {
 			System.out.println(e);

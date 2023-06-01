@@ -22,7 +22,7 @@ public class MemberSql {
 			stmt.setString(1, member.getFirstName());
 			stmt.setString(2, member.getLastName());
 			stmt.setString(3, member.getAddress());
-			stmt.setInt(4, member.getPhoneNumber());
+			stmt.setString(4, member.getPhoneNumber());
 			stmt.setDate(5, member.getJoinDate());
 			stmt.setString(6, String.valueOf(member.getGender()));
 			stmt.setInt(7, member.getCenterId());
@@ -47,7 +47,7 @@ public class MemberSql {
 			stmt.setString(1, member.getFirstName());
 			stmt.setString(2, member.getLastName());
 			stmt.setString(3, member.getAddress());
-			stmt.setInt(4, member.getPhoneNumber());
+			stmt.setString(4, member.getPhoneNumber());
 			stmt.setDate(5, member.getJoinDate());
 			stmt.setString(6, String.valueOf(member.getGender()));
 			stmt.setInt(7, member.getCenterId());
@@ -90,7 +90,7 @@ public class MemberSql {
 			ResultSet result = stmt.executeQuery(query);
 			while (result.next()) {
 				Member member = new Member(result.getInt(1), result.getString(2),
-						result.getString(3), result.getString(4), result.getInt(5),
+						result.getString(3), result.getString(4), result.getString(5),
 						result.getDate(6),  result.getString(7).charAt(0), result.getInt(8));
 				members.add(member);
 			}
@@ -117,7 +117,7 @@ public class MemberSql {
 				member.setFirstName(result.getString(2));
 				member.setLastName(result.getString(3));
 				member.setAddress(result.getString(4));
-				member.setPhoneNumber(result.getInt(5));
+				member.setPhoneNumber(result.getString(5));
 				member.setJoinDate(result.getDate(6));
 				member.setGender(result.getString(7).charAt(0));
 				member.setCenterId(result.getInt(8));
