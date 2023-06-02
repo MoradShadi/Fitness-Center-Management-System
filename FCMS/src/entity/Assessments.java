@@ -111,8 +111,9 @@ public class Assessments {
 		this.staffId = staffId;
 	}
 
-	public Assessments(int memberWeight, int memberHeight, int memberAge, double memberBMI, double memberBoneMass,
+	public Assessments(Date assessmentDate,int memberWeight, int memberHeight, int memberAge, double memberBMI, double memberBoneMass,
 			double memberFatMass, double memberMuscleMass, int staffId) {
+		this.assessmentDate = assessmentDate;
 		this.memberWeight = memberWeight;
 		this.memberHeight = memberHeight;
 		this.memberAge = memberAge;

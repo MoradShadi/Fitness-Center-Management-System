@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,7 +39,8 @@ public class MemberSignUp extends JFrame {
 	private JTextField phoneNumber;
 	private Choice gender;
 	private Choice fitnessCenterSelector;
-	private HashMap<String, FitnessCenter> map;
+	private List<FitnessCenter> centerList;
+	private static HashMap<String, FitnessCenter> map = new HashMap<String, FitnessCenter>();
 
 	/**
 	 * Launch the application.
@@ -47,6 +49,7 @@ public class MemberSignUp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					for (FitnessCenter i : FitnessCenterSql.getAllCenters()) map.put(i.getCenterName(),i);
 					MemberSignUp frame = new MemberSignUp();
 					frame.setVisible(true);
 					
@@ -61,7 +64,11 @@ public class MemberSignUp extends JFrame {
 	 * Create the frame.
 	 */
 	public MemberSignUp() {
-		for (FitnessCenter i : FitnessCenterSql.getAllCenters()) map.put(i.getCenterName(),i); 
+		centerList = FitnessCenterSql.getAllCenters();
+		System.out.println(centerList.get(0).getCenterName());
+		for (FitnessCenter i : centerList) {
+			this.map.put(i.getCenterName(),i); 
+		}
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		

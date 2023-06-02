@@ -31,7 +31,7 @@ public class PreEditMember extends JFrame {
 
 	private JPanel contentPane;
     private List<Member> memberList;
-    private HashMap<Integer, Member> map;
+    private HashMap<Integer, Member> map=new HashMap<Integer,Member>();
     private Choice memberSelector;
 
 	/**
@@ -54,7 +54,11 @@ public class PreEditMember extends JFrame {
 	 * Create the frame.
 	 */
 	public PreEditMember() {
-		for (Member i : MemberSql.getAllMembers()) map.put(i.getMemberId(),i); 
+		memberList = MemberSql.getAllMembers();
+		System.out.println(memberList.get(0).getMemberId());
+		for (Member i : memberList) {
+			this.map.put(i.getMemberId(),i); 
+		}
 		setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -93,8 +97,8 @@ public class PreEditMember extends JFrame {
         memberSelector = new Choice();
         memberSelector.setBounds(200, 300, 350, 27);
         // Need to be retrieved from the database, these are just placeholders for now.
-		for (int i = 0; i < memberList.size(); i ++) {
-			memberSelector.add(String.valueOf(memberList.get(i).getMemberId()));
+		for(int key : map.keySet()){
+			memberSelector.add(String.valueOf(map.get(key).getMemberId()));
 		}
         memberSelector.add("ID 1 (John Doe)");
         memberSelector.add("ID 2 (Jane Doe)");
@@ -138,8 +142,7 @@ public class PreEditMember extends JFrame {
         btnConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            	EditMembers sFrame = new EditMembers();
-            	sFrame.setEditMember(map.get(Integer.parseInt(memberSelector.getSelectedItem())));
+            	EditMembers sFrame = new EditMembers(map.get(Integer.parseInt(memberSelector.getSelectedItem())));
                 sFrame.setVisible(true);
                 dispose();
             }

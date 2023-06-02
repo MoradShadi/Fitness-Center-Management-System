@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -44,31 +45,10 @@ public class AssessmentForm extends JFrame {
 	private static List<Staff> staffList;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AssessmentForm frame = new AssessmentForm();
-					frame.setVisible(true);
-					try {
-						staffList = StaffSql.getAllStaff();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public AssessmentForm() {
+		staffList = StaffSql.getAllStaff();
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -200,8 +180,11 @@ public class AssessmentForm extends JFrame {
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Assessments assessment = new Assessments(Integer.parseInt(txtWeight.getText()), Integer.parseInt(txtHeight.getText()), Integer.parseInt(txtAge.getText()), Double.parseDouble(txtBMI.getText()), Double.parseDouble(txtBoneMass.getText()), Double.parseDouble(txtFatMass.getText()), Double.parseDouble(txtMuscleMass.getText()), Integer.parseInt(choiceStaff.getSelectedItem()) );
+					Assessments assessment = new Assessments(new Date(System.currentTimeMillis()), Integer.parseInt(txtWeight.getText()), Integer.parseInt(txtHeight.getText()), Integer.parseInt(txtAge.getText()), Double.parseDouble(txtBMI.getText()), Double.parseDouble(txtBoneMass.getText()), Double.parseDouble(txtFatMass.getText()), Double.parseDouble(txtMuscleMass.getText()), Integer.parseInt(choiceStaff.getSelectedItem()) );
 					AssessmentSql.addAssessment(assessment);
+					Members member = new Members();
+					member.setVisible(true);
+					dispose();
 				} catch(Exception e1) {
 					  //  Block of code to handle errors
 				}

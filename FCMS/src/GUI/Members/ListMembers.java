@@ -5,6 +5,9 @@ import GUI.Members.Members;
 import entity.Member;
 
 import javax.swing.*;
+
+import Database.MemberSql;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +18,7 @@ import java.util.List;
 public class ListMembers extends JFrame {
     private JList<String> list;
     private DefaultListModel<String> listModel;
-    private List<Member> memberList;
+    private static List<Member> memberList;
     /**
      * Launch the application.
      */
@@ -33,6 +36,8 @@ public class ListMembers extends JFrame {
     }
 
     public ListMembers() {
+    	memberList = MemberSql.getAllMembers();
+		System.out.println(memberList.get(0).getMemberId());
         setUndecorated(true);
         setBounds(0, 0, 900, 625);
 

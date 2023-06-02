@@ -45,6 +45,7 @@ public class DeleteMember extends JFrame {
 	 * Create the frame.
 	 */
 	public DeleteMember() {
+		memberList = MemberSql.getAllMembers();
 		setUndecorated(true);
         setBounds(0, 0, 900, 625);
 

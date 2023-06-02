@@ -21,28 +21,14 @@ public class EditMembers extends JFrame {
 	private JTextField lastName;
 	private JTextField address;
 	private JTextField phoneNumber;
-	private Member member;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EditMembers frame = new EditMembers();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private Member member2;
 
 	/**
 	 * Create the frame.
+	 * @param member 
 	 */
-	public EditMembers() {
+	public EditMembers(Member member) {
+		member2 = member;
 		setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -79,26 +65,26 @@ public class EditMembers extends JFrame {
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         firstName = new JTextField();
-        firstName.setText(member.getFirstName());
+        firstName.setText(member2.getFirstName());
         firstName.setColumns(10);
         firstName.setBounds(240, 222, 280, 35);
         Panel.add(firstName);
 
         lastName = new JTextField();
-        firstName.setText(member.getLastName());
+        lastName.setText(member2.getLastName());
         lastName.setColumns(10);
         lastName.setBounds(240, 271, 280, 35);
         Panel.add(lastName);
 
         phoneNumber = new JTextField();
-        firstName.setText(member.getPhoneNumber());
+        phoneNumber.setText(member2.getPhoneNumber());
         phoneNumber.setColumns(10);
         phoneNumber.setBounds(240, 378, 280, 27);
        
         Panel.add(phoneNumber);
         
         address = new JTextField();
-        firstName.setText(member.getAddress());
+        address.setText(member2.getAddress());
 		address.setColumns(10);
 		address.setBounds(240, 328, 280, 27);
 		Panel.add(address);
@@ -159,11 +145,14 @@ public class EditMembers extends JFrame {
         btnConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            	member.setFirstName(firstName.getText());
-            	member.setLastName(lastName.getText());
-            	member.setAddress(address.getText());
-            	member.setPhoneNumber(phoneNumber.getText());
-                MemberSql.updateMember(member);
+            	member2.setFirstName(firstName.getText());
+            	member2.setLastName(lastName.getText());
+            	member2.setAddress(address.getText());
+            	member2.setPhoneNumber(phoneNumber.getText());
+                MemberSql.updateMember(member2);
+            	Members member = new Members();
+            	member.setVisible(true);
+                dispose();
             }
         });
         btnConfirm.setBounds(417, 543, 103, 35);
@@ -202,8 +191,4 @@ public class EditMembers extends JFrame {
         Panel.add(title);
 
     }
-
-	public void setEditMember(Member mem) {
-		member = mem;
-	}
 }

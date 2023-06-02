@@ -128,7 +128,7 @@ public class PreEditCenter extends JFrame {
         btnConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            	EditMembers sFrame = new EditMembers();
+            	EditCenter sFrame = new EditCenter();
                 sFrame.setVisible(true);
                 dispose();
             }
