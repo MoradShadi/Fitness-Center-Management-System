@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -20,14 +21,19 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Database.FitnessCenterSql;
+import Database.MemberSql;
 import GUI.Members.MemberSignUp;
 import GUI.Members.Members;
+import entity.FitnessCenter;
+import entity.Member;
 
 public class ListCenters extends JFrame {
 
 	private JPanel contentPane;
     private JList<String> list;
     private DefaultListModel<String> listModel;
+    private List<FitnessCenter> centerList;
 
 	/**
 	 * Launch the application.
@@ -49,6 +55,7 @@ public class ListCenters extends JFrame {
 	 * Create the frame.
 	 */
 	public ListCenters() {
+		centerList = FitnessCenterSql.getAllCenters();
 		setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -85,6 +92,9 @@ public class ListCenters extends JFrame {
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         listModel = new DefaultListModel<>();
+        for (int i = 0; i < centerList.size(); i++) {
+        	listModel.addElement(String.valueOf(centerList.get(i).getCenterId()) + " " + String.valueOf(centerList.get(i).getCenterName()));
+        }
         listModel.addElement("Center 1");
         listModel.addElement("Center 2");
         listModel.addElement("Center 3");

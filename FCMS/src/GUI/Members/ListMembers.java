@@ -37,7 +37,6 @@ public class ListMembers extends JFrame {
 
     public ListMembers() {
     	memberList = MemberSql.getAllMembers();
-		System.out.println(memberList.get(0).getMemberId());
         setUndecorated(true);
         setBounds(0, 0, 900, 625);
 

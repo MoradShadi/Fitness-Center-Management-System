@@ -21,38 +21,30 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Database.FitnessCenterSql;
 import GUI.Members.MemberSignUp;
 import GUI.Members.Members;
 import GUI.Members.PreEditMember;
+import entity.FitnessCenter;
+import entity.Member;
 
 public class EditCenter extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField centerName;
-	private JTextField staffSize;
-	private JTextField address;
-	private JTextField yearlyPrice;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EditCenter frame = new EditCenter();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private JTextField street;
+	private JTextField post;
+	private JTextField phone;
+	private FitnessCenter center;
+	private JTextField town;
+	
 	/**
 	 * Create the frame.
+	 * @param fitnessCenter 
 	 */
-	public EditCenter() {
+	public EditCenter(FitnessCenter fitnessCenter) {
+		center = fitnessCenter;
+		
 		setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -89,72 +81,58 @@ public class EditCenter extends JFrame {
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         centerName = new JTextField();
-		centerName.setBounds(240, 140, 280, 35);
+        centerName.setText(center.getCenterName());
+		centerName.setBounds(240, 170, 280, 35);
 		Panel.add(centerName);
 		centerName.setColumns(10);
 		
-		staffSize = new JTextField();
-		staffSize.setColumns(10);
-		staffSize.setBounds(240, 200, 280, 35);
-		Panel.add(staffSize);
+		street = new JTextField();
+		street.setText(center.getCenterStreet());
+		street.setColumns(10);
+		street.setBounds(240, 230, 280, 35);
+		Panel.add(street);
 		
-		address = new JTextField();
-		address.setColumns(10);
-		address.setBounds(240, 320, 280, 35);
-		Panel.add(address);
+		post = new JTextField();
+		post.setText(center.getCenterPost());
+		post.setColumns(10);
+		post.setBounds(240, 350, 280, 35);
+		Panel.add(post);
 		
-		yearlyPrice = new JTextField();
-		yearlyPrice.setColumns(10);
-		yearlyPrice.setBounds(240, 380, 280, 35);
-		Panel.add(yearlyPrice);
-		
-		Choice saunaPresence = new Choice();
-		saunaPresence.setBounds(240, 275, 280, 20);
-		saunaPresence.add("True");
-		saunaPresence.add("False");
-		Panel.add(saunaPresence);
-
-		Choice parkingPresence = new Choice();
-		parkingPresence.setBounds(240, 450, 280, 20);
-		parkingPresence.add("True");
-		parkingPresence.add("False");
-		Panel.add(parkingPresence);
+		phone = new JTextField();
+		phone.setText(center.getCenterPhoneNumber());
+		phone.setColumns(10);
+		phone.setBounds(240, 410, 280, 35);
+		Panel.add(phone);
 		
 		JLabel lblCenterName = new JLabel("Center Name:");
 		lblCenterName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCenterName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblCenterName.setBounds(29, 144, 171, 20);
+		lblCenterName.setBounds(29, 174, 171, 20);
 		Panel.add(lblCenterName);
 
-		JLabel lblCenterSize = new JLabel("Staff Size:");
-		lblCenterSize.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCenterSize.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblCenterSize.setBounds(29, 201, 170, 20);
-		Panel.add(lblCenterSize);
+		JLabel lblStreet = new JLabel("Street:");
+		lblStreet.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStreet.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblStreet.setBounds(29, 231, 170, 20);
+		Panel.add(lblStreet);
 		
-		JLabel lblSauna = new JLabel("Sauna Presence:");
-		lblSauna.setHorizontalAlignment(SwingConstants.LEFT);
-		lblSauna.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblSauna.setBounds(29, 270, 170, 20);
-		Panel.add(lblSauna);
+		JLabel lblTown = new JLabel("Town:");
+		lblTown.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTown.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblTown.setBounds(29, 300, 170, 20);
+		Panel.add(lblTown);
 		
-		JLabel lblAddress = new JLabel("Address:");
-		lblAddress.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAddress.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblAddress.setBounds(29, 325, 170, 20);
-		Panel.add(lblAddress);
+		JLabel lblPost = new JLabel("Post:");
+		lblPost.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPost.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblPost.setBounds(29, 355, 170, 20);
+		Panel.add(lblPost);
 		
-		JLabel lblYearlyPrice = new JLabel("Yearly Price (€):");
-		lblYearlyPrice.setHorizontalAlignment(SwingConstants.LEFT);
-		lblYearlyPrice.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblYearlyPrice.setBounds(29, 387, 170, 20);
-		Panel.add(lblYearlyPrice);
-		
-		JLabel lblParkinglblSauna = new JLabel("Parking Presence:");
-		lblParkinglblSauna.setHorizontalAlignment(SwingConstants.LEFT);
-		lblParkinglblSauna.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblParkinglblSauna.setBounds(29, 447, 170, 20);
-		Panel.add(lblParkinglblSauna);
+		JLabel lblPhone = new JLabel("Phone Number:");
+		lblPhone.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPhone.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblPhone.setBounds(29, 417, 170, 20);
+		Panel.add(lblPhone);
 
         JLabel backArrow = new JLabel("");
         backArrow.addMouseListener(new MouseAdapter() {
@@ -187,7 +165,15 @@ public class EditCenter extends JFrame {
         btnConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Add the new staff member to the database.
+            	center.setCenterName(centerName.getText());
+            	center.setCenterStreet(street.getText());
+            	center.setCenterTown(town.getText());
+            	center.setCenterPost(post.getText());
+            	center.setCenterPhoneNumber(phone.getText());
+            	FitnessCenterSql.UpdateCenter(center);
+                FitnessCenters center = new FitnessCenters();
+                center.setVisible(true);
+                dispose();
             }
         });
         btnConfirm.setBounds(417, 543, 103, 35);
@@ -219,12 +205,17 @@ public class EditCenter extends JFrame {
         btnCancel.setBounds(290, 543, 103, 35);
         Panel.add(btnCancel);
 
-        JLabel title = new JLabel("Edit Staff Member");
+        JLabel title = new JLabel("Edit Center");
         title.setBounds(72, 31, 448, 77);
         title.setForeground(SystemColor.textHighlight);
         title.setFont(new Font("Segoe UI Light", Font.BOLD, 45));
         Panel.add(title);
+        
+        town = new JTextField();
+        town.setText(center.getCenterTown());
+        town.setColumns(10);
+        town.setBounds(240, 285, 280, 35);
+        Panel.add(town);
 
 	}
-
 }

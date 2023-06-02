@@ -49,7 +49,6 @@ public class MemberSignUp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					for (FitnessCenter i : FitnessCenterSql.getAllCenters()) map.put(i.getCenterName(),i);
 					MemberSignUp frame = new MemberSignUp();
 					frame.setVisible(true);
 					
@@ -65,7 +64,6 @@ public class MemberSignUp extends JFrame {
 	 */
 	public MemberSignUp() {
 		centerList = FitnessCenterSql.getAllCenters();
-		System.out.println(centerList.get(0).getCenterName());
 		for (FitnessCenter i : centerList) {
 			this.map.put(i.getCenterName(),i); 
 		}

@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,12 +21,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Database.FitnessCenterSql;
+import Database.MemberSql;
 import GUI.Members.MemberSignUp;
 import GUI.Members.Members;
+import entity.FitnessCenter;
 
 public class DeleteCenters extends JFrame {
 
 	private JPanel contentPane;
+	private List<FitnessCenter> centerList;
+	private Choice centerSelector;
 
 	/**
 	 * Launch the application.
@@ -47,6 +53,7 @@ public class DeleteCenters extends JFrame {
 	 * Create the frame.
 	 */
 	public DeleteCenters() {
+		centerList = FitnessCenterSql.getAllCenters();
 		setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -82,13 +89,16 @@ public class DeleteCenters extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice staffSelector = new Choice();
-        staffSelector.setBounds(200, 300, 350, 27);
+        centerSelector = new Choice();
+        centerSelector.setBounds(200, 300, 350, 27);
         // Need to be retrieved from the database, these are just placeholders for now.
-        staffSelector.add("ID 1 center");
-        staffSelector.add("ID 2 center");
-        staffSelector.add("ID 3 center");
-        Panel.add(staffSelector);
+		for (int i = 0; i < centerList.size(); i ++) {
+			centerSelector.add(String.valueOf(centerList.get(i).getCenterId()));
+		}
+        centerSelector.add("ID 1 center");
+        centerSelector.add("ID 2 center");
+        centerSelector.add("ID 3 center");
+        Panel.add(centerSelector);
 
         JLabel lblClassSelector = new JLabel("Select Center:");
         lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
@@ -128,7 +138,8 @@ public class DeleteCenters extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
             	if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this center", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
-            		//Need to delete member from database here
+            		//Need to delete center from database here
+            		FitnessCenterSql.deleteCenter(Integer.parseInt(centerSelector.getSelectedItem()));
                     FitnessCenters center = new FitnessCenters();
                     center.setVisible(true);
                     dispose();

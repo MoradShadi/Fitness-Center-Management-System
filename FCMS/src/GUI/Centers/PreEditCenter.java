@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,13 +22,20 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Database.FitnessCenterSql;
+import Database.MemberSql;
 import GUI.Members.EditMembers;
 import GUI.Members.MemberSignUp;
 import GUI.Members.Members;
+import entity.FitnessCenter;
+import entity.Member;
 
 public class PreEditCenter extends JFrame {
 
 	private JPanel contentPane;
+    private List<FitnessCenter> centerList;
+    private HashMap<String, FitnessCenter> map= new HashMap<String,FitnessCenter>();
+    private Choice centerSelector;
 
 	/**
 	 * Launch the application.
@@ -48,6 +57,10 @@ public class PreEditCenter extends JFrame {
 	 * Create the frame.
 	 */
 	public PreEditCenter() {
+		centerList = FitnessCenterSql.getAllCenters();
+		for (FitnessCenter i : centerList) {
+			this.map.put(i.getCenterName(),i); 
+		}
 		setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -83,13 +96,16 @@ public class PreEditCenter extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice staffSelector = new Choice();
-        staffSelector.setBounds(200, 300, 350, 27);
+        centerSelector = new Choice();
+        centerSelector.setBounds(200, 300, 350, 27);
         // Need to be retrieved from the database, these are just placeholders for now.
-        staffSelector.add("ID 1 center");
-        staffSelector.add("ID 2 center");
-        staffSelector.add("ID 3 center");
-        Panel.add(staffSelector);
+		for(String key : map.keySet()){
+			centerSelector.add(map.get(key).getCenterName());
+		}
+        centerSelector.add("ID 1 center");
+        centerSelector.add("ID 2 center");
+        centerSelector.add("ID 3 center");
+        Panel.add(centerSelector);
 
         JLabel lblClassSelector = new JLabel("Select Center:");
         lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
@@ -128,7 +144,7 @@ public class PreEditCenter extends JFrame {
         btnConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            	EditCenter sFrame = new EditCenter();
+            	EditCenter sFrame = new EditCenter(map.get(centerSelector.getSelectedItem()));
                 sFrame.setVisible(true);
                 dispose();
             }

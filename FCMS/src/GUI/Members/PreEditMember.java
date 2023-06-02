@@ -55,7 +55,6 @@ public class PreEditMember extends JFrame {
 	 */
 	public PreEditMember() {
 		memberList = MemberSql.getAllMembers();
-		System.out.println(memberList.get(0).getMemberId());
 		for (Member i : memberList) {
 			this.map.put(i.getMemberId(),i); 
 		}
