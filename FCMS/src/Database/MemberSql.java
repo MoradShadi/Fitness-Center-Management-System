@@ -1,10 +1,12 @@
 package Database;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import entity.Member;
@@ -12,13 +14,15 @@ import entity.Member;
 public final class MemberSql {
 
 	// Return "Member added successfully" or " Something went wrong..." 
-	public static String addMember (Member member){
+	public static int addMember (Member member){
 		Connection conn = DBConnection.getConnection();
-
-		String query = "CALL InsertMember(?, ?, ?, ?, ?, ?, ?);";
+		int memberId = 0;
+		
+		String query = "CALL InsertMember(?, ?, ?, ?, ?, ?, ?, ?);";
 		System.out.println(query);
 		try {
-			PreparedStatement stmt = conn.prepareStatement(query);
+			CallableStatement stmt = conn.prepareCall(query);
+			stmt.registerOutParameter(8, Types.INTEGER);
 			stmt.setString(1, member.getFirstName());
 			stmt.setString(2, member.getLastName());
 			stmt.setString(3, member.getAddress());
@@ -27,11 +31,12 @@ public final class MemberSql {
 			stmt.setString(6, String.valueOf(member.getGender()));
 			stmt.setInt(7, member.getCenterId());
 			stmt.executeUpdate();
+			memberId = stmt.getInt(8);
 		} catch (SQLException e) {
 			System.out.println(e);
-			return "Something went wrong! Unable to add member!";
+			return memberId;
 		}
-		return "Member added successfully";
+		return memberId;
 	}
 	
 	// Return "Member updated successfully" or " Something went wrong..." 
