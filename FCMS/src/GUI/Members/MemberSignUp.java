@@ -206,14 +206,10 @@ public class MemberSignUp extends JFrame {
 		btnNext.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {
-					Member newMemb = new Member(firstName.getText(), lastName.getText(), address.getText(), phoneNumber.getText(), new Date(System.currentTimeMillis()) , gender.getSelectedItem().charAt(0), map.get(fitnessCenterSelector.getSelectedItem()).getCenterId() );
-					MemberSql.addMember(newMemb);
-				} catch(Exception e1) {
-					  //  Block of code to handle errors
-				}
+				Member newMemb = new Member(firstName.getText(), lastName.getText(), address.getText(), phoneNumber.getText(), new Date(System.currentTimeMillis()) , gender.getSelectedItem().charAt(0), map.get(fitnessCenterSelector.getSelectedItem()).getCenterId() );
+				int newMembId  = MemberSql.addMember(newMemb);
 				
-				AssessmentForm test = new AssessmentForm();
+				AssessmentForm test = new AssessmentForm(newMembId);
 				test.setVisible(true);
 				dispose();
 			}

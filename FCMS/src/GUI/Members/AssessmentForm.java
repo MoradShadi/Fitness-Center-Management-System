@@ -43,11 +43,14 @@ public class AssessmentForm extends JFrame {
 	private JTextField txtMuscleMass;
 	private Choice choiceStaff;
 	private static List<Staff> staffList;
+	private int memberID;
 
 	/**
 	 * Create the frame.
+	 * @param newMembId 
 	 */
-	public AssessmentForm() {
+	public AssessmentForm(int newMembId) {
+		memberID = newMembId;
 		staffList = StaffSql.getAllStaff();
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
@@ -180,7 +183,7 @@ public class AssessmentForm extends JFrame {
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Assessments assessment = new Assessments(new Date(System.currentTimeMillis()), Integer.parseInt(txtWeight.getText()), Integer.parseInt(txtHeight.getText()), Integer.parseInt(txtAge.getText()), Double.parseDouble(txtBMI.getText()), Double.parseDouble(txtBoneMass.getText()), Double.parseDouble(txtFatMass.getText()), Double.parseDouble(txtMuscleMass.getText()), Integer.parseInt(choiceStaff.getSelectedItem()) );
+					Assessments assessment = new Assessments(memberID, new Date(System.currentTimeMillis()), Integer.parseInt(txtWeight.getText()), Integer.parseInt(txtHeight.getText()), Integer.parseInt(txtAge.getText()), Double.parseDouble(txtBMI.getText()), Double.parseDouble(txtBoneMass.getText()), Double.parseDouble(txtFatMass.getText()), Double.parseDouble(txtMuscleMass.getText()), Integer.parseInt(choiceStaff.getSelectedItem()) );
 					AssessmentSql.addAssessment(assessment);
 					Members member = new Members();
 					member.setVisible(true);
