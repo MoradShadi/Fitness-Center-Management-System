@@ -1,7 +1,10 @@
 package GUI.Classes;
 
-import GUI.Home;
-import GUI.Members.Members;
+import Database.ClassSql;
+import Database.FitnessCenterSql;
+import Database.StaffSql;
+import entity.*;
+import entity.Class;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,21 +12,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.sql.Time;
+import java.util.HashMap;
+import java.util.List;
 
 public class ClassesSignUp extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField maxParticipants;
 	private JSpinner dateTimeSpinner;
 	private SpinnerDateModel dateModel;
+	private SpinnerNumberModel maxParticipantsModel;
 	private JSpinner maxParticipantsSpinner;
 	private JSpinner classSessionNumberSpinner;
-
+	private SpinnerNumberModel classSessionNumberModel;
 	private JSpinner classCostSpinner;
-	private JSpinner roomNumberSpinner;
+	private SpinnerNumberModel classCostModel;
 	private JSpinner participantsNumberSpinner;
-	private final int OFFSET = 10;
-
+	private SpinnerNumberModel participantsNumberModel;
+	private ClassSql classSql = new ClassSql();
+	private StaffSql staffSql = new StaffSql();
+	private List<FitnessCenter> centerList;
+	private static HashMap<String, FitnessCenter> map = new HashMap<String, FitnessCenter>();
 
 
 
@@ -43,10 +52,24 @@ public class ClassesSignUp extends JFrame {
 		});
 	}
 
+	private char convertStringToChar(String s) {
+		if (s == "m") {
+			return 'M';
+		} else if (s == "f") {
+			return 'F';
+		} else {
+			return '-';
+		}
+	}
+
 	/**
 	 * Create the frame.
 	 */
 	public ClassesSignUp() {
+		centerList = FitnessCenterSql.getAllCenters();
+		for (FitnessCenter i : centerList) {
+			this.map.put(i.getCenterName(),i);
+		}
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -84,10 +107,9 @@ public class ClassesSignUp extends JFrame {
 		
 		Choice fitnessCenterSelector = new Choice();
 		fitnessCenterSelector.setBounds(240, 120, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
-		fitnessCenterSelector.add("Schwäbisch Hall");
-		fitnessCenterSelector.add("Börsenplatz");
-		fitnessCenterSelector.add("Blaubeuren");
+		for (String key : map.keySet()) {
+			fitnessCenterSelector.add(key);
+		}
 		Panel.add(fitnessCenterSelector);
 
 		dateModel = new SpinnerDateModel();
@@ -96,51 +118,60 @@ public class ClassesSignUp extends JFrame {
 		Panel.add(dateTimeSpinner);
 
 		maxParticipantsSpinner = new JSpinner();
-		maxParticipantsSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		maxParticipantsModel = new SpinnerNumberModel(0, 0, 100, 1);
+		maxParticipantsSpinner.setModel(maxParticipantsModel);
 		maxParticipantsSpinner.setBounds(240, 200, 280, 35);
 		Panel.add(maxParticipantsSpinner);
 
 		classSessionNumberSpinner = new JSpinner();
-		classSessionNumberSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		classSessionNumberModel = new SpinnerNumberModel(0, 0, 100, 1);
+		classSessionNumberSpinner.setModel(classSessionNumberModel);
 		classSessionNumberSpinner.setBounds(240, 250, 280, 35);
 		Panel.add(classSessionNumberSpinner);
 
 		classCostSpinner = new JSpinner();
-		classCostSpinner.setModel(new SpinnerNumberModel(0.0, 0.0, 1000.0, 0.5));
+		classCostModel = new SpinnerNumberModel(0.0, 0.0, 1000.0, 0.5);
+		classCostSpinner.setModel(classCostModel);
 		classCostSpinner.setBounds(240, 300, 280, 35);
 		Panel.add(classCostSpinner);
 
 		Choice classType = new Choice();
 		classType.setBounds(240, 360, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
-		classType.add("Yoga");
-		classType.add("Abs & Core");
-		classType.add("Stretching");
+		List<ClassDescription> classPlaceholders = classSql.getClassTypes();
+		for (ClassDescription classPlaceholder : classPlaceholders) {
+			classType.add(classPlaceholder.getClassType());
+		}
 		Panel.add(classType);
 
-		roomNumberSpinner = new JSpinner();
-		roomNumberSpinner.setModel(new SpinnerNumberModel(0, 0, 10, 1));
-		roomNumberSpinner.setBounds(240, 400, 280, 35);
-		Panel.add(roomNumberSpinner);
+		Choice roomNumber = new Choice();
+		roomNumber.setBounds(240, 400, 280, 35);
+		List<Facility> rooms = FitnessCenterSql.getAllrooms();
+		for (Facility room : rooms) {
+			roomNumber.add(String.valueOf(room.getFacilityRoomNumber()));
+		}
+		Panel.add(roomNumber);
 
 		Choice genderRestriction = new Choice();
 		genderRestriction.setBounds(240, 440, 280, 27);
 		genderRestriction.add("m");
 		genderRestriction.add("f");
-		genderRestriction.add("both");
+		genderRestriction.add("-");
 		Panel.add(genderRestriction);
 
 		participantsNumberSpinner = new JSpinner();
-		participantsNumberSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		participantsNumberModel = new SpinnerNumberModel(0, 0, 100, 1);
+		participantsNumberSpinner.setModel(participantsNumberModel);
 		participantsNumberSpinner.setBounds(240, 470, 280, 35);
 		Panel.add(participantsNumberSpinner);
 
 		Choice classInstructor = new Choice();
 		classInstructor.setBounds(240, 510, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
-		classInstructor.add("John Doe");
-		classInstructor.add("Jane Doe");
-		classInstructor.add("John Smith");
+		List<Staff> staffPlaceholders = staffSql.getAllStaff();
+		for (Staff staffPlaceholder : staffPlaceholders) {
+			if(staffPlaceholder.getRoleId() == 'T') {
+				classInstructor.add(staffPlaceholder.getFirstName() + " " + staffPlaceholder.getLastName());
+			}
+		}
 		Panel.add(classInstructor);
 
 		JLabel classesLabel = new JLabel("Fitness Center:");
@@ -242,6 +273,19 @@ public class ClassesSignUp extends JFrame {
 		btnConfirm.setHorizontalTextPosition(SwingConstants.LEADING);
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				java.util.Date dateInput = dateModel.getDate();
+				Date classDate = new Date(dateInput.getTime());
+				Time classTime = new Time(dateInput.getTime());
+				String genderRestrictionString = genderRestriction.getSelectedItem();
+				char genderRestrictionChar = convertStringToChar(genderRestrictionString);
+				String roomNumberString = roomNumber.getSelectedItem();
+				int roomNumberInt = Integer.parseInt(roomNumberString);
+				Class newClass = new Class(map.get(fitnessCenterSelector.getSelectedItem()).getCenterId(), classDate, classTime, (int)maxParticipantsModel.getValue(), (int)classSessionNumberSpinner.getValue(),
+						(double)classCostModel.getValue(), classType.getSelectedItem(), roomNumberInt, genderRestrictionChar, (int)participantsNumberModel.getValue());
+				ClassSql.addClass(newClass);
+				Classes classes = new Classes();
+				classes.setVisible(true);
+				dispose();
 			}
 		});
 		btnConfirm.setBackground(Color.ORANGE);

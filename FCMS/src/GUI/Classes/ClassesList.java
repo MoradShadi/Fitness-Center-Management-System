@@ -1,18 +1,18 @@
 package GUI.Classes;
 
-import GUI.Home;
-import GUI.Members.Members;
+import Database.ClassSql;
+import entity.Class;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class ClassesList extends JFrame {
     private JList<String> list;
     private DefaultListModel<String> listModel;
+    private static List<Class> classesList;
     /**
      * Launch the application.
      */
@@ -30,6 +30,7 @@ public class ClassesList extends JFrame {
     }
 
     public ClassesList() {
+        classesList = ClassSql.getAllClasses();
         setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -66,18 +67,9 @@ public class ClassesList extends JFrame {
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         listModel = new DefaultListModel<>();
-        listModel.addElement("ID 1 (Yoga)");
-        listModel.addElement("ID 2 (Abs & Core)");
-        listModel.addElement("ID 3 (Stretching)");
-        listModel.addElement("ID 1 (Yoga)");
-        listModel.addElement("ID 2 (Abs & Core)");
-        listModel.addElement("ID 3 (Stretching)");
-        listModel.addElement("ID 1 (Yoga)");
-        listModel.addElement("ID 2 (Abs & Core)");
-        listModel.addElement("ID 3 (Stretching)");
-        listModel.addElement("ID 1 (Yoga)");
-        listModel.addElement("ID 2 (Abs & Core)");
-        listModel.addElement("ID 3 (Stretching)");
+        for (Class c : classesList) {
+            listModel.addElement(c.getClassId() + " " + c.getClassType() + " " + c.getClassDate() + " " + c.getClassTime() + " " + c.getRoomNumber());
+        }
         list = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setBounds(70, 120, 400, 400);

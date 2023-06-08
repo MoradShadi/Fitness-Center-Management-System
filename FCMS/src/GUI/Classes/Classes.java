@@ -205,8 +205,8 @@ public class Classes extends JFrame {
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ClassesEdit classesEdit = new ClassesEdit();
-				classesEdit.setVisible(true);
+				PreEditClasses preEditClasses = new PreEditClasses();
+				preEditClasses.setVisible(true);
 				dispose();
 			}
 		});

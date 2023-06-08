@@ -150,4 +150,21 @@ public class Class {
 //		this.genderRestrictions = genderRestrictions;
 //	}
 
+
+	@Override
+	public String toString() {
+		return "Class{" +
+				"classId=" + classId +
+				", centerId=" + centerId +
+				", classDate=" + classDate +
+				", classTime=" + classTime +
+				", maxParticipants=" + maxParticipants +
+				", classSessions=" + classSessions +
+				", classCost=" + classCost +
+				", classType='" + classType + '\'' +
+				", roomNumber=" + roomNumber +
+				", genderRestrictions=" + genderRestrictions +
+				", nbParticipants=" + nbParticipants +
+				'}';
+	}
 }

@@ -103,10 +103,9 @@ public class StaffDelete extends JFrame {
         mainPanel.add(Logo);
 
         JButton btnConfirm = new JButton("Delete");
-        btnConfirm.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Add the new staff member to the database.
+        btnConfirm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(staffSelector.getSelectedItem());
             }
         });
         btnConfirm.setBounds(417, 560, 103, 35);

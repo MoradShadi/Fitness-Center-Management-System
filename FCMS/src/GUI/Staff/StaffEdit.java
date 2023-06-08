@@ -209,6 +209,14 @@ public class StaffEdit extends JFrame {
         btnConfirm.setHorizontalTextPosition(SwingConstants.LEADING);
         btnConfirm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println(staffSelector.getSelectedItem());
+                System.out.println(firstName.getText());
+                System.out.println(lastName.getText());
+                System.out.println(phoneNumber.getText());
+                System.out.println(dateModel.getDate());
+                System.out.println(firstAidCertified.getSelectedItem());
+                System.out.println(fitnessCenterSelector.getSelectedItem());
+                System.out.println(position.getText());
             }
         });
         btnConfirm.setBackground(Color.ORANGE);

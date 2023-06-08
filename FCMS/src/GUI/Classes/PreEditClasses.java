@@ -1,9 +1,13 @@
 package GUI.Classes;
 
 import Database.ClassSql;
-import GUI.Home;
+import Database.MemberSql;
+import GUI.Members.EditMembers;
+import GUI.Members.MemberSignUp;
 import GUI.Members.Members;
+import GUI.Members.PreEditMember;
 import entity.Class;
+import entity.Member;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,17 +15,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.List;
 
-public class ClassesDelete extends JFrame {
+public class PreEditClasses extends JFrame {
+    private JPanel contentPane;
+    private List<Class> classList;
+    private HashMap<Integer, Class> map = new HashMap<>();
+    private Choice classSelector;
 
-    private ClassSql classSql = new ClassSql();
-
+    /**
+     * Launch the application.
+     */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    ClassesSignUp frame = new ClassesSignUp();
+                    PreEditClasses frame = new PreEditClasses();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -30,7 +40,14 @@ public class ClassesDelete extends JFrame {
         });
     }
 
-    public ClassesDelete() {
+    /**
+     * Create the frame.
+     */
+    public PreEditClasses() {
+        classList = ClassSql.getAllClasses();
+        for (Class c : classList) {
+            this.map.put(c.getClassId(), c);
+        }
         setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -66,40 +83,39 @@ public class ClassesDelete extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice classSelector = new Choice();
-        classSelector.setBounds(240, 120, 280, 27);
-        List<Class> classes = classSql.getAllClasses();
-        for (Class c : classes) {
-            classSelector.add(c.getClassId() + "- " + c.getClassType() + " " + c.getClassDate() + " " + c.getClassTime() + " " + c.getRoomNumber());
+        classSelector = new Choice();
+        classSelector.setBounds(200, 300, 350, 27);
+        for(int key : map.keySet()){
+            classSelector.add(String.valueOf(map.get(key).getClassId()));
         }
         Panel.add(classSelector);
 
         JLabel lblClassSelector = new JLabel("Select Class:");
         lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
         lblClassSelector.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblClassSelector.setBounds(29, 120, 201, 20);
+        lblClassSelector.setBounds(29, 300, 201, 20);
         Panel.add(lblClassSelector);
 
         JLabel backArrow = new JLabel("");
         backArrow.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Classes cframe = new Classes();
-                cframe.setVisible(true);
+                Classes sFrame = new Classes();
+                sFrame.setVisible(true);
                 dispose();
             }
         });
         backArrow.setHorizontalAlignment(SwingConstants.CENTER);
         backArrow.setBounds(10, 11, 89, 58);
         mainPanel.add(backArrow);
-        ImageIcon backIcon = new ImageIcon(ClassesSignUp.class.getResource("/GUI/Images/backarrow.png"));
+        ImageIcon backIcon = new ImageIcon(MemberSignUp.class.getResource("/GUI/Images/backarrow.png"));
         Image img7 = backIcon.getImage();
         Image imgScale7 = img7.getScaledInstance(80, 80, 100);
         ImageIcon scaledIcon7 = new ImageIcon(imgScale7);
         backArrow.setIcon(scaledIcon7);
 
         JLabel Logo = new JLabel("");
-        ImageIcon icon1 = new ImageIcon(ClassesSignUp.class.getResource("/GUI/Images/fitness.png"));
+        ImageIcon icon1 = new ImageIcon(MemberSignUp.class.getResource("/GUI/Images/fitness.png"));
         Image img1 = icon1.getImage();
         Image imgScale1 = img1.getScaledInstance(300, 300, 100);
         ImageIcon scaledIcon1 = new ImageIcon(imgScale1);
@@ -107,15 +123,12 @@ public class ClassesDelete extends JFrame {
         Logo.setBounds(0, 179, 310, 346);
         mainPanel.add(Logo);
 
-        JButton btnConfirm = new JButton("Delete");
+        JButton btnConfirm = new JButton("Update");
         btnConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                String classId = classSelector.getSelectedItem().split("-")[0];
-                int classIdInt = Integer.parseInt(classId);
-                ClassSql.deleteClass(classIdInt);
-                Classes classes = new Classes();
-                classes.setVisible(true);
+                ClassesEdit classesEdit = new ClassesEdit(map.get(Integer.parseInt(classSelector.getSelectedItem())));
+                classesEdit.setVisible(true);
                 dispose();
             }
         });
@@ -148,7 +161,7 @@ public class ClassesDelete extends JFrame {
         btnCancel.setBounds(290, 560, 103, 35);
         Panel.add(btnCancel);
 
-        JLabel title = new JLabel("Delete Class");
+        JLabel title = new JLabel("Edit Class");
         title.setBounds(72, 31, 448, 77);
         title.setForeground(SystemColor.textHighlight);
         title.setFont(new Font("Segoe UI Light", Font.BOLD, 45));

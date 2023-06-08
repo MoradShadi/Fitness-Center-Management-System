@@ -1,7 +1,12 @@
 package GUI.Classes;
 
+import Database.ClassSql;
+import Database.FitnessCenterSql;
+import Database.StaffSql;
 import GUI.Home;
 import GUI.Members.Members;
+import entity.*;
+import entity.Class;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,23 +14,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.sql.Time;
+import java.util.HashMap;
+import java.util.List;
 
 public class ClassesEdit extends JFrame {
-    // TODO: To prefill for all the inputs the current data from the DB
 
-    private JPanel contentPane;
-    private JTextField maxParticipants;
+
     private JSpinner dateTimeSpinner;
     private SpinnerDateModel dateModel;
     private JSpinner maxParticipantsSpinner;
+    private SpinnerNumberModel maxParticipantsModel;
     private JSpinner classSessionNumberSpinner;
-
+    private SpinnerNumberModel classSessionNumberModel;
     private JSpinner classCostSpinner;
     private JSpinner roomNumberSpinner;
     private JSpinner participantsNumberSpinner;
-    private final int OFFSET = 10;
+    private SpinnerNumberModel classCostModel;
+    private SpinnerNumberModel roomNumberModel;
+    private SpinnerNumberModel participantsNumberModel;
+    private FitnessCenterSql fitnessCenterSql = new FitnessCenterSql();
+    private ClassSql classSql = new ClassSql();
+    private StaffSql staffSql = new StaffSql();
+    private Class selectedClass;
+    private List<FitnessCenter> centerList;
+    private static HashMap<String, FitnessCenter> map = new HashMap<String, FitnessCenter>();
 
-
+    private char convertStringToChar(String s) {
+        return s.charAt(0);
+    }
 
 
     /**
@@ -47,7 +65,12 @@ public class ClassesEdit extends JFrame {
     /**
      * Create the frame.
      */
-    public ClassesEdit() {
+    public ClassesEdit(Class myClass) {
+        selectedClass = myClass;
+        centerList = FitnessCenterSql.getAllCenters();
+        for (FitnessCenter i : centerList) {
+            this.map.put(i.getCenterName(),i);
+        }
         setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -83,93 +106,100 @@ public class ClassesEdit extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice classSelector = new Choice();
-        classSelector.setBounds(240, 120, 280, 27);
-        // Need to be retrieved from the database, these are just placeholders for now.
-        classSelector.add("ID 1 (Yoga)");
-        classSelector.add("ID 2 (Abs & Core)");
-        classSelector.add("ID 3 (Stretching)");
-        Panel.add(classSelector);
-
         Choice fitnessCenterSelector = new Choice();
-        fitnessCenterSelector.setBounds(240, 160, 280, 27);
-        // Need to be retrieved from the database, these are just placeholders for now.
-        fitnessCenterSelector.add("Schwäbisch Hall");
-        fitnessCenterSelector.add("Börsenplatz");
-        fitnessCenterSelector.add("Blaubeuren");
+        fitnessCenterSelector.setBounds(240, 120, 280, 27);
+        for (String key : map.keySet()) {
+            fitnessCenterSelector.add(key);
+        }
+        fitnessCenterSelector.select(FitnessCenterSql.getCenter(selectedClass.getCenterId()).getCenterName());
         Panel.add(fitnessCenterSelector);
 
         dateModel = new SpinnerDateModel();
         dateTimeSpinner = new JSpinner(dateModel);
-        dateTimeSpinner.setBounds(240, 200, 280, 27);
+        dateTimeSpinner.setBounds(240, 160, 280, 27);
+        Date sqlDate = selectedClass.getClassDate();
+        Time sqlTime = selectedClass.getClassTime();
+        java.util.Date utilDate = new java.util.Date(sqlDate.getTime() + sqlTime.getTime());
+        dateTimeSpinner.setValue(utilDate);
         Panel.add(dateTimeSpinner);
 
         maxParticipantsSpinner = new JSpinner();
-        maxParticipantsSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-        maxParticipantsSpinner.setBounds(240, 250, 280, 35);
+        maxParticipantsModel = new SpinnerNumberModel(0, 0, 100, 1);
+        maxParticipantsSpinner.setModel(maxParticipantsModel);
+        maxParticipantsSpinner.setBounds(240, 200, 280, 35);
+        maxParticipantsSpinner.setValue(selectedClass.getMaxParticipants());
         Panel.add(maxParticipantsSpinner);
 
+        classSessionNumberSpinner = new JSpinner();
+        classSessionNumberModel = new SpinnerNumberModel(0, 0, 100, 1);
+        classSessionNumberSpinner.setModel(classSessionNumberModel);
+        classSessionNumberSpinner.setBounds(240, 250, 280, 35);
+        classSessionNumberSpinner.setValue(selectedClass.getClassSessions());
+        Panel.add(classSessionNumberSpinner);
+
         classCostSpinner = new JSpinner();
-        classCostSpinner.setModel(new SpinnerNumberModel(0.0, 0.0, 1000.0, 0.5));
+        classCostModel = new SpinnerNumberModel(0.0, 0.0, 1000.0, 0.5);
+        classCostSpinner.setModel(classCostModel);
         classCostSpinner.setBounds(240, 300, 280, 35);
+        classCostSpinner.setValue(selectedClass.getClassCost());
         Panel.add(classCostSpinner);
 
         Choice classType = new Choice();
         classType.setBounds(240, 360, 280, 27);
-        // Need to be retrieved from the database, these are just placeholders for now.
-        classType.add("Yoga");
-        classType.add("Abs & Core");
-        classType.add("Stretching");
+        List<ClassDescription> classPlaceholders = classSql.getClassTypes();
+        for (ClassDescription classPlaceholder : classPlaceholders) {
+            classType.add(classPlaceholder.getClassType());
+        }
+        classType.select(selectedClass.getClassType());
         Panel.add(classType);
 
-        roomNumberSpinner = new JSpinner();
-        roomNumberSpinner.setModel(new SpinnerNumberModel(0, 0, 10, 1));
-        roomNumberSpinner.setBounds(240, 400, 280, 35);
-        Panel.add(roomNumberSpinner);
+        Choice roomNumber = new Choice();
+        roomNumber.setBounds(240, 400, 280, 35);
+        List<Facility> rooms = FitnessCenterSql.getAllrooms();
+        for (Facility room : rooms) {
+            roomNumber.add(String.valueOf(room.getFacilityRoomNumber()));
+        }
+        roomNumber.select(String.valueOf(selectedClass.getRoomNumber()));
+        Panel.add(roomNumber);
 
         Choice genderRestriction = new Choice();
         genderRestriction.setBounds(240, 440, 280, 27);
-        genderRestriction.add("m");
-        genderRestriction.add("f");
-        genderRestriction.add("both");
+        genderRestriction.add("M");
+        genderRestriction.add("F");
+        genderRestriction.add("-");
+        genderRestriction.select(String.valueOf(selectedClass.getGenderRestrictions()));
         Panel.add(genderRestriction);
 
         participantsNumberSpinner = new JSpinner();
-        participantsNumberSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+        participantsNumberModel = new SpinnerNumberModel(0, 0, 100, 1);
+        participantsNumberSpinner.setModel(participantsNumberModel);
         participantsNumberSpinner.setBounds(240, 470, 280, 35);
+        participantsNumberSpinner.setValue(selectedClass.getNbParticipants());
         Panel.add(participantsNumberSpinner);
-
-        Choice classInstructor = new Choice();
-        classInstructor.setBounds(240, 510, 280, 27);
-        // Need to be retrieved from the database, these are just placeholders for now.
-        classInstructor.add("John Doe");
-        classInstructor.add("Jane Doe");
-        classInstructor.add("John Smith");
-        Panel.add(classInstructor);
 
         JLabel classesLabel = new JLabel("Fitness Center:");
         classesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         classesLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        classesLabel.setBounds(29, 160, 171, 20);
+        classesLabel.setBounds(29, 120, 171, 20);
         Panel.add(classesLabel);
 
         JLabel lblDate = new JLabel("Datetime:");
         lblDate.setHorizontalAlignment(SwingConstants.LEFT);
         lblDate.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblDate.setBounds(29, 205, 171, 20);
+        lblDate.setBounds(29, 160, 171, 20);
         Panel.add(lblDate);
 
         JLabel lblMaxParticipants = new JLabel("Max Participants:");
         lblMaxParticipants.setHorizontalAlignment(SwingConstants.LEFT);
         lblMaxParticipants.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblMaxParticipants.setBounds(29, 255, 171, 20);
+        lblMaxParticipants.setBounds(29, 205, 171, 20);
         Panel.add(lblMaxParticipants);
 
-        JLabel lblClassSelector = new JLabel("Select Class:");
-        lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
-        lblClassSelector.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblClassSelector.setBounds(29, 120, 201, 20);
-        Panel.add(lblClassSelector);
+        JLabel lblClassSessionNumber = new JLabel("Class Session Number:");
+        lblClassSessionNumber.setHorizontalAlignment(SwingConstants.LEFT);
+        lblClassSessionNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+        lblClassSessionNumber.setBounds(29, 255, 201, 20);
+        Panel.add(lblClassSessionNumber);
 
         JLabel lblClassCost = new JLabel("Class Cost:");
         lblClassCost.setHorizontalAlignment(SwingConstants.LEFT);
@@ -200,12 +230,6 @@ public class ClassesEdit extends JFrame {
         lblParticipantsNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
         lblParticipantsNumber.setBounds(29, 475, 201, 20);
         Panel.add(lblParticipantsNumber);
-
-        JLabel lblClassInstructor = new JLabel("Class Instructor:");
-        lblClassInstructor.setHorizontalAlignment(SwingConstants.LEFT);
-        lblClassInstructor.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblClassInstructor.setBounds(29, 510, 171, 20);
-        Panel.add(lblClassInstructor);
 
         JLabel backArrow = new JLabel("");
         backArrow.addMouseListener(new MouseAdapter() {
@@ -246,6 +270,19 @@ public class ClassesEdit extends JFrame {
         btnConfirm.setHorizontalTextPosition(SwingConstants.LEADING);
         btnConfirm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                java.util.Date dateInput = dateModel.getDate();
+                Date classDate = new Date(dateInput.getTime());
+                Time classTime = new Time(dateInput.getTime());
+                String genderRestrictionString = genderRestriction.getSelectedItem();
+                char genderRestrictionChar = convertStringToChar(genderRestrictionString);
+                String roomNumberString = roomNumber.getSelectedItem();
+                int roomNumberInt = Integer.parseInt(roomNumberString);
+                Class newClass = new Class(selectedClass.getClassId() ,map.get(fitnessCenterSelector.getSelectedItem()).getCenterId(), classDate, classTime, (int)maxParticipantsModel.getValue(), (int)classSessionNumberSpinner.getValue(),
+                        (double)classCostModel.getValue(), classType.getSelectedItem(), roomNumberInt, genderRestrictionChar, (int)participantsNumberModel.getValue());
+                ClassSql.UpdateClass(newClass);
+                Classes classes = new Classes();
+                classes.setVisible(true);
+                dispose();
             }
         });
         btnConfirm.setBackground(Color.ORANGE);
