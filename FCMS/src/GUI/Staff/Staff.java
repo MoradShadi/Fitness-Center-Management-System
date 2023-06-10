@@ -2,7 +2,6 @@ package GUI.Staff;
 
 import GUI.Home;
 import GUI.LoginPage;
-import GUI.Members.MemberSignUp;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -174,6 +173,9 @@ public class Staff extends JFrame {
 		lblClasses.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				StaffDelete staffDelete = new StaffDelete();
+				staffDelete.setVisible(true);
+				dispose();
 			}
 		});
 		lblClasses.setForeground(SystemColor.textHighlight);
@@ -203,6 +205,9 @@ public class Staff extends JFrame {
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				PreEditStaff staffEdit = new PreEditStaff();
+				staffEdit.setVisible(true);
+				dispose();
 			}
 		});
 		lblCenters.setIconTextGap(0);
@@ -233,6 +238,9 @@ public class Staff extends JFrame {
 		lblStaff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				StaffList staffList = new StaffList();
+				staffList.setVisible(true);
+				dispose();
 			}
 		});
 		lblStaff.setBackground(SystemColor.menu);

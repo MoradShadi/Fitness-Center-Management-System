@@ -1,8 +1,8 @@
 package GUI.Staff;
 
-import GUI.Home;
-import GUI.Members.AssessmentForm;
-import GUI.Members.Members;
+import Database.FitnessCenterSql;
+import Database.StaffSql;
+import entity.FitnessCenter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,14 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.List;
 
 public class StaffSignUp extends JFrame {
 
-	private JPanel contentPane;
 	private JTextField firstName;
 	private JTextField lastName;
-	private JTextField position;
 	private JTextField phoneNumber;
+	private JSpinner dateTimeSpinner;
+	private SpinnerDateModel dateModel;
+	private List<FitnessCenter> centerList;
+	private static HashMap<String, FitnessCenter> map = new HashMap<String, FitnessCenter>();
 
 	/**
 	 * Launch the application.
@@ -39,6 +43,10 @@ public class StaffSignUp extends JFrame {
 	 * Create the frame.
 	 */
 	public StaffSignUp() {
+		centerList = FitnessCenterSql.getAllCenters();
+		for (FitnessCenter i : centerList) {
+			this.map.put(i.getCenterName(),i);
+		}
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -73,84 +81,100 @@ public class StaffSignUp extends JFrame {
 		Panel.add(exit);
 		exit.setForeground(SystemColor.textHighlight);
 		exit.setFont(new Font("Tahoma", Font.BOLD, 30));
-		
-		Choice fitnessCenterSelector = new Choice();
-		fitnessCenterSelector.setBounds(240, 144, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
-		fitnessCenterSelector.add("Schwäbisch Hall");
-		fitnessCenterSelector.add("Börsenplatz");
-		fitnessCenterSelector.add("Blaubeuren");
-		
-		Panel.add(fitnessCenterSelector);
+
 		
 		firstName = new JTextField();
-		firstName.setBounds(240, 191, 280, 35);
-		Panel.add(firstName);
 		firstName.setColumns(10);
-		
+		firstName.setBounds(240, 144, 280, 35);
+		Panel.add(firstName);
+
 		lastName = new JTextField();
 		lastName.setColumns(10);
-		lastName.setBounds(240, 260, 280, 35);
+		lastName.setBounds(240, 191, 280, 35);
 		Panel.add(lastName);
-		
-		position = new JTextField();
-		position.setColumns(10);
-		position.setBounds(240, 377, 280, 35);
-		Panel.add(position);
-		
+
 		phoneNumber = new JTextField();
 		phoneNumber.setColumns(10);
-		phoneNumber.setBounds(240, 443, 280, 35);
+		phoneNumber.setBounds(240, 240, 280, 35);
 		Panel.add(phoneNumber);
-		
-		Choice gender = new Choice();
-		gender.setBounds(240, 325, 280, 20);
-		gender.add("Male");
-		gender.add("Female");
-		Panel.add(gender);
-		
-		JLabel fitnessCenterlabel = new JLabel("Fitness Center Branch:");
-		fitnessCenterlabel.setHorizontalAlignment(SwingConstants.LEFT);
-		fitnessCenterlabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		fitnessCenterlabel.setBounds(29, 144, 171, 20);
-		Panel.add(fitnessCenterlabel);
-		
+
+		dateModel = new SpinnerDateModel();
+		dateTimeSpinner = new JSpinner(dateModel);
+		dateTimeSpinner.setBounds(240, 290, 280, 27);
+		Panel.add(dateTimeSpinner);
+
+		Choice firstAidCertified = new Choice();
+		firstAidCertified.setBounds(240, 340, 280, 20);
+		firstAidCertified.add("Y");
+		firstAidCertified.add("N");
+		Panel.add(firstAidCertified);
+
+		Choice fitnessCenterSelector = new Choice();
+		fitnessCenterSelector.setBounds(240, 390, 280, 27);
+		for (String key : map.keySet()) {
+			fitnessCenterSelector.add(key);
+		}
+		Panel.add(fitnessCenterSelector);
+
+		Choice position = new Choice();
+		position.setBounds(240, 430, 280, 35);
+		position.add("A");
+		position.add("C");
+		position.add("D");
+		position.add("M");
+		position.add("P");
+		position.add("S");
+		position.add("T");
+		Panel.add(position);
+
 		JLabel lblFirstName = new JLabel("First Name:");
 		lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFirstName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblFirstName.setBounds(29, 201, 170, 20);
+		lblFirstName.setBounds(29, 144, 170, 20);
 		Panel.add(lblFirstName);
-		
+
 		JLabel lblLastName = new JLabel("Last Name:");
 		lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLastName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblLastName.setBounds(29, 270, 170, 20);
+		lblLastName.setBounds(29, 191, 170, 20);
 		Panel.add(lblLastName);
-		
-		JLabel lblGender = new JLabel("Gender:");
-		lblGender.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGender.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblGender.setBounds(29, 325, 170, 20);
-		Panel.add(lblGender);
-		
-		JLabel lblAddress = new JLabel("Position:");
-		lblAddress.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAddress.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblAddress.setBounds(29, 387, 170, 20);
-		Panel.add(lblAddress);
-		
+
 		JLabel lblPhoneNumber = new JLabel("Phone Number:");
 		lblPhoneNumber.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPhoneNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblPhoneNumber.setBounds(29, 447, 170, 20);
+		lblPhoneNumber.setBounds(29, 240, 170, 20);
 		Panel.add(lblPhoneNumber);
+
+		JLabel startDate = new JLabel("Start Date:");
+		startDate.setHorizontalAlignment(SwingConstants.LEFT);
+		startDate.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		startDate.setBounds(29, 290, 170, 20);
+		Panel.add(startDate);
+
+		JLabel firstAidCertifiedLabel = new JLabel("First Aid Certified:");
+		firstAidCertifiedLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		firstAidCertifiedLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		firstAidCertifiedLabel.setBounds(29, 340, 170, 20);
+		Panel.add(firstAidCertifiedLabel);
+
+		JLabel fitnessCenterLabel = new JLabel("Fitness Center:");
+		fitnessCenterLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		fitnessCenterLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		fitnessCenterLabel.setBounds(29, 390, 170, 20);
+		Panel.add(fitnessCenterLabel);
+
+		JLabel roleLabel = new JLabel("Role:");
+		roleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		roleLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		roleLabel.setBounds(29, 430, 170, 20);
+		Panel.add(roleLabel);
 		
 		JLabel backArrow = new JLabel("");
 		backArrow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Home hframe = new Home();
-				hframe.setVisible(true);
+				Staff sFrame = new Staff();
+				sFrame.setVisible(true);
 				dispose();
 			}
 		});
@@ -184,6 +208,14 @@ public class StaffSignUp extends JFrame {
 		btnConfirm.setHorizontalTextPosition(SwingConstants.LEADING);
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				java.util.Date dateInput = dateModel.getDate();
+				java.sql.Date date = new java.sql.Date(dateInput.getTime());
+				entity.Staff staff = new entity.Staff(firstName.getText(), lastName.getText(), phoneNumber.getText(), date, firstAidCertified.getSelectedItem().charAt(0),
+						 map.get(fitnessCenterSelector.getSelectedItem()).getCenterId(), position.getSelectedItem().charAt(0));
+				StaffSql.addStaffMember(staff);
+				Staff sFrame = new Staff();
+				sFrame.setVisible(true);
+				dispose();
 			}
 		});
 		btnConfirm.setBackground(Color.ORANGE);
@@ -195,8 +227,8 @@ public class StaffSignUp extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this form?", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
-					Members member = new Members();
-					member.setVisible(true);
+					Staff staff = new Staff();
+					staff.setVisible(true);
 					dispose();
 				}
 			}

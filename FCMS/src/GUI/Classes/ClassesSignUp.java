@@ -1,7 +1,10 @@
 package GUI.Classes;
 
-import GUI.Home;
-import GUI.Members.Members;
+import Database.ClassSql;
+import Database.FitnessCenterSql;
+import Database.StaffSql;
+import entity.*;
+import entity.Class;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +12,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.sql.Time;
+import java.util.HashMap;
+import java.util.List;
 
 public class ClassesSignUp extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField maxParticipants;
+	private JSpinner dateTimeSpinner;
+	private SpinnerDateModel dateModel;
+	private SpinnerNumberModel maxParticipantsModel;
+	private JSpinner maxParticipantsSpinner;
+	private JSpinner classSessionNumberSpinner;
+	private SpinnerNumberModel classSessionNumberModel;
+	private JSpinner classCostSpinner;
+	private SpinnerNumberModel classCostModel;
+	private JSpinner participantsNumberSpinner;
+	private SpinnerNumberModel participantsNumberModel;
+	private ClassSql classSql = new ClassSql();
+	private StaffSql staffSql = new StaffSql();
+	private List<FitnessCenter> centerList;
+	private static HashMap<String, FitnessCenter> map = new HashMap<String, FitnessCenter>();
+
+
 
 	/**
 	 * Launch the application.
@@ -31,10 +52,24 @@ public class ClassesSignUp extends JFrame {
 		});
 	}
 
+	private char convertStringToChar(String s) {
+		if (s == "m") {
+			return 'M';
+		} else if (s == "f") {
+			return 'F';
+		} else {
+			return '-';
+		}
+	}
+
 	/**
 	 * Create the frame.
 	 */
 	public ClassesSignUp() {
+		centerList = FitnessCenterSql.getAllCenters();
+		for (FitnessCenter i : centerList) {
+			this.map.put(i.getCenterName(),i);
+		}
 		setUndecorated(true);
 		setBounds(0, 0, 900, 625);
 		
@@ -71,93 +106,140 @@ public class ClassesSignUp extends JFrame {
 		exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
 		Choice fitnessCenterSelector = new Choice();
-		fitnessCenterSelector.setBounds(240, 144, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
-		fitnessCenterSelector.add("Schwäbisch Hall");
-		fitnessCenterSelector.add("Börsenplatz");
-		fitnessCenterSelector.add("Blaubeuren");
-
+		fitnessCenterSelector.setBounds(240, 120, 280, 27);
+		for (String key : map.keySet()) {
+			fitnessCenterSelector.add(key);
+		}
 		Panel.add(fitnessCenterSelector);
 
-		Choice classTypeSelector = new Choice();
-		classTypeSelector.setBounds(240, 255, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
-		classTypeSelector.add("Yoga");
-		classTypeSelector.add("Abs & Core");
-		classTypeSelector.add("Stretching");
+		dateModel = new SpinnerDateModel();
+		dateTimeSpinner = new JSpinner(dateModel);
+		dateTimeSpinner.setBounds(240, 160, 280, 27);
+		Panel.add(dateTimeSpinner);
 
-		Panel.add(classTypeSelector);
+		maxParticipantsSpinner = new JSpinner();
+		maxParticipantsModel = new SpinnerNumberModel(0, 0, 100, 1);
+		maxParticipantsSpinner.setModel(maxParticipantsModel);
+		maxParticipantsSpinner.setBounds(240, 200, 280, 35);
+		Panel.add(maxParticipantsSpinner);
 
-		maxParticipants = new JTextField();
-		maxParticipants.setColumns(10);
-		maxParticipants.setBounds(240, 191, 280, 35);
-		Panel.add(maxParticipants);
+		classSessionNumberSpinner = new JSpinner();
+		classSessionNumberModel = new SpinnerNumberModel(0, 0, 100, 1);
+		classSessionNumberSpinner.setModel(classSessionNumberModel);
+		classSessionNumberSpinner.setBounds(240, 250, 280, 35);
+		Panel.add(classSessionNumberSpinner);
 
-		Choice startTimeSelector = new Choice();
-		startTimeSelector.setBounds(240, 310, 280, 27);
-		for (int i = 9; i < 19; i++) {
-			startTimeSelector.add(i + ":00");
+		classCostSpinner = new JSpinner();
+		classCostModel = new SpinnerNumberModel(0.0, 0.0, 1000.0, 0.5);
+		classCostSpinner.setModel(classCostModel);
+		classCostSpinner.setBounds(240, 300, 280, 35);
+		Panel.add(classCostSpinner);
+
+		Choice classType = new Choice();
+		classType.setBounds(240, 360, 280, 27);
+		List<ClassDescription> classPlaceholders = classSql.getClassTypes();
+		for (ClassDescription classPlaceholder : classPlaceholders) {
+			classType.add(classPlaceholder.getClassType());
 		}
-		Panel.add(startTimeSelector);
+		Panel.add(classType);
 
-		Choice durationSelector = new Choice();
-		durationSelector.setBounds(240, 360, 280, 27);
-		for (int i = 1; i < 4; i++) {
-			durationSelector.add(i + " hour(s)");
+		Choice roomNumber = new Choice();
+		roomNumber.setBounds(240, 400, 280, 35);
+		List<Facility> rooms = FitnessCenterSql.getAllrooms();
+		for (Facility room : rooms) {
+			roomNumber.add(String.valueOf(room.getFacilityRoomNumber()));
 		}
-		Panel.add(durationSelector);
+		Panel.add(roomNumber);
 
-		Choice instructorSelector = new Choice();
-		instructorSelector.setBounds(240, 420, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
-		instructorSelector.add("John Doe");
-		instructorSelector.add("Jane Willow");
-		instructorSelector.add("John Smith");
-		instructorSelector.add("Jane Linda");
-		Panel.add(instructorSelector);
-		
-		JLabel classesLabel = new JLabel("Classes:");
+		Choice genderRestriction = new Choice();
+		genderRestriction.setBounds(240, 440, 280, 27);
+		genderRestriction.add("m");
+		genderRestriction.add("f");
+		genderRestriction.add("-");
+		Panel.add(genderRestriction);
+
+		participantsNumberSpinner = new JSpinner();
+		participantsNumberModel = new SpinnerNumberModel(0, 0, 100, 1);
+		participantsNumberSpinner.setModel(participantsNumberModel);
+		participantsNumberSpinner.setBounds(240, 470, 280, 35);
+		Panel.add(participantsNumberSpinner);
+
+		Choice classInstructor = new Choice();
+		classInstructor.setBounds(240, 510, 280, 27);
+		List<Staff> staffPlaceholders = staffSql.getAllStaff();
+		for (Staff staffPlaceholder : staffPlaceholders) {
+			if(staffPlaceholder.getRoleId() == 'T') {
+				classInstructor.add(staffPlaceholder.getFirstName() + " " + staffPlaceholder.getLastName());
+			}
+		}
+		Panel.add(classInstructor);
+
+		JLabel classesLabel = new JLabel("Fitness Center:");
 		classesLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		classesLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		classesLabel.setBounds(29, 144, 171, 20);
+		classesLabel.setBounds(29, 120, 171, 20);
 		Panel.add(classesLabel);
 
-		JLabel classTypeLabel = new JLabel("Class Type:");
-		classTypeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		classTypeLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		classTypeLabel.setBounds(29, 255, 171, 20);
-		Panel.add(classTypeLabel);
+		JLabel lblDate = new JLabel("Datetime:");
+		lblDate.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDate.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblDate.setBounds(29, 160, 171, 20);
+		Panel.add(lblDate);
 
-		JLabel startTimeLabel = new JLabel("Start Time:");
-		startTimeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		startTimeLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		startTimeLabel.setBounds(29, 310, 171, 20);
-		Panel.add(startTimeLabel);
-
-		JLabel durationLabel = new JLabel("Duration:");
-		durationLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		durationLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		durationLabel.setBounds(29, 360, 171, 20);
-		Panel.add(durationLabel);
-
-		JLabel instructorLabel = new JLabel("Instructor:");
-		instructorLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		instructorLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		instructorLabel.setBounds(29, 420, 171, 20);
-		Panel.add(instructorLabel);
-		
 		JLabel lblMaxParticipants = new JLabel("Max Participants:");
 		lblMaxParticipants.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMaxParticipants.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-		lblMaxParticipants.setBounds(29, 201, 170, 20);
+		lblMaxParticipants.setBounds(29, 205, 171, 20);
 		Panel.add(lblMaxParticipants);
+
+		JLabel lblClassSessionNumber = new JLabel("Class Session Number:");
+		lblClassSessionNumber.setHorizontalAlignment(SwingConstants.LEFT);
+		lblClassSessionNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblClassSessionNumber.setBounds(29, 255, 201, 20);
+		Panel.add(lblClassSessionNumber);
+
+		JLabel lblClassCost = new JLabel("Class Cost:");
+		lblClassCost.setHorizontalAlignment(SwingConstants.LEFT);
+		lblClassCost.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblClassCost.setBounds(29, 305, 171, 20);
+		Panel.add(lblClassCost);
+
+		JLabel lblClassType = new JLabel("Class Type:");
+		lblClassType.setHorizontalAlignment(SwingConstants.LEFT);
+		lblClassType.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblClassType.setBounds(29, 360, 171, 20);
+		Panel.add(lblClassType);
+
+		JLabel lblRoomNumber = new JLabel("Room Number:");
+		lblRoomNumber.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRoomNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblRoomNumber.setBounds(29, 405, 171, 20);
+		Panel.add(lblRoomNumber);
+
+		JLabel genederRestriction = new JLabel("Allowed Gender:");
+		genederRestriction.setHorizontalAlignment(SwingConstants.LEFT);
+		genederRestriction.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		genederRestriction.setBounds(29, 440, 171, 20);
+		Panel.add(genederRestriction);
+
+		JLabel lblParticipantsNumber = new JLabel("Participants Number:");
+		lblParticipantsNumber.setHorizontalAlignment(SwingConstants.LEFT);
+		lblParticipantsNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblParticipantsNumber.setBounds(29, 475, 201, 20);
+		Panel.add(lblParticipantsNumber);
+
+		JLabel lblClassInstructor = new JLabel("Class Instructor:");
+		lblClassInstructor.setHorizontalAlignment(SwingConstants.LEFT);
+		lblClassInstructor.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
+		lblClassInstructor.setBounds(29, 510, 171, 20);
+		Panel.add(lblClassInstructor);
 
 		JLabel backArrow = new JLabel("");
 		backArrow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Home hframe = new Home();
-				hframe.setVisible(true);
+				Classes cframe = new Classes();
+				cframe.setVisible(true);
 				dispose();
 			}
 		});
@@ -186,11 +268,24 @@ public class ClassesSignUp extends JFrame {
 				// Add the new staff member to the database.
 			}
 		});
-		btnConfirm.setBounds(417, 543, 103, 35);
+		btnConfirm.setBounds(417, 560, 103, 35);
 		btnConfirm.setForeground(SystemColor.desktop);
 		btnConfirm.setHorizontalTextPosition(SwingConstants.LEADING);
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				java.util.Date dateInput = dateModel.getDate();
+				Date classDate = new Date(dateInput.getTime());
+				Time classTime = new Time(dateInput.getTime());
+				String genderRestrictionString = genderRestriction.getSelectedItem();
+				char genderRestrictionChar = convertStringToChar(genderRestrictionString);
+				String roomNumberString = roomNumber.getSelectedItem();
+				int roomNumberInt = Integer.parseInt(roomNumberString);
+				Class newClass = new Class(map.get(fitnessCenterSelector.getSelectedItem()).getCenterId(), classDate, classTime, (int)maxParticipantsModel.getValue(), (int)classSessionNumberSpinner.getValue(),
+						(double)classCostModel.getValue(), classType.getSelectedItem(), roomNumberInt, genderRestrictionChar, (int)participantsNumberModel.getValue());
+				ClassSql.addClass(newClass);
+				Classes classes = new Classes();
+				classes.setVisible(true);
+				dispose();
 			}
 		});
 		btnConfirm.setBackground(Color.ORANGE);
@@ -202,8 +297,8 @@ public class ClassesSignUp extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this form?", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
-					Members member = new Members();
-					member.setVisible(true);
+					Classes classes = new Classes();
+					classes.setVisible(true);
 					dispose();
 				}
 			}
@@ -212,7 +307,7 @@ public class ClassesSignUp extends JFrame {
 		btnCancel.setForeground(Color.BLACK);
 		btnCancel.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
 		btnCancel.setBackground(Color.ORANGE);
-		btnCancel.setBounds(290, 543, 103, 35);
+		btnCancel.setBounds(290, 560, 103, 35);
 		Panel.add(btnCancel);
 		
 		JLabel title = new JLabel("Class sign-up form");

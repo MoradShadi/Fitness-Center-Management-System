@@ -104,11 +104,9 @@ public class MemberSignUp extends JFrame {
 		
 		fitnessCenterSelector = new Choice();
 		fitnessCenterSelector.setBounds(240, 144, 280, 27);
-		// Need to be retrieved from the database, these are just placeholders for now.
 		for (String key : map.keySet()) {
 			fitnessCenterSelector.add(key);
 		}
-		
 		Panel.add(fitnessCenterSelector);
 		
 		firstName = new JTextField();

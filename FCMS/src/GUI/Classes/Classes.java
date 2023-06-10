@@ -173,6 +173,9 @@ public class Classes extends JFrame {
 		lblClasses.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ClassesDelete classesDelete = new ClassesDelete();
+				classesDelete.setVisible(true);
+				dispose();
 			}
 		});
 		lblClasses.setForeground(SystemColor.textHighlight);
@@ -202,6 +205,9 @@ public class Classes extends JFrame {
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				PreEditClasses preEditClasses = new PreEditClasses();
+				preEditClasses.setVisible(true);
+				dispose();
 			}
 		});
 		lblCenters.setIconTextGap(0);
@@ -232,6 +238,9 @@ public class Classes extends JFrame {
 		lblStaff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ClassesList classesList = new ClassesList();
+				classesList.setVisible(true);
+				dispose();
 			}
 		});
 		lblStaff.setBackground(SystemColor.menu);
