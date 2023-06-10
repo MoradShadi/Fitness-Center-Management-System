@@ -1,7 +1,9 @@
 package GUI.Staff;
 
+import Database.StaffSql;
 import GUI.Classes.ClassesSignUp;
 import GUI.Home;
+import entity.Member;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +13,7 @@ import java.awt.event.MouseEvent;
 public class StaffList extends JFrame{
     private JList<String> list;
     private DefaultListModel<String> listModel;
+    private static java.util.List<entity.Staff> staffList;
     /**
      * Launch the application.
      */
@@ -28,6 +31,7 @@ public class StaffList extends JFrame{
     }
 
     public StaffList() {
+        staffList = StaffSql.getAllStaff();
         setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -64,15 +68,9 @@ public class StaffList extends JFrame{
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         listModel = new DefaultListModel<>();
-        listModel.addElement("ID 1 (John Doe)");
-        listModel.addElement("ID 2 (Jane Doe)");
-        listModel.addElement("ID 3 (John Smith)");
-        listModel.addElement("ID 1 (John Doe)");
-        listModel.addElement("ID 2 (Jane Doe)");
-        listModel.addElement("ID 3 (John Smith)");
-        listModel.addElement("ID 1 (John Doe)");
-        listModel.addElement("ID 2 (Jane Doe)");
-        listModel.addElement("ID 3 (John Smith)");
+        for (int i = 0; i < staffList.size(); i++) {
+            listModel.addElement(String.valueOf(staffList.get(i).getStaffId()) + " " + String.valueOf(staffList.get(i).getFirstName())+ " " + String.valueOf(staffList.get(i).getLastName()));
+        }
         list = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setBounds(70, 120, 400, 400);

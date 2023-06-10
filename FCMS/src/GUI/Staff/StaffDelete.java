@@ -1,8 +1,7 @@
 package GUI.Staff;
 
+import Database.StaffSql;
 import GUI.Classes.ClassesSignUp;
-import GUI.Home;
-import GUI.Members.Members;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class StaffDelete extends JFrame {
+
+    private List<entity.Staff> staffList;
+    private Choice staffSelector;
+
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -26,6 +30,7 @@ public class StaffDelete extends JFrame {
     }
 
     public StaffDelete() {
+        staffList = StaffSql.getAllStaff();
         setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -61,18 +66,18 @@ public class StaffDelete extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice staffSelector = new Choice();
-        staffSelector.setBounds(240, 144, 280, 27);
+        staffSelector = new Choice();
+        staffSelector.setBounds(200, 300, 350, 27);
         // Need to be retrieved from the database, these are just placeholders for now.
-        staffSelector.add("ID 1 (John Doe)");
-        staffSelector.add("ID 2 (Jane Doe)");
-        staffSelector.add("ID 3 (John Smith)");
+        for (int i = 0; i < staffList.size(); i ++) {
+            staffSelector.add(String.valueOf(staffList.get(i).getStaffId()));
+        }
         Panel.add(staffSelector);
 
         JLabel lblClassSelector = new JLabel("Select Staff:");
         lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
         lblClassSelector.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblClassSelector.setBounds(29, 144, 201, 20);
+        lblClassSelector.setBounds(29, 300, 201, 20);
         Panel.add(lblClassSelector);
 
         JLabel backArrow = new JLabel("");
@@ -105,16 +110,17 @@ public class StaffDelete extends JFrame {
         JButton btnConfirm = new JButton("Delete");
         btnConfirm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println(staffSelector.getSelectedItem());
+                if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this staff member", "Confirmation", JOptionPane.YES_NO_OPTION)== 0) {
+                    StaffSql.deleteStafMember(Integer.parseInt(staffSelector.getSelectedItem()));
+                    Staff staffPane = new Staff();
+                    staffPane.setVisible(true);
+                    dispose();
+                }
             }
         });
         btnConfirm.setBounds(417, 560, 103, 35);
         btnConfirm.setForeground(SystemColor.desktop);
         btnConfirm.setHorizontalTextPosition(SwingConstants.LEADING);
-        btnConfirm.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
         btnConfirm.setBackground(Color.ORANGE);
         btnConfirm.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
         Panel.add(btnConfirm);

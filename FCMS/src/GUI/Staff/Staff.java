@@ -2,7 +2,6 @@ package GUI.Staff;
 
 import GUI.Home;
 import GUI.LoginPage;
-import GUI.Members.MemberSignUp;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -206,7 +205,7 @@ public class Staff extends JFrame {
 		lblCenters.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				StaffEdit staffEdit = new StaffEdit();
+				PreEditStaff staffEdit = new PreEditStaff();
 				staffEdit.setVisible(true);
 				dispose();
 			}

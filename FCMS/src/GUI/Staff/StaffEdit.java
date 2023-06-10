@@ -1,7 +1,10 @@
 package GUI.Staff;
 
+import Database.FitnessCenterSql;
+import Database.StaffSql;
 import GUI.Home;
 import GUI.Members.Members;
+import entity.FitnessCenter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.sql.Time;
+import java.util.HashMap;
+import java.util.List;
 
 public class StaffEdit extends JFrame {
     private JPanel contentPane;
@@ -18,6 +25,9 @@ public class StaffEdit extends JFrame {
     private JTextField phoneNumber;
     private JSpinner dateTimeSpinner;
     private SpinnerDateModel dateModel;
+    private entity.Staff staff;
+    private List<FitnessCenter> centerList;
+    private static HashMap<String, FitnessCenter> map = new HashMap<>();
 
     /**
      * Launch the application.
@@ -38,7 +48,12 @@ public class StaffEdit extends JFrame {
     /**
      * Create the frame.
      */
-    public StaffEdit() {
+    public StaffEdit(entity.Staff staffParam) {
+        staff = staffParam;
+        centerList = FitnessCenterSql.getAllCenters();
+        for (FitnessCenter i : centerList) {
+            this.map.put(i.getCenterName(),i);
+        }
         setUndecorated(true);
         setBounds(0, 0, 900, 625);
 
@@ -74,100 +89,100 @@ public class StaffEdit extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice staffSelector = new Choice();
-        staffSelector.setBounds(240, 144, 280, 27);
-        // Need to be retrieved from the database, these are just placeholders for now.
-        staffSelector.add("ID 1 (John Doe)");
-        staffSelector.add("ID 2 (Jane Doe)");
-        staffSelector.add("ID 3 (John Smith)");
-        Panel.add(staffSelector);
-
 
         firstName = new JTextField();
+        firstName.setText(staff.getFirstName());
         firstName.setColumns(10);
-        firstName.setBounds(240, 191, 280, 35);
+        firstName.setBounds(240, 144, 280, 35);
         Panel.add(firstName);
 
         lastName = new JTextField();
+        lastName.setText(staff.getLastName());
         lastName.setColumns(10);
-        lastName.setBounds(240, 240, 280, 35);
+        lastName.setBounds(240, 191, 280, 35);
         Panel.add(lastName);
 
         phoneNumber = new JTextField();
+        phoneNumber.setText(staff.getPhoneNumber());
         phoneNumber.setColumns(10);
-        phoneNumber.setBounds(240, 290, 280, 35);
+        phoneNumber.setBounds(240, 240, 280, 35);
         Panel.add(phoneNumber);
 
         dateModel = new SpinnerDateModel();
+        Date sqlDate = staff.getStartDate();
+        java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
         dateTimeSpinner = new JSpinner(dateModel);
-        dateTimeSpinner.setBounds(240, 340, 280, 27);
+        dateTimeSpinner.setValue(utilDate);
+        dateTimeSpinner.setBounds(240, 290, 280, 27);
         Panel.add(dateTimeSpinner);
 
         Choice firstAidCertified = new Choice();
-        firstAidCertified.setBounds(240, 390, 280, 20);
-        firstAidCertified.add("True");
-        firstAidCertified.add("False");
+        firstAidCertified.setBounds(240, 340, 280, 20);
+        firstAidCertified.add("Y");
+        firstAidCertified.add("N");
+        firstAidCertified.select(String.valueOf(staff.getFirstAidCertified()));
         Panel.add(firstAidCertified);
 
         Choice fitnessCenterSelector = new Choice();
-        fitnessCenterSelector.setBounds(240, 430, 280, 27);
-        // Need to be retrieved from the database, these are just placeholders for now.
-        fitnessCenterSelector.add("Schwäbisch Hall");
-        fitnessCenterSelector.add("Börsenplatz");
-        fitnessCenterSelector.add("Blaubeuren");
+        fitnessCenterSelector.setBounds(240, 390, 280, 27);
+        for (String key : map.keySet()) {
+            fitnessCenterSelector.add(key);
+        }
+        fitnessCenterSelector.select(FitnessCenterSql.getCenter(staff.getCenterId()).getCenterName());
         Panel.add(fitnessCenterSelector);
 
-        position = new JTextField();
-        position.setColumns(10);
-        position.setBounds(240, 470, 280, 35);
+        Choice position = new Choice();
+        position.setBounds(240, 430, 280, 35);
+        position.add("A");
+        position.add("C");
+        position.add("D");
+        position.add("M");
+        position.add("P");
+        position.add("S");
+        position.add("T");
+        position.select(String.valueOf(staff.getRoleId()));
         Panel.add(position);
-
-        JLabel lblClassSelector = new JLabel("Select Staff:");
-        lblClassSelector.setHorizontalAlignment(SwingConstants.LEFT);
-        lblClassSelector.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblClassSelector.setBounds(29, 144, 201, 20);
-        Panel.add(lblClassSelector);
 
         JLabel lblFirstName = new JLabel("First Name:");
         lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
         lblFirstName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblFirstName.setBounds(29, 191, 170, 20);
+        lblFirstName.setBounds(29, 144, 170, 20);
         Panel.add(lblFirstName);
 
         JLabel lblLastName = new JLabel("Last Name:");
         lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
         lblLastName.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblLastName.setBounds(29, 240, 170, 20);
+        lblLastName.setBounds(29, 191, 170, 20);
         Panel.add(lblLastName);
 
         JLabel lblPhoneNumber = new JLabel("Phone Number:");
         lblPhoneNumber.setHorizontalAlignment(SwingConstants.LEFT);
         lblPhoneNumber.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblPhoneNumber.setBounds(29, 290, 170, 20);
+        lblPhoneNumber.setBounds(29, 240, 170, 20);
         Panel.add(lblPhoneNumber);
 
         JLabel startDate = new JLabel("Start Date:");
         startDate.setHorizontalAlignment(SwingConstants.LEFT);
         startDate.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        startDate.setBounds(29, 340, 170, 20);
+        startDate.setBounds(29, 290, 170, 20);
         Panel.add(startDate);
 
         JLabel firstAidCertifiedLabel = new JLabel("First Aid Certified:");
         firstAidCertifiedLabel.setHorizontalAlignment(SwingConstants.LEFT);
         firstAidCertifiedLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        firstAidCertifiedLabel.setBounds(29, 390, 170, 20);
+        firstAidCertifiedLabel.setBounds(29, 340, 170, 20);
         Panel.add(firstAidCertifiedLabel);
 
         JLabel fitnessCenterLabel = new JLabel("Fitness Center:");
         fitnessCenterLabel.setHorizontalAlignment(SwingConstants.LEFT);
         fitnessCenterLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        fitnessCenterLabel.setBounds(29, 430, 170, 20);
+        fitnessCenterLabel.setBounds(29, 390, 170, 20);
         Panel.add(fitnessCenterLabel);
 
         JLabel roleLabel = new JLabel("Role:");
         roleLabel.setHorizontalAlignment(SwingConstants.LEFT);
         roleLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        roleLabel.setBounds(29, 470, 170, 20);
+        roleLabel.setBounds(29, 430, 170, 20);
         Panel.add(roleLabel);
 
         JLabel backArrow = new JLabel("");
@@ -197,26 +212,20 @@ public class StaffEdit extends JFrame {
         Logo.setBounds(0, 179, 310, 346);
         mainPanel.add(Logo);
 
-        JButton btnConfirm = new JButton("Update");
-        btnConfirm.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Add the new staff member to the database.
-            }
-        });
+        JButton btnConfirm = new JButton("Confirm");
         btnConfirm.setBounds(417, 543, 103, 35);
         btnConfirm.setForeground(SystemColor.desktop);
         btnConfirm.setHorizontalTextPosition(SwingConstants.LEADING);
         btnConfirm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println(staffSelector.getSelectedItem());
-                System.out.println(firstName.getText());
-                System.out.println(lastName.getText());
-                System.out.println(phoneNumber.getText());
-                System.out.println(dateModel.getDate());
-                System.out.println(firstAidCertified.getSelectedItem());
-                System.out.println(fitnessCenterSelector.getSelectedItem());
-                System.out.println(position.getText());
+                java.util.Date dateInput = dateModel.getDate();
+                java.sql.Date date = new java.sql.Date(dateInput.getTime());
+                entity.Staff newStaff = new entity.Staff(staff.getStaffId(), firstName.getText(), lastName.getText(), phoneNumber.getText(), date, firstAidCertified.getSelectedItem().charAt(0),
+                        map.get(fitnessCenterSelector.getSelectedItem()).getCenterId(), position.getSelectedItem().charAt(0));
+                StaffSql.UpdateStaffMember(newStaff);
+                Staff staffFrame = new Staff();
+                staffFrame.setVisible(true);
+                dispose();
             }
         });
         btnConfirm.setBackground(Color.ORANGE);
