@@ -33,8 +33,11 @@ public class ClassesSignUp extends JFrame {
 	private StaffSql staffSql = new StaffSql();
 	private List<FitnessCenter> centerList;
 	private static HashMap<String, FitnessCenter> map = new HashMap<String, FitnessCenter>();
-
-
+	Choice fitnessCenterSelector;
+	Choice classType;
+	Choice roomNumber;
+	Choice genderRestriction;
+	Choice classInstructor;
 
 	/**
 	 * Launch the application.
@@ -105,7 +108,7 @@ public class ClassesSignUp extends JFrame {
 		exit.setForeground(SystemColor.textHighlight);
 		exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		Choice fitnessCenterSelector = new Choice();
+		fitnessCenterSelector = new Choice();
 		fitnessCenterSelector.setBounds(240, 120, 280, 27);
 		for (String key : map.keySet()) {
 			fitnessCenterSelector.add(key);
@@ -135,7 +138,7 @@ public class ClassesSignUp extends JFrame {
 		classCostSpinner.setBounds(240, 300, 280, 35);
 		Panel.add(classCostSpinner);
 
-		Choice classType = new Choice();
+		classType = new Choice();
 		classType.setBounds(240, 360, 280, 27);
 		List<ClassDescription> classPlaceholders = classSql.getClassTypes();
 		for (ClassDescription classPlaceholder : classPlaceholders) {
@@ -143,7 +146,7 @@ public class ClassesSignUp extends JFrame {
 		}
 		Panel.add(classType);
 
-		Choice roomNumber = new Choice();
+		roomNumber = new Choice();
 		roomNumber.setBounds(240, 400, 280, 35);
 		List<Facility> rooms = FitnessCenterSql.getAllrooms();
 		for (Facility room : rooms) {
@@ -151,7 +154,7 @@ public class ClassesSignUp extends JFrame {
 		}
 		Panel.add(roomNumber);
 
-		Choice genderRestriction = new Choice();
+		genderRestriction = new Choice();
 		genderRestriction.setBounds(240, 440, 280, 27);
 		genderRestriction.add("m");
 		genderRestriction.add("f");
@@ -164,12 +167,12 @@ public class ClassesSignUp extends JFrame {
 		participantsNumberSpinner.setBounds(240, 470, 280, 35);
 		Panel.add(participantsNumberSpinner);
 
-		Choice classInstructor = new Choice();
+		classInstructor = new Choice();
 		classInstructor.setBounds(240, 510, 280, 27);
 		List<Staff> staffPlaceholders = staffSql.getAllStaff();
 		for (Staff staffPlaceholder : staffPlaceholders) {
 			if(staffPlaceholder.getRoleId() == 'T') {
-				classInstructor.add(staffPlaceholder.getFirstName() + " " + staffPlaceholder.getLastName());
+				classInstructor.add(staffPlaceholder.getStaffId() + "-" + staffPlaceholder.getFirstName() + " " + staffPlaceholder.getLastName());
 			}
 		}
 		Panel.add(classInstructor);
@@ -282,7 +285,12 @@ public class ClassesSignUp extends JFrame {
 				int roomNumberInt = Integer.parseInt(roomNumberString);
 				Class newClass = new Class(map.get(fitnessCenterSelector.getSelectedItem()).getCenterId(), classDate, classTime, (int)maxParticipantsModel.getValue(), (int)classSessionNumberSpinner.getValue(),
 						(double)classCostModel.getValue(), classType.getSelectedItem(), roomNumberInt, genderRestrictionChar, (int)participantsNumberModel.getValue());
-				ClassSql.addClass(newClass);
+				String instructor = classInstructor.getSelectedItem();
+				String number = instructor.substring(0, instructor.indexOf("-"));
+				int instructorId = Integer.parseInt(number);
+				ClassStaffing newStaffing = new ClassStaffing(instructorId, 'Y');
+				ClassSql.AddClassTransaction(newClass, newStaffing);
+				//				ClassSql.addClass(newClass);
 				Classes classes = new Classes();
 				classes.setVisible(true);
 				dispose();

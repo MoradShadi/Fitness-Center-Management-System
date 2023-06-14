@@ -28,7 +28,10 @@ public class StaffEdit extends JFrame {
     private entity.Staff staff;
     private List<FitnessCenter> centerList;
     private static HashMap<String, FitnessCenter> map = new HashMap<>();
-
+    Choice firstAidCertified;
+    Choice fitnessCenterSelector;
+    Choice position1;
+    
     /**
      * Launch the application.
      */
@@ -116,14 +119,14 @@ public class StaffEdit extends JFrame {
         dateTimeSpinner.setBounds(240, 290, 280, 27);
         Panel.add(dateTimeSpinner);
 
-        Choice firstAidCertified = new Choice();
+        firstAidCertified = new Choice();
         firstAidCertified.setBounds(240, 340, 280, 20);
         firstAidCertified.add("Y");
         firstAidCertified.add("N");
         firstAidCertified.select(String.valueOf(staff.getFirstAidCertified()));
         Panel.add(firstAidCertified);
 
-        Choice fitnessCenterSelector = new Choice();
+        fitnessCenterSelector = new Choice();
         fitnessCenterSelector.setBounds(240, 390, 280, 27);
         for (String key : map.keySet()) {
             fitnessCenterSelector.add(key);
@@ -131,17 +134,17 @@ public class StaffEdit extends JFrame {
         fitnessCenterSelector.select(FitnessCenterSql.getCenter(staff.getCenterId()).getCenterName());
         Panel.add(fitnessCenterSelector);
 
-        Choice position = new Choice();
-        position.setBounds(240, 430, 280, 35);
-        position.add("A");
-        position.add("C");
-        position.add("D");
-        position.add("M");
-        position.add("P");
-        position.add("S");
-        position.add("T");
-        position.select(String.valueOf(staff.getRoleId()));
-        Panel.add(position);
+        position1 = new Choice();
+        position1.setBounds(240, 430, 280, 35);
+        position1.add("A");
+        position1.add("C");
+        position1.add("D");
+        position1.add("M");
+        position1.add("P");
+        position1.add("S");
+        position1.add("T");
+        position1.select(String.valueOf(staff.getRoleId()));
+        Panel.add(position1);
 
         JLabel lblFirstName = new JLabel("First Name:");
         lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
@@ -221,7 +224,7 @@ public class StaffEdit extends JFrame {
                 java.util.Date dateInput = dateModel.getDate();
                 java.sql.Date date = new java.sql.Date(dateInput.getTime());
                 entity.Staff newStaff = new entity.Staff(staff.getStaffId(), firstName.getText(), lastName.getText(), phoneNumber.getText(), date, firstAidCertified.getSelectedItem().charAt(0),
-                        map.get(fitnessCenterSelector.getSelectedItem()).getCenterId(), position.getSelectedItem().charAt(0));
+                        map.get(fitnessCenterSelector.getSelectedItem()).getCenterId(), position1.getSelectedItem().charAt(0));
                 StaffSql.UpdateStaffMember(newStaff);
                 Staff staffFrame = new Staff();
                 staffFrame.setVisible(true);

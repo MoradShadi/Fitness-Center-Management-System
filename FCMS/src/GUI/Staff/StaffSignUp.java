@@ -22,7 +22,10 @@ public class StaffSignUp extends JFrame {
 	private SpinnerDateModel dateModel;
 	private List<FitnessCenter> centerList;
 	private static HashMap<String, FitnessCenter> map = new HashMap<String, FitnessCenter>();
-
+	Choice firstAidCertified;
+	Choice fitnessCenterSelector;
+	Choice position;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -103,20 +106,20 @@ public class StaffSignUp extends JFrame {
 		dateTimeSpinner.setBounds(240, 290, 280, 27);
 		Panel.add(dateTimeSpinner);
 
-		Choice firstAidCertified = new Choice();
+		firstAidCertified = new Choice();
 		firstAidCertified.setBounds(240, 340, 280, 20);
 		firstAidCertified.add("Y");
 		firstAidCertified.add("N");
 		Panel.add(firstAidCertified);
 
-		Choice fitnessCenterSelector = new Choice();
+		fitnessCenterSelector = new Choice();
 		fitnessCenterSelector.setBounds(240, 390, 280, 27);
 		for (String key : map.keySet()) {
 			fitnessCenterSelector.add(key);
 		}
 		Panel.add(fitnessCenterSelector);
 
-		Choice position = new Choice();
+		position = new Choice();
 		position.setBounds(240, 430, 280, 35);
 		position.add("A");
 		position.add("C");
