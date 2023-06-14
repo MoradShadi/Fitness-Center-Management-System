@@ -4,6 +4,7 @@ import GUI.Centers.FitnessCenters;
 import GUI.Classes.Classes;
 import GUI.Members.Members;
 import GUI.Staff.Staff;
+import GUI.Enrollment.EnrollmentPage;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -118,7 +119,7 @@ public class Home extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 139)));
 		panel.setBackground(SystemColor.menu);
-		panel.setBounds(206, 178, 199, 150);
+		panel.setBounds(91, 178, 199, 150);
 		mainPanel.add(panel);
 		
 		JLabel lblMembers = new JLabel("Members");
@@ -149,7 +150,7 @@ public class Home extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 139)));
 		panel_1.setBackground(SystemColor.menu);
-		panel_1.setBounds(483, 178, 199, 150);
+		panel_1.setBounds(611, 178, 199, 150);
 		mainPanel.add(panel_1);
 		
 		JLabel lblClasses = new JLabel("Classes");
@@ -180,7 +181,7 @@ public class Home extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 139)));
 		panel_2.setBackground(SystemColor.menu);
-		panel_2.setBounds(206, 365, 199, 150);
+		panel_2.setBounds(91, 365, 199, 150);
 		mainPanel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -213,7 +214,7 @@ public class Home extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 139)));
 		panel_3.setBackground(SystemColor.menu);
-		panel_3.setBounds(483, 365, 199, 150);
+		panel_3.setBounds(611, 365, 199, 150);
 		mainPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -244,5 +245,35 @@ public class Home extends JFrame {
 		lblStaff.setIcon(scaledIcon6);
 		lblStaff.setBounds(10, 7, 179, 132);
 		panel_3.add(lblStaff);
+		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setLayout(null);
+		panel_1_1.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 139)));
+		panel_1_1.setBackground(SystemColor.menu);
+		panel_1_1.setBounds(352, 286, 199, 150);
+		mainPanel.add(panel_1_1);
+		
+		JLabel lblEnroll = new JLabel("Enroll");
+		lblEnroll.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				EnrollmentPage enrolFrame = new EnrollmentPage();
+				enrolFrame.setVisible(true);
+				dispose();
+			}
+		});
+		lblEnroll.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lblEnroll.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblEnroll.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblEnroll.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnroll.setForeground(SystemColor.textHighlight);
+		lblEnroll.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblEnroll.setBounds(10, 7, 179, 132);
+		ImageIcon enrollIcon = new ImageIcon(Home.class.getResource("/GUI/Images/Enroll.png"));
+		Image img7 = enrollIcon.getImage();
+		Image imgScale7 = img7.getScaledInstance(100, 100, 100);
+		ImageIcon scaledIcon7 = new ImageIcon(imgScale7);
+		lblEnroll.setIcon(scaledIcon7);
+		panel_1_1.add(lblEnroll);
 	}
 }
