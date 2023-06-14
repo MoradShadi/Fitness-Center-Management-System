@@ -40,7 +40,11 @@ public class ClassesEdit extends JFrame {
     private Class selectedClass;
     private List<FitnessCenter> centerList;
     private static HashMap<String, FitnessCenter> map = new HashMap<String, FitnessCenter>();
-
+    Choice fitnessCenterSelector;
+    Choice classType;
+    Choice roomNumber;
+    Choice genderRestriction;
+    
     private char convertStringToChar(String s) {
         return s.charAt(0);
     }
@@ -106,7 +110,7 @@ public class ClassesEdit extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice fitnessCenterSelector = new Choice();
+        fitnessCenterSelector = new Choice();
         fitnessCenterSelector.setBounds(240, 120, 280, 27);
         for (String key : map.keySet()) {
             fitnessCenterSelector.add(key);
@@ -144,7 +148,7 @@ public class ClassesEdit extends JFrame {
         classCostSpinner.setValue(selectedClass.getClassCost());
         Panel.add(classCostSpinner);
 
-        Choice classType = new Choice();
+        classType = new Choice();
         classType.setBounds(240, 360, 280, 27);
         List<ClassDescription> classPlaceholders = classSql.getClassTypes();
         for (ClassDescription classPlaceholder : classPlaceholders) {
@@ -153,7 +157,7 @@ public class ClassesEdit extends JFrame {
         classType.select(selectedClass.getClassType());
         Panel.add(classType);
 
-        Choice roomNumber = new Choice();
+        roomNumber = new Choice();
         roomNumber.setBounds(240, 400, 280, 35);
         List<Facility> rooms = FitnessCenterSql.getAllrooms();
         for (Facility room : rooms) {
@@ -162,7 +166,7 @@ public class ClassesEdit extends JFrame {
         roomNumber.select(String.valueOf(selectedClass.getRoomNumber()));
         Panel.add(roomNumber);
 
-        Choice genderRestriction = new Choice();
+        genderRestriction = new Choice();
         genderRestriction.setBounds(240, 440, 280, 27);
         genderRestriction.add("M");
         genderRestriction.add("F");

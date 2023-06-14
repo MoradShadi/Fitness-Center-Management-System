@@ -16,6 +16,7 @@ import java.util.List;
 public class ClassesDelete extends JFrame {
 
     private ClassSql classSql = new ClassSql();
+    Choice classSelector;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -66,7 +67,7 @@ public class ClassesDelete extends JFrame {
         exit.setForeground(SystemColor.textHighlight);
         exit.setFont(new Font("Tahoma", Font.BOLD, 30));
 
-        Choice classSelector = new Choice();
+        classSelector = new Choice();
         classSelector.setBounds(240, 120, 280, 27);
         List<Class> classes = classSql.getAllClasses();
         for (Class c : classes) {
