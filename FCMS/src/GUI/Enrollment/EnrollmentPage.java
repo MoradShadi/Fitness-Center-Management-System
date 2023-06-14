@@ -119,7 +119,7 @@ public class EnrollmentPage extends JFrame {
         JLabel lblMemberSelector = new JLabel("Select Member:");
         lblMemberSelector.setHorizontalAlignment(SwingConstants.LEFT);
         lblMemberSelector.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblMemberSelector.setBounds(29, 300, 201, 20);
+        lblMemberSelector.setBounds(29, 300, 165, 20);
         Panel.add(lblMemberSelector);
 
         JLabel backArrow = new JLabel("");
@@ -153,7 +153,8 @@ public class EnrollmentPage extends JFrame {
         btnConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            	Enrollment newEnrollment = new Enrollment(memberMap.get(Integer.parseInt(memberSelector.getSelectedItem())).getMemberId(), classMap.get(String.valueOf(memberSelector.getSelectedItem())).getClassId(),new Date(System.currentTimeMillis()));
+            	System.out.println(classMap.get(String.valueOf(classSelector.getSelectedItem())).getClassId());
+            	Enrollment newEnrollment = new Enrollment(memberMap.get(Integer.parseInt(memberSelector.getSelectedItem())).getMemberId(), classMap.get(String.valueOf(classSelector.getSelectedItem())).getClassId(),new Date(System.currentTimeMillis()));
             	EnrollmentSql.addEnrollment(newEnrollment);
             	Home hframe = new Home();
 				hframe.setVisible(true);
@@ -198,7 +199,7 @@ public class EnrollmentPage extends JFrame {
         JLabel lblSelectClass = new JLabel("Select Class:");
         lblSelectClass.setHorizontalAlignment(SwingConstants.LEFT);
         lblSelectClass.setFont(new Font("Segoe UI Light", Font.BOLD, 17));
-        lblSelectClass.setBounds(29, 344, 201, 20);
+        lblSelectClass.setBounds(29, 344, 165, 20);
         Panel.add(lblSelectClass);
         
         classSelector = new Choice();
