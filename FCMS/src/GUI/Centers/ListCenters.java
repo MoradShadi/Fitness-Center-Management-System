@@ -95,9 +95,6 @@ public class ListCenters extends JFrame {
         for (int i = 0; i < centerList.size(); i++) {
         	listModel.addElement(String.valueOf(centerList.get(i).getCenterId()) + " " + String.valueOf(centerList.get(i).getCenterName()));
         }
-        listModel.addElement("Center 1");
-        listModel.addElement("Center 2");
-        listModel.addElement("Center 3");
         list = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setBounds(70, 120, 400, 400);

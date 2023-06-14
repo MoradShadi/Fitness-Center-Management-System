@@ -76,12 +76,6 @@ public class ListMembers extends JFrame {
         for (int i = 0; i < memberList.size(); i++) {
         	listModel.addElement(String.valueOf(memberList.get(i).getMemberId()) + " " + String.valueOf(memberList.get(i).getFirstName())+ " " + String.valueOf(memberList.get(i).getLastName()));
         }
-        listModel.addElement("Morad");
-        listModel.addElement("Sandra");
-        listModel.addElement("Tiberiu");
-        listModel.addElement("Vlad");
-        listModel.addElement("Daryna");
-        listModel.addElement("Michela");
         list = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setBounds(70, 120, 400, 400);

@@ -99,9 +99,6 @@ public class PreEditMember extends JFrame {
 		for(int key : map.keySet()){
 			memberSelector.add(String.valueOf(map.get(key).getMemberId()));
 		}
-        memberSelector.add("ID 1 (John Doe)");
-        memberSelector.add("ID 2 (Jane Doe)");
-        memberSelector.add("ID 3 (John Smith)");
         Panel.add(memberSelector);
 
         JLabel lblClassSelector = new JLabel("Select Member:");

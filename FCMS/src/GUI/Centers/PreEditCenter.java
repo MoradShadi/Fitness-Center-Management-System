@@ -102,9 +102,6 @@ public class PreEditCenter extends JFrame {
 		for(String key : map.keySet()){
 			centerSelector.add(map.get(key).getCenterName());
 		}
-        centerSelector.add("ID 1 center");
-        centerSelector.add("ID 2 center");
-        centerSelector.add("ID 3 center");
         Panel.add(centerSelector);
 
         JLabel lblClassSelector = new JLabel("Select Center:");

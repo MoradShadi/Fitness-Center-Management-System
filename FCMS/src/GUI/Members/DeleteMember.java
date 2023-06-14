@@ -87,9 +87,6 @@ public class DeleteMember extends JFrame {
 		for (int i = 0; i < memberList.size(); i ++) {
 			memberSelector.add(String.valueOf(memberList.get(i).getMemberId()));
 		}
-        memberSelector.add("ID 1 (John Doe)");
-        memberSelector.add("ID 2 (Jane Doe)");
-        memberSelector.add("ID 3 (John Smith)");
         Panel.add(memberSelector);
 
         JLabel lblClassSelector = new JLabel("Select Member:");

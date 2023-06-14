@@ -95,9 +95,6 @@ public class DeleteCenters extends JFrame {
 		for (int i = 0; i < centerList.size(); i ++) {
 			centerSelector.add(String.valueOf(centerList.get(i).getCenterId()));
 		}
-        centerSelector.add("ID 1 center");
-        centerSelector.add("ID 2 center");
-        centerSelector.add("ID 3 center");
         Panel.add(centerSelector);
 
         JLabel lblClassSelector = new JLabel("Select Center:");
