@@ -184,7 +184,7 @@ public class EditMembers extends JFrame {
         btnCancel.setBounds(290, 543, 103, 35);
         Panel.add(btnCancel);
 
-        JLabel title = new JLabel("Edit Staff Member");
+        JLabel title = new JLabel("Edit Member");
         title.setBounds(72, 31, 448, 77);
         title.setForeground(SystemColor.textHighlight);
         title.setFont(new Font("Segoe UI Light", Font.BOLD, 45));

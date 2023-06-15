@@ -114,8 +114,8 @@ public class PreEditCenter extends JFrame {
         backArrow.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Members sFrame = new Members();
-                sFrame.setVisible(true);
+                FitnessCenters center = new FitnessCenters();
+                center.setVisible(true);
                 dispose();
             }
         });
